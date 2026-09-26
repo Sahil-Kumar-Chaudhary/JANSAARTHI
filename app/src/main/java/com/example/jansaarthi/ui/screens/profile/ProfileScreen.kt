@@ -66,7 +66,13 @@ fun ProfileScreen(navController: NavController) {
     // Fetch profile on mount if null
     LaunchedEffect(Unit) {
         if (currentUser == null && App.instance.authRepository.isLoggedIn()) {
-            App.instance.authRepository.fetchMe()
+            val result = App.instance.authRepository.fetchMe()
+            if (result.isFailure) {
+                App.instance.authRepository.logout()
+                navController.navigate(Routes.LOGIN) {
+                    popUpTo(0) { inclusive = true }
+                }
+            }
         }
     }
 

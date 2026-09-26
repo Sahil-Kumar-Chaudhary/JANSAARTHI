@@ -1,4 +1,4 @@
-package com.example.jansaarthi.ui.theme
+﻿package com.example.jansaarthi.ui.theme
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.example.jansaarthi.data.repository.AppLanguage
@@ -27,7 +27,7 @@ data class AppStrings(
 
 val EnglishStrings = AppStrings(
     language = AppLanguage.EN,
-    homeGreeting = "Namaste, Ramesh ji!",
+    homeGreeting = "Welcome!",
     homeSubtitle = "Let's find the right support for you.",
     quickServices = "Quick Services",
     businessLoan = "Business Loan",
@@ -49,7 +49,7 @@ val EnglishStrings = AppStrings(
 
 val HindiStrings = AppStrings(
     language = AppLanguage.HI,
-    homeGreeting = "नमस्ते, रमेश जी!",
+    homeGreeting = "नमस्ते!",
     homeSubtitle = "आइए आपके लिए सही सहायता खोजें।",
     quickServices = "त्वरित सेवाएँ",
     businessLoan = "व्यापार ऋण",
