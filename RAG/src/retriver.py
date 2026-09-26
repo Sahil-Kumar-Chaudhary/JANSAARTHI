@@ -1,4 +1,4 @@
-from chroma import create_vectore_store
+from .chroma import create_vectore_store
 
 def retriver():
     retriver_data = create_vectore_store().as_retriever(
