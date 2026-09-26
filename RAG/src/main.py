@@ -1,3 +1,4 @@
-from loader import load_data
+from retriver import retriver
 
-print(load_data)
+data = retriver().invoke("what is git")
+print(data)

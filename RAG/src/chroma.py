@@ -10,7 +10,8 @@ def create_vectore_store():
 
     vc = Chroma.from_documents(
         documents=chunks,
-        embedding=embedding
+        embedding=embedding,
+        persist_directory="../chroma_db"
     )
 
     return vc
