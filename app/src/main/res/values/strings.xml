@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">JANSAARTHI</string>
+    
+    <!-- Home Screen -->
+    <string name="how_can_we_help">Namaste, Ramesh ji! 🙏</string>
+    <string name="instant_match">Instant Match</string>
+    <string name="voice_assistance">VOICE &amp; AI ASSISTANCE</string>
+    <string name="tell_us_what_you_need">Tell us what financial support you need.</string>
+    
+    <!-- Services -->
+    <string name="business_loan">Business Loan</string>
+    <string name="education_loan">Education Loan</string>
+    <string name="check_eligibility">Check Eligibility</string>
+    <string name="calculate_emi">Calculate EMI</string>
+    <string name="find_partner">Find Partner</string>
+    
+    <!-- Scheme Info -->
+    <string name="why_jansaarthi">Why JANSAARTHI?</string>
+    <string name="official_criteria">Official Source-Based Criteria</string>
+    <string name="direct_guidance">Direct Step-by-Step Guidance</string>
+    <string name="zero_fees">Zero Fees &amp; No Middlemen</string>
+    
+    <!-- Navigation -->
+    <string name="home">Home</string>
+    <string name="schemes">Schemes</string>
+    <string name="calculator">Calculator</string>
+    <string name="partners">Partners</string>
+    <string name="profile">Profile</string>
+</resources>

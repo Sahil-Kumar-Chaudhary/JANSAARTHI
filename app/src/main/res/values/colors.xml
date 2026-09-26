@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand Colors from JANSAARTHI design -->
+    <color name="jansaarthi_primary">#7A3E3F</color>
+    <color name="jansaarthi_secondary">#FFB65C</color>
+    <color name="jansaarthi_accent">#FF9800</color>
+    <color name="yellow_accent">#FFB65C</color>
+    <color name="yellow_accent_dark">#E67F18</color>
+    <color name="jansaarthi_primary_dark">#5D3233</color>
+    
+    <!-- Surface and background colors -->
+    <color name="background">#FFFFFF</color>
+    <color name="surface">#F9FAFB</color>
+    <color name="on_surface">#1F2937</color>
+    
+    <!-- Semantic colors -->
+    <color name="success_green">#22C55E</color>
+    <color name="error_red">#EF4444</color>
+    <color name="warning_amber">#F59E0B</color>
+    <color name="info_blue">#3B82F6</color>
+    
+    <!-- Status colors -->
+    <color name="jansaarthi_status_bar">#1F2937</color>
+    <color name="jansaarthi_nav_bar">#FFFFFF</color>
+    
+    <!-- UI Elements -->
+    <color name="card_background">#FFFFFF00</color>
+    <color name="button_primary">#7A5C4D</color>
+    <color name="button_secondary">#FF9800</color>
+</resources>
