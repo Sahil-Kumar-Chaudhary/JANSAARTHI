@@ -13,8 +13,10 @@ const connectDB = async () => {
             uri = mongoServer.getUri();
         }
 
-        await mongoose.connect(uri);
-        console.log(`MongoDB Connected: ${uri}`);
+        await mongoose.connect(uri, {
+            dbName: 'jansaarthi'
+        });
+        console.log('MongoDB Connected successfully to database: jansaarthi');
     } catch (error) {
         console.error(`Error connecting to MongoDB: ${error.message}`);
         process.exit(1);
