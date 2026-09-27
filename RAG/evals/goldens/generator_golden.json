@@ -1,0 +1,120 @@
+[
+  {
+    "id": "f001",
+    "query": "What is the fundamental difference between Git and GitHub?",
+    "ideal_context": [
+      "Git is a distributed version control system used to track changes in files and coordinate development among multiple contributors.",
+      "GitHub is a platform that hosts Git repositories and adds collaboration, pull requests, issues, discussions, Actions, security features, and other development capabilities.",
+      "Git and GitHub are not the same thing. Git is the version control system. GitHub is a service that can host Git repositories and provide collaboration and automation features around them.",
+      "A developer can use Git without GitHub, and Git repositories can be hosted on other services or private infrastructure."
+    ],
+    "ideal_answer": "Git is a distributed version control system that tracks changes to files and lets developers create commits, branches, and history locally. GitHub is a separate web-based platform that hosts Git repositories and layers collaboration and automation features on top of Git, such as pull requests, issues, discussions, and Actions. Git can be used entirely on its own without GitHub, and Git repositories can be hosted on other services instead.",
+    "source_sessions": ["1"],
+    "metrics": ["faithfulness", "answer_relevancy"]
+  },
+  {
+    "id": "f002",
+    "query": "What is the difference between git init and git clone?",
+    "ideal_context": [
+      "The git init command creates a new Git repository in an existing directory. It creates a .git directory containing Git's internal repository data. After initialization, files can be staged and committed. git init does not automatically commit the existing files.",
+      "The git clone command creates a new local copy of an existing repository. Cloning normally downloads repository history and checks out the default branch. It also configures a remote, commonly named origin, pointing to the repository from which the clone was created.",
+      "The difference between git init and git clone is important. git init starts a new repository in an existing directory, while git clone creates a local repository from an existing repository."
+    ],
+    "ideal_answer": "git init creates a brand-new Git repository inside an existing directory by adding a .git folder, without committing any existing files automatically. git clone instead creates a local copy of an already existing repository, downloading its history, checking out the default branch, and automatically configuring a remote (commonly named origin) pointing back to the source repository.",
+    "source_sessions": ["1"],
+    "metrics": ["faithfulness", "answer_relevancy"]
+  },
+  {
+    "id": "f003",
+    "query": "How does a fork differ from a branch on GitHub?",
+    "ideal_context": [
+      "A fork is a separate copy of a repository under another account or organization. Forks are commonly used when a contributor does not have direct write access to the original repository.",
+      "Forks are different from branches. A branch is a reference within a repository, while a fork is a separate repository.",
+      "A branch in Git is a movable reference to a commit. Branches allow different lines of development to progress independently."
+    ],
+    "ideal_answer": "A branch is a movable reference inside the same repository that lets development proceed on an independent line of history. A fork, by contrast, is an entirely separate copy of a repository created under another GitHub account or organization, typically used when a contributor lacks direct write access to the original repository. In short, a branch stays within one repository, while a fork creates a new, distinct repository.",
+    "source_sessions": ["1"],
+    "metrics": ["faithfulness", "answer_relevancy"]
+  },
+  {
+    "id": "f004",
+    "query": "What is the conceptual difference between git fetch and git pull?",
+    "ideal_context": [
+      "git fetch downloads changes and references from a remote repository without integrating those changes into the current working branch. It updates remote-tracking references such as origin/main.",
+      "git pull combines fetching remote changes with an integration step. According to the Git documentation, git pull first performs a fetch and then integrates the fetched branch into the current branch.",
+      "A useful conceptual distinction is: git fetch means \"download remote information.\" git pull means \"download remote information and integrate it.\"",
+      "Because pull performs an integration operation, conflicts can occur during a pull."
+    ],
+    "ideal_answer": "git fetch only downloads new commits and references from a remote repository and updates remote-tracking references like origin/main, without changing the current working branch. git pull does that same download step but then also integrates the fetched changes into the current branch, which is why conflicts can occur during a pull but not during a plain fetch.",
+    "source_sessions": ["1"],
+    "metrics": ["faithfulness", "answer_relevancy"]
+  },
+  {
+    "id": "f005",
+    "query": "What is a pull request and how is it different from a Git command?",
+    "ideal_context": [
+      "A pull request is a GitHub collaboration mechanism used to propose changes from one branch or repository into another. A pull request displays the proposed changes and provides a place for discussion, review, automated checks, and approval.",
+      "Pull requests are not a Git command. They are a GitHub feature built around Git branches and commits.",
+      "A typical pull request workflow is to create a feature branch, push it to GitHub, open a pull request, wait for automated checks and human review, address requested changes, and eventually merge the pull request according to repository rules."
+    ],
+    "ideal_answer": "A pull request is a GitHub feature, not a Git command, used to propose merging changes from one branch or repository into another. It provides a dedicated place for viewing the proposed changes, discussion, automated checks, and review approval. The typical flow is to create a feature branch, push it to GitHub, open a pull request, get automated checks and human review, address feedback, and then merge according to the repository's rules.",
+    "source_sessions": ["1"],
+    "metrics": ["faithfulness", "answer_relevancy"]
+  },
+  {
+    "id": "f006",
+    "query": "What are the three different merge methods GitHub offers for pull requests?",
+    "ideal_context": [
+      "GitHub can provide different methods for integrating a pull request, depending on repository settings. A merge commit preserves the branch relationship and creates a merge commit. Squash merging combines the pull request's changes into a single commit on the target branch. Rebase merging reapplies the pull request's commits onto the target branch without creating a traditional merge commit.",
+      "The exact merge options available can depend on repository settings and branch rules."
+    ],
+    "ideal_answer": "GitHub supports three pull request merge methods: a standard merge commit, which preserves the branch relationship by creating a merge commit; squash merging, which combines all of the pull request's changes into a single commit on the target branch; and rebase merging, which reapplies the pull request's individual commits onto the target branch without creating a traditional merge commit. Which options are actually available depends on the repository's settings and branch rules.",
+    "source_sessions": ["1"],
+    "metrics": ["faithfulness", "answer_relevancy"]
+  },
+  {
+    "id": "f007",
+    "query": "What is the difference between merge and rebase when integrating branches?",
+    "ideal_context": [
+      "Merge preserves the existing branch histories and can introduce a merge commit. Rebase creates a new sequence of commits on a different base and can produce a more linear history.",
+      "Rebase rewrites commit history because the replayed commits receive new identities. This makes rebase powerful but potentially dangerous when rewriting commits that other people have already based work on. Rebase is commonly used on local or private branches before sharing them.",
+      "A common rule is to be cautious when rewriting shared history. Rebase can be appropriate for local work, while merging is often safer when preserving published history is important."
+    ],
+    "ideal_answer": "Merge integrates two branches while preserving their existing histories, potentially creating a merge commit with multiple parents. Rebase instead replays commits onto a different base commit, producing a more linear history, but because the replayed commits get new identities, it rewrites history. This makes rebase risky on commits others have already built on, so it's generally recommended for local or private branches before sharing, while merge is considered safer for already-published history.",
+    "source_sessions": ["1"],
+    "metrics": ["faithfulness", "answer_relevancy"]
+  },
+  {
+    "id": "f008",
+    "query": "What does the GITHUB_TOKEN do in GitHub Actions and how should its permissions be handled?",
+    "ideal_context": [
+      "GitHub Actions provides a GITHUB_TOKEN that workflows can use for authentication against GitHub APIs and repository resources. GitHub recommends using the built-in token when appropriate rather than unnecessarily creating another credential. Workflow permissions should be limited to the minimum required access.",
+      "The permissions available to GITHUB_TOKEN should be explicitly considered when designing a workflow. A workflow that only reads repository contents should not receive unnecessary write permissions."
+    ],
+    "ideal_answer": "GITHUB_TOKEN is a built-in token that GitHub Actions workflows can use to authenticate against GitHub APIs and repository resources, and GitHub recommends using it instead of creating an additional credential when it's sufficient. Its permissions should be explicitly scoped to the minimum required for the workflow — for example, a workflow that only needs to read repository contents should not be granted unnecessary write access.",
+    "source_sessions": ["1"],
+    "metrics": ["faithfulness", "answer_relevancy"]
+  },
+  {
+    "id": "f009",
+    "query": "Why doesn't adding a secret to .gitignore after it was already committed actually remove it from the repository?",
+    "ideal_context": [
+      "Git repositories can accidentally contain secrets such as passwords, API keys, private certificates, cloud credentials, and tokens. Adding a secret to .gitignore after it has already been committed does not remove it from historical commits.",
+      "Removing sensitive information from Git history may require history rewriting and credential rotation. If a credential has been exposed, simply deleting the latest copy is not sufficient; the credential itself should generally be revoked or rotated."
+    ],
+    "ideal_answer": "Adding a file to .gitignore only tells Git to stop tracking new changes to it going forward — it has no effect on commits that already exist in the repository's history, so a previously committed secret remains accessible in past commits. Truly removing it requires rewriting Git history, and because the secret was already exposed, it should also be revoked or rotated rather than just deleted from the latest snapshot.",
+    "source_sessions": ["1"],
+    "metrics": ["faithfulness", "answer_relevancy"]
+  },
+  {
+    "id": "f010",
+    "query": "What problem does Git LFS solve, and how does it work?",
+    "ideal_context": [
+      "Git Large File Storage, or Git LFS, is an extension designed for handling large files such as binaries, media assets, and other files that are inefficient to store directly in ordinary Git history.",
+      "Git LFS replaces large files in Git history with pointers while storing the actual large content separately. This can reduce the size of the Git repository's ordinary object database."
+    ],
+    "ideal_answer": "Git LFS is an extension for handling large files, such as binaries and media assets, that would otherwise be inefficient to store directly in normal Git history. It works by replacing those large files in Git's history with lightweight pointers, while the actual large content is stored separately, which keeps the size of the repository's ordinary object database down.",
+    "source_sessions": ["1"],
+    "metrics": ["faithfulness", "answer_relevancy"]
+  }
+]
