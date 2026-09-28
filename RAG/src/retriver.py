@@ -7,4 +7,3 @@ def retriver():
     )
     return retriver_data
 
-# 71 88

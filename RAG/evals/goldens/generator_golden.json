@@ -83,38 +83,5 @@
     "ideal_answer": "Merge integrates two branches while preserving their existing histories, potentially creating a merge commit with multiple parents. Rebase instead replays commits onto a different base commit, producing a more linear history, but because the replayed commits get new identities, it rewrites history. This makes rebase risky on commits others have already built on, so it's generally recommended for local or private branches before sharing, while merge is considered safer for already-published history.",
     "source_sessions": ["1"],
     "metrics": ["faithfulness", "answer_relevancy"]
-  },
-  {
-    "id": "f008",
-    "query": "What does the GITHUB_TOKEN do in GitHub Actions and how should its permissions be handled?",
-    "ideal_context": [
-      "GitHub Actions provides a GITHUB_TOKEN that workflows can use for authentication against GitHub APIs and repository resources. GitHub recommends using the built-in token when appropriate rather than unnecessarily creating another credential. Workflow permissions should be limited to the minimum required access.",
-      "The permissions available to GITHUB_TOKEN should be explicitly considered when designing a workflow. A workflow that only reads repository contents should not receive unnecessary write permissions."
-    ],
-    "ideal_answer": "GITHUB_TOKEN is a built-in token that GitHub Actions workflows can use to authenticate against GitHub APIs and repository resources, and GitHub recommends using it instead of creating an additional credential when it's sufficient. Its permissions should be explicitly scoped to the minimum required for the workflow — for example, a workflow that only needs to read repository contents should not be granted unnecessary write access.",
-    "source_sessions": ["1"],
-    "metrics": ["faithfulness", "answer_relevancy"]
-  },
-  {
-    "id": "f009",
-    "query": "Why doesn't adding a secret to .gitignore after it was already committed actually remove it from the repository?",
-    "ideal_context": [
-      "Git repositories can accidentally contain secrets such as passwords, API keys, private certificates, cloud credentials, and tokens. Adding a secret to .gitignore after it has already been committed does not remove it from historical commits.",
-      "Removing sensitive information from Git history may require history rewriting and credential rotation. If a credential has been exposed, simply deleting the latest copy is not sufficient; the credential itself should generally be revoked or rotated."
-    ],
-    "ideal_answer": "Adding a file to .gitignore only tells Git to stop tracking new changes to it going forward — it has no effect on commits that already exist in the repository's history, so a previously committed secret remains accessible in past commits. Truly removing it requires rewriting Git history, and because the secret was already exposed, it should also be revoked or rotated rather than just deleted from the latest snapshot.",
-    "source_sessions": ["1"],
-    "metrics": ["faithfulness", "answer_relevancy"]
-  },
-  {
-    "id": "f010",
-    "query": "What problem does Git LFS solve, and how does it work?",
-    "ideal_context": [
-      "Git Large File Storage, or Git LFS, is an extension designed for handling large files such as binaries, media assets, and other files that are inefficient to store directly in ordinary Git history.",
-      "Git LFS replaces large files in Git history with pointers while storing the actual large content separately. This can reduce the size of the Git repository's ordinary object database."
-    ],
-    "ideal_answer": "Git LFS is an extension for handling large files, such as binaries and media assets, that would otherwise be inefficient to store directly in normal Git history. It works by replacing those large files in Git's history with lightweight pointers, while the actual large content is stored separately, which keeps the size of the repository's ordinary object database down.",
-    "source_sessions": ["1"],
-    "metrics": ["faithfulness", "answer_relevancy"]
   }
 ]
