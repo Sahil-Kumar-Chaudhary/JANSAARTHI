@@ -28,6 +28,9 @@ data class User(
     val purpose: String? = null,
     val requestedAmount: Int? = null,
     val projectCost: Int? = null,
+    val educationLevel: String? = null,
+    val areaType: String? = null,
+    val dob: String? = null,
     val language: String = "EN",
     val theme: String = "SYSTEM",
     val notificationsEnabled: Boolean = true
@@ -56,6 +59,8 @@ data class RegisterRequest(
     val businessRegistrationStatus: String? = null,
     val purpose: String? = null,
     val requestedAmount: Int? = null,
-    val projectCost: Int? = null
+    val projectCost: Int? = null,
+    val educationLevel: String? = null,
+    val areaType: String? = null,
+    val dob: String? = null
 )
-

@@ -525,7 +525,7 @@ fun LoginScreen(
 /**
  * Draws soft golden decorative layered curves in the upper-left corner.
  */
-private fun DrawScope.drawTopLeftGoldenCurves(
+internal fun DrawScope.drawTopLeftGoldenCurves(
     goldPrimary: Color,
     goldAccent: Color,
     isDark: Boolean
@@ -610,7 +610,7 @@ private fun DrawScope.drawTopLeftGoldenCurves(
 /**
  * Draws an Indian tricolour-inspired flowing wave in the upper-right corner.
  */
-private fun DrawScope.drawTricolourWave(isDark: Boolean) {
+internal fun DrawScope.drawTricolourWave(isDark: Boolean) {
     val w = size.width
     val h = size.height
     val stripeWidth = 8.5.dp.toPx()
@@ -669,7 +669,7 @@ private fun DrawScope.drawTricolourWave(isDark: Boolean) {
 /**
  * Draws flowing golden layered waves along the bottom edge.
  */
-private fun DrawScope.drawBottomGoldenWaves(
+internal fun DrawScope.drawBottomGoldenWaves(
     goldPrimary: Color,
     goldAccent: Color,
     isDark: Boolean
@@ -755,7 +755,7 @@ private fun DrawScope.drawBottomGoldenWaves(
  * A thin decorative golden divider with subtle central ornament.
  */
 @Composable
-private fun DecorativeGoldenDivider(
+internal fun DecorativeGoldenDivider(
     modifier: Modifier = Modifier,
     goldColor: Color,
     accentColor: Color

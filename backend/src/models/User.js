@@ -24,6 +24,9 @@ const userSchema = new mongoose.Schema({
     purpose: { type: String },
     requestedAmount: { type: Number },
     projectCost: { type: Number },
+    educationLevel: { type: String },
+    areaType: { type: String },
+    dob: { type: String },
     
     // Settings
     language: { type: String, default: 'EN' },
@@ -36,5 +39,3 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
-
-

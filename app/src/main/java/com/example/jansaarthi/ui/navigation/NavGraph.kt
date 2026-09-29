@@ -130,6 +130,11 @@ fun AppNavGraph(
                 com.example.jansaarthi.ui.screens.auth.RegisterScreen(
                     onNavigateToLogin = {
                         navController.popBackStack()
+                    },
+                    onNavigateToHome = {
+                        navController.navigate(Routes.HOME) {
+                            popUpTo(Routes.LOGIN) { inclusive = true }
+                        }
                     }
                 )
             }

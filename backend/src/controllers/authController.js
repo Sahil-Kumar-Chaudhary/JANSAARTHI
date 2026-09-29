@@ -12,7 +12,8 @@ exports.register = async (req, res) => {
             verificationDocType, verificationDocUrl,
             scCategory, annualFamilyIncome, occupation,
             businessType, businessRegistrationStatus,
-            purpose, requestedAmount, projectCost
+            purpose, requestedAmount, projectCost,
+            educationLevel, areaType, dob
         } = req.body;
         
         if (!name || !mobile || !password || !age || !gender || !state || !district || !verificationDocType || !verificationDocUrl) {
@@ -37,7 +38,8 @@ exports.register = async (req, res) => {
             verificationDocType, verificationDocUrl,
             scCategory, annualFamilyIncome, occupation,
             businessType, businessRegistrationStatus,
-            purpose, requestedAmount, projectCost
+            purpose, requestedAmount, projectCost,
+            educationLevel, areaType, dob
         });
 
         await newUser.save();

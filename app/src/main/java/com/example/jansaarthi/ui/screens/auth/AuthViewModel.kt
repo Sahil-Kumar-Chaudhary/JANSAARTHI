@@ -48,41 +48,26 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun registerFull(
-        name: String, mobile: String, email: String?, password: String,
-        age: Int, gender: String, state: String, district: String,
-        verificationDocType: String, verificationDocUrl: String,
-        scCategory: String?, annualFamilyIncome: Int?, occupation: String?,
-        businessType: String?, businessRegistrationStatus: String?,
-        purpose: String?, requestedAmount: Int?, projectCost: Int?
-    ) {
-        if (name.isBlank() || mobile.isBlank() || password.isBlank()) {
+    fun register(request: RegisterRequest) {
+        if (request.name.isBlank() || request.mobile.isBlank() || request.password.isBlank()) {
             _authState.value = AuthState.Error("Please fill mandatory fields.")
             return
         }
-        if (!mobile.matches(Regex("^[6-9]\\d{9}$"))) {
+        if (!request.mobile.matches(Regex("^[6-9]\\d{9}$"))) {
             _authState.value = AuthState.Error("Please enter a valid 10-digit Indian mobile number.")
             return
         }
-        if (email != null && !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (request.email != null && !android.util.Patterns.EMAIL_ADDRESS.matcher(request.email).matches()) {
             _authState.value = AuthState.Error("Please enter a valid email address.")
             return
         }
-        if (password.length < 8) {
+        if (request.password.length < 8) {
             _authState.value = AuthState.Error("Password must be at least 8 characters.")
             return
         }
 
         _authState.value = AuthState.Loading
         viewModelScope.launch {
-            val request = RegisterRequest(
-                name = name, mobile = mobile, email = email, password = password,
-                age = age, gender = gender, state = state, district = district,
-                verificationDocType = verificationDocType, verificationDocUrl = verificationDocUrl,
-                scCategory = scCategory, annualFamilyIncome = annualFamilyIncome, occupation = occupation,
-                businessType = businessType, businessRegistrationStatus = businessRegistrationStatus,
-                purpose = purpose, requestedAmount = requestedAmount, projectCost = projectCost
-            )
             val result = authRepository.register(request)
             if (result.isSuccess) {
                 _authState.value = AuthState.Success
@@ -90,5 +75,27 @@ class AuthViewModel : ViewModel() {
                 _authState.value = AuthState.Error(result.exceptionOrNull()?.message ?: "Registration failed")
             }
         }
+    }
+
+    fun registerFull(
+        name: String, mobile: String, email: String?, password: String,
+        age: Int, gender: String, state: String, district: String,
+        verificationDocType: String, verificationDocUrl: String,
+        scCategory: String?, annualFamilyIncome: Int?, occupation: String?,
+        businessType: String?, businessRegistrationStatus: String?,
+        purpose: String?, requestedAmount: Int?, projectCost: Int?,
+        educationLevel: String? = null, areaType: String? = null, dob: String? = null
+    ) {
+        register(
+            RegisterRequest(
+                name = name, mobile = mobile, email = email, password = password,
+                age = age, gender = gender, state = state, district = district,
+                verificationDocType = verificationDocType, verificationDocUrl = verificationDocUrl,
+                scCategory = scCategory, annualFamilyIncome = annualFamilyIncome, occupation = occupation,
+                businessType = businessType, businessRegistrationStatus = businessRegistrationStatus,
+                purpose = purpose, requestedAmount = requestedAmount, projectCost = projectCost,
+                educationLevel = educationLevel, areaType = areaType, dob = dob
+            )
+        )
     }
 }
