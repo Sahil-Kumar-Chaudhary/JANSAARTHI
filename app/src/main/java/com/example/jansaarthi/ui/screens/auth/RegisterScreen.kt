@@ -42,6 +42,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
@@ -189,242 +191,71 @@ fun RegisterScreen(
         }
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(bgColor)
-    ) {
-        // Decorative Background Layer
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            drawTopLeftGoldenCurves(goldPrimary, goldAccent, isDark)
-            drawTricolourWave(isDark)
-            drawBottomGoldenWaves(goldPrimary, goldAccent, isDark)
-        }
-
-        // Landmark Silhouettes
-        Image(
-            painter = painterResource(id = R.drawable.ic_indian_landmarks_silhouette),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(130.dp)
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 30.dp),
-            colorFilter = ColorFilter.tint(
-                if (isDark) goldAccent.copy(alpha = 0.16f) else goldPrimary.copy(alpha = 0.24f)
-            ),
-            contentScale = ContentScale.FillWidth
+    if (formData.step == RegistrationStep.INTRO) {
+        RegistrationIntroScreen(
+            onNavigateToLogin = onNavigateToLogin,
+            onGetStarted = {
+                formData = formData.copy(step = RegistrationStep.BASIC_DETAILS)
+            },
+            navyColor = navyColor,
+            secondaryTextColor = secondaryTextColor,
+            goldPrimary = goldPrimary,
+            goldAccent = goldAccent,
+            cardBgColor = cardBgColor,
+            dividerColor = dividerColor,
+            bgColor = bgColor,
+            isDark = isDark
         )
-
-        // Main Scrollable Registration Flow
-        Column(
+    } else {
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .statusBarsPadding()
-                .navigationBarsPadding()
-                .imePadding()
-                .verticalScroll(scrollState)
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .background(bgColor)
         ) {
-            Spacer(modifier = Modifier.height(6.dp))
+            // Decorative Background Layer
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                drawTopLeftGoldenCurves(goldPrimary, goldAccent, isDark)
+                drawTricolourWave(isDark)
+                drawBottomGoldenWaves(goldPrimary, goldAccent, isDark)
+            }
 
-            when (formData.step) {
-                // ==========================================
-                // SCREEN 1: REGISTRATION INTRODUCTION
-                // ==========================================
-                RegistrationStep.INTRO -> {
-                    // Top Navigation Bar
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 4.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        IconButton(onClick = onNavigateToLogin) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back to Login",
-                                tint = navyColor
-                            )
-                        }
+            // Landmark Silhouettes
+            Image(
+                painter = painterResource(id = R.drawable.ic_indian_landmarks_silhouette),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(130.dp)
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 30.dp),
+                colorFilter = ColorFilter.tint(
+                    if (isDark) goldAccent.copy(alpha = 0.16f) else goldPrimary.copy(alpha = 0.24f)
+                ),
+                contentScale = ContentScale.FillWidth
+            )
+
+            // Main Scrollable Registration Flow
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .statusBarsPadding()
+                    .navigationBarsPadding()
+                    .imePadding()
+                    .verticalScroll(scrollState)
+                    .padding(horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(6.dp))
+
+                when (formData.step) {
+                    RegistrationStep.INTRO -> {
+                        // Handled in dedicated RegistrationIntroScreen above
                     }
 
-                    Spacer(modifier = Modifier.height(4.dp))
-
-                    // Brand Logo
-                    Box(
-                        modifier = Modifier.size(76.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        AppLogo(modifier = Modifier.fillMaxSize())
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    // Brand Name
-                    Text(
-                        text = "JANSAARTHI",
-                        fontSize = 25.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = navyColor,
-                        letterSpacing = 1.8.sp,
-                        textAlign = TextAlign.Center
-                    )
-
-                    Spacer(modifier = Modifier.height(3.dp))
-
-                    // Tagline
-                    Text(
-                        text = "Aapki Zarurat. Sahi Sarkari Raasta.",
-                        fontSize = 13.5.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = goldPrimary,
-                        letterSpacing = 0.2.sp,
-                        textAlign = TextAlign.Center
-                    )
-
-                    Spacer(modifier = Modifier.height(18.dp))
-
-                    // Header
-                    Text(
-                        text = "Create New Account",
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = navyColor,
-                        textAlign = TextAlign.Center
-                    )
-
-                    Spacer(modifier = Modifier.height(4.dp))
-
-                    Text(
-                        text = "Register to access government schemes and services",
-                        fontSize = 13.5.sp,
-                        fontWeight = FontWeight.Normal,
-                        color = secondaryTextColor,
-                        textAlign = TextAlign.Center
-                    )
-
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    // Feature Badge 1: Create your account
-                    IntroFeatureBadge(
-                        icon = Icons.Outlined.Person,
-                        title = "Create your account",
-                        subtitle = "Provide your basic and additional details",
-                        cardBgColor = cardBgColor,
-                        navyColor = navyColor,
-                        secondaryTextColor = secondaryTextColor,
-                        goldPrimary = goldPrimary,
-                        dividerColor = dividerColor,
-                        isDark = isDark
-                    )
-
-                    Spacer(modifier = Modifier.height(14.dp))
-
-                    // Feature Badge 2: Secure & Verified
-                    IntroFeatureBadge(
-                        icon = Icons.Outlined.Shield,
-                        title = "Secure & Verified",
-                        subtitle = "Your information is safe with us",
-                        cardBgColor = cardBgColor,
-                        navyColor = navyColor,
-                        secondaryTextColor = secondaryTextColor,
-                        goldPrimary = goldPrimary,
-                        dividerColor = dividerColor,
-                        isDark = isDark
-                    )
-
-                    Spacer(modifier = Modifier.height(14.dp))
-
-                    // Feature Badge 3: Get Personalized Support
-                    IntroFeatureBadge(
-                        icon = Icons.Outlined.FlashOn,
-                        title = "Get Personalized Support",
-                        subtitle = "Discover schemes and financial assistance for your needs",
-                        cardBgColor = cardBgColor,
-                        navyColor = navyColor,
-                        secondaryTextColor = secondaryTextColor,
-                        goldPrimary = goldPrimary,
-                        dividerColor = dividerColor,
-                        isDark = isDark
-                    )
-
-                    Spacer(modifier = Modifier.height(32.dp))
-
-                    // Golden Get Started Button
-                    Button(
-                        onClick = {
-                            formData = formData.copy(step = RegistrationStep.BASIC_DETAILS)
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(52.dp),
-                        shape = RoundedCornerShape(14.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Transparent
-                        ),
-                        contentPadding = PaddingValues(0.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(
-                                    brush = Brush.horizontalGradient(
-                                        colors = listOf(goldPrimary, goldAccent)
-                                    ),
-                                    shape = RoundedCornerShape(14.dp)
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                Text(
-                                    text = "Get Started",
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                                    contentDescription = null,
-                                    tint = Color.White,
-                                    modifier = Modifier.size(18.dp)
-                                )
-                            }
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Row(
-                        modifier = Modifier.padding(bottom = 24.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = "Already have an account? ",
-                            fontSize = 13.5.sp,
-                            color = secondaryTextColor
-                        )
-                        Text(
-                            text = "Login",
-                            fontSize = 13.5.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = goldPrimary,
-                            textDecoration = TextDecoration.Underline,
-                            modifier = Modifier.clickable { onNavigateToLogin() }
-                        )
-                    }
-                }
-
-                // ==========================================
-                // SCREEN 2: STEP 1 — BASIC DETAILS
-                // ==========================================
-                RegistrationStep.BASIC_DETAILS -> {
+                    // ==========================================
+                    // SCREEN 2: STEP 1 — BASIC DETAILS
+                    // ==========================================
+                    RegistrationStep.BASIC_DETAILS -> {
                     RegistrationStepHeader(
                         currentStep = 1,
                         onBackClick = { formData = formData.copy(step = RegistrationStep.INTRO) },
@@ -1161,6 +992,7 @@ fun RegisterScreen(
             }
         }
     }
+    }
 }
 
 /**
@@ -1362,6 +1194,336 @@ private fun RegistrationStepper(
 }
 
 /**
+ * Registration Introduction Screen (Screen 1 of 4)
+ * Featuring dedicated background-foreground layering, responsive vertical scrolling,
+ * solid elevated golden CTA button, clear high-contrast Login link, and reserved
+ * bottom spacing ensuring artwork never obscures interactive elements.
+ */
+@Composable
+private fun RegistrationIntroScreen(
+    onNavigateToLogin: () -> Unit,
+    onGetStarted: () -> Unit,
+    navyColor: Color,
+    secondaryTextColor: Color,
+    goldPrimary: Color,
+    goldAccent: Color,
+    cardBgColor: Color,
+    dividerColor: Color,
+    bgColor: Color,
+    isDark: Boolean
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(bgColor)
+    ) {
+        // Decorative Background Layer (strictly behind content)
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            drawTopLeftGoldenCurves(goldPrimary, goldAccent, isDark)
+            drawTricolourWave(isDark)
+            drawIntroBottomGoldenWaves(goldPrimary, goldAccent, isDark)
+        }
+
+        // Indian Landmark Silhouettes with restrained, subtle opacity
+        Image(
+            painter = painterResource(id = R.drawable.ic_indian_landmarks_silhouette),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(105.dp)
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 12.dp),
+            colorFilter = ColorFilter.tint(
+                if (isDark) goldAccent.copy(alpha = 0.06f) else goldPrimary.copy(alpha = 0.09f)
+            ),
+            contentScale = ContentScale.FillWidth
+        )
+
+        // Main Foreground Scrollable Content Column
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .statusBarsPadding()
+                .navigationBarsPadding()
+                .imePadding()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // 1. Back button
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 2.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(
+                    onClick = onNavigateToLogin,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back to Login",
+                        tint = navyColor
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(2.dp))
+
+            // 2. JANSAARTHI logo and branding
+            Box(
+                modifier = Modifier.size(66.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                AppLogo(modifier = Modifier.fillMaxSize())
+            }
+
+            Spacer(modifier = Modifier.height(6.dp))
+
+            Text(
+                text = "JANSAARTHI",
+                fontSize = 22.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = navyColor,
+                letterSpacing = 1.6.sp,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(2.dp))
+
+            Text(
+                text = "Aapki Zarurat. Sahi Sarkari Raasta.",
+                fontSize = 12.5.sp,
+                fontWeight = FontWeight.Bold,
+                color = goldPrimary,
+                letterSpacing = 0.2.sp,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // 3. Create New Account heading
+            Text(
+                text = "Create New Account",
+                fontSize = 21.sp,
+                fontWeight = FontWeight.Bold,
+                color = navyColor,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(3.dp))
+
+            // 4. Registration description
+            Text(
+                text = "Register to access government schemes and services",
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Normal,
+                color = secondaryTextColor,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(14.dp))
+
+            // 5. Create your account information card
+            IntroFeatureBadge(
+                icon = Icons.Outlined.Person,
+                title = "Create your account",
+                subtitle = "Provide your basic and additional details",
+                cardBgColor = cardBgColor,
+                navyColor = navyColor,
+                secondaryTextColor = secondaryTextColor,
+                goldPrimary = goldPrimary,
+                dividerColor = dividerColor,
+                isDark = isDark
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // 6. Secure & Verified information card
+            IntroFeatureBadge(
+                icon = Icons.Outlined.Shield,
+                title = "Secure & Verified",
+                subtitle = "Your information is safe with us",
+                cardBgColor = cardBgColor,
+                navyColor = navyColor,
+                secondaryTextColor = secondaryTextColor,
+                goldPrimary = goldPrimary,
+                dividerColor = dividerColor,
+                isDark = isDark
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // 7. Get Personalized Support information card
+            IntroFeatureBadge(
+                icon = Icons.Outlined.FlashOn,
+                title = "Get Personalized Support",
+                subtitle = "Discover schemes and financial assistance for your needs",
+                cardBgColor = cardBgColor,
+                navyColor = navyColor,
+                secondaryTextColor = secondaryTextColor,
+                goldPrimary = goldPrimary,
+                dividerColor = dividerColor,
+                isDark = isDark
+            )
+
+            Spacer(modifier = Modifier.height(18.dp))
+
+            // 8. Get Started button with solid golden background and elevation
+            Button(
+                onClick = onGetStarted,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = goldPrimary,
+                    contentColor = Color.White
+                ),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 3.dp,
+                    pressedElevation = 6.dp
+                )
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Get Started",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(19.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // 9. Already have an account? Login
+            Row(
+                modifier = Modifier
+                    .clickable { onNavigateToLogin() }
+                    .padding(horizontal = 16.dp, vertical = 6.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "Already have an account? ",
+                    fontSize = 13.5.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = secondaryTextColor
+                )
+                Text(
+                    text = "Login",
+                    fontSize = 13.5.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = goldPrimary,
+                    textDecoration = TextDecoration.Underline
+                )
+            }
+
+            // Reserved bottom space ensuring content is never obscured by bottom decorative waves
+            Spacer(modifier = Modifier.height(72.dp))
+        }
+    }
+}
+
+/**
+ * Draws flowing golden layered waves along the bottom edge for the Intro screen.
+ * Uses restrained opacity and proportional height so that decorative artwork
+ * serves as an elegant background texture that never obscures foreground text or buttons.
+ */
+private fun DrawScope.drawIntroBottomGoldenWaves(
+    goldPrimary: Color,
+    goldAccent: Color,
+    isDark: Boolean
+) {
+    val w = size.width
+    val h = size.height
+
+    // Layer 1: Back soft golden wave
+    val wave1 = Path().apply {
+        moveTo(0f, h - 60.dp.toPx())
+        cubicTo(
+            w * 0.35f, h - 75.dp.toPx(),
+            w * 0.65f, h - 50.dp.toPx(),
+            w, h - 65.dp.toPx()
+        )
+        lineTo(w, h)
+        lineTo(0f, h)
+        close()
+    }
+    drawPath(
+        path = wave1,
+        brush = Brush.verticalGradient(
+            colors = listOf(
+                goldAccent.copy(alpha = if (isDark) 0.08f else 0.14f),
+                goldPrimary.copy(alpha = if (isDark) 0.14f else 0.22f)
+            ),
+            startY = h - 75.dp.toPx(),
+            endY = h
+        )
+    )
+
+    // Layer 2: Mid golden wave
+    val wave2 = Path().apply {
+        moveTo(0f, h - 42.dp.toPx())
+        cubicTo(
+            w * 0.28f, h - 35.dp.toPx(),
+            w * 0.72f, h - 52.dp.toPx(),
+            w, h - 36.dp.toPx()
+        )
+        lineTo(w, h)
+        lineTo(0f, h)
+        close()
+    }
+    drawPath(
+        path = wave2,
+        brush = Brush.verticalGradient(
+            colors = listOf(
+                goldAccent.copy(alpha = if (isDark) 0.14f else 0.22f),
+                goldPrimary.copy(alpha = if (isDark) 0.20f else 0.30f)
+            ),
+            startY = h - 52.dp.toPx(),
+            endY = h
+        )
+    )
+
+    // Layer 3: Foreground golden wave
+    val wave3 = Path().apply {
+        moveTo(0f, h - 25.dp.toPx())
+        cubicTo(
+            w * 0.38f, h - 38.dp.toPx(),
+            w * 0.75f, h - 18.dp.toPx(),
+            w, h - 8.dp.toPx()
+        )
+        lineTo(w, h)
+        lineTo(0f, h)
+        close()
+    }
+    drawPath(
+        path = wave3,
+        brush = Brush.verticalGradient(
+            colors = listOf(
+                goldAccent.copy(alpha = if (isDark) 0.18f else 0.28f),
+                goldPrimary.copy(alpha = if (isDark) 0.25f else 0.38f)
+            ),
+            startY = h - 38.dp.toPx(),
+            endY = h
+        )
+    )
+}
+
+/**
  * Feature Badge used on the Registration Introduction Screen.
  */
 @Composable
@@ -1378,7 +1540,7 @@ private fun IntroFeatureBadge(
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(containerColor = cardBgColor),
         border = BorderStroke(1.dp, dividerColor.copy(alpha = if (isDark) 0.65f else 0.85f)),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
@@ -1386,7 +1548,7 @@ private fun IntroFeatureBadge(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 14.dp),
+                .padding(horizontal = 14.dp, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
