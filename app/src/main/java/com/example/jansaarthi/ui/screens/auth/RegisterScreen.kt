@@ -212,27 +212,14 @@ fun RegisterScreen(
                 .fillMaxSize()
                 .background(bgColor)
         ) {
-            // Decorative Background Layer
+            // Decorative Background Layer for form steps (Steps 1, 2, 3)
+            // Displays the clean ivory background, upper-left golden curves, and upper-right tricolour wave.
+            // Bottom waves and landmark silhouette are omitted from the form screens to ensure
+            // form readability, clean navigation-bar insets, and eliminate rectangular golden artifacts.
             Canvas(modifier = Modifier.fillMaxSize()) {
                 drawTopLeftGoldenCurves(goldPrimary, goldAccent, isDark)
                 drawTricolourWave(isDark)
-                drawBottomGoldenWaves(goldPrimary, goldAccent, isDark)
             }
-
-            // Landmark Silhouettes
-            Image(
-                painter = painterResource(id = R.drawable.ic_indian_landmarks_silhouette),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(130.dp)
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 30.dp),
-                colorFilter = ColorFilter.tint(
-                    if (isDark) goldAccent.copy(alpha = 0.16f) else goldPrimary.copy(alpha = 0.24f)
-                ),
-                contentScale = ContentScale.FillWidth
-            )
 
             // Main Scrollable Registration Flow
             Column(
@@ -557,7 +544,7 @@ fun RegisterScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(28.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
                 }
 
                 // ==========================================
@@ -774,7 +761,7 @@ fun RegisterScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(28.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
                 }
 
                 // ==========================================
@@ -987,7 +974,7 @@ fun RegisterScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(28.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
                 }
             }
         }
@@ -1466,8 +1453,10 @@ private fun DrawScope.drawIntroBottomGoldenWaves(
         path = wave1,
         brush = Brush.verticalGradient(
             colors = listOf(
+                Color.Transparent,
                 goldAccent.copy(alpha = if (isDark) 0.08f else 0.14f),
-                goldPrimary.copy(alpha = if (isDark) 0.14f else 0.22f)
+                goldPrimary.copy(alpha = if (isDark) 0.12f else 0.20f),
+                Color.Transparent
             ),
             startY = h - 75.dp.toPx(),
             endY = h
@@ -1490,8 +1479,10 @@ private fun DrawScope.drawIntroBottomGoldenWaves(
         path = wave2,
         brush = Brush.verticalGradient(
             colors = listOf(
-                goldAccent.copy(alpha = if (isDark) 0.14f else 0.22f),
-                goldPrimary.copy(alpha = if (isDark) 0.20f else 0.30f)
+                Color.Transparent,
+                goldAccent.copy(alpha = if (isDark) 0.12f else 0.20f),
+                goldPrimary.copy(alpha = if (isDark) 0.16f else 0.26f),
+                Color.Transparent
             ),
             startY = h - 52.dp.toPx(),
             endY = h
@@ -1514,8 +1505,10 @@ private fun DrawScope.drawIntroBottomGoldenWaves(
         path = wave3,
         brush = Brush.verticalGradient(
             colors = listOf(
-                goldAccent.copy(alpha = if (isDark) 0.18f else 0.28f),
-                goldPrimary.copy(alpha = if (isDark) 0.25f else 0.38f)
+                Color.Transparent,
+                goldAccent.copy(alpha = if (isDark) 0.15f else 0.24f),
+                goldPrimary.copy(alpha = if (isDark) 0.20f else 0.30f),
+                Color.Transparent
             ),
             startY = h - 38.dp.toPx(),
             endY = h
