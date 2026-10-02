@@ -20,6 +20,7 @@ import com.example.jansaarthi.ui.screens.schemes.SchemesScreen
 import com.example.jansaarthi.ui.screens.calculator.CalculatorScreen
 import com.example.jansaarthi.ui.screens.partners.PartnersScreen
 import com.example.jansaarthi.ui.screens.profile.*
+import com.example.jansaarthi.ui.screens.notifications.NotificationScreen
 import com.example.jansaarthi.ui.screens.rag.RagScreen
 import com.example.jansaarthi.ui.screens.requirement.RequirementScreen
 
@@ -165,6 +166,9 @@ fun AppNavGraph(
             }
             composable(Routes.PROFILE_IDENTITY_VERIFICATION) {
                 AuthGuard(navController) { IdentityVerificationScreen(navController) }
+            }
+            composable(Routes.PROFILE_NOTIFICATIONS) {
+                AuthGuard(navController) { NotificationScreen(navController) }
             }
             composable(Routes.PROFILE_SUPPORT) {
                 AuthGuard(navController) { com.example.jansaarthi.ui.screens.PlaceholderScreen(navController, "Help & Support") }
