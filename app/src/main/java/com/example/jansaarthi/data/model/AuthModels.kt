@@ -64,3 +64,35 @@ data class RegisterRequest(
     val areaType: String? = null,
     val dob: String? = null
 )
+
+data class ForgotPasswordRequest(
+    val mobile: String
+)
+
+data class ForgotPasswordResponse(
+    val message: String,
+    val mobile: String? = null,
+    val otp: String? = null
+)
+
+data class VerifyResetOtpRequest(
+    val mobile: String,
+    val otp: String
+)
+
+data class VerifyResetOtpResponse(
+    val message: String,
+    val resetToken: String? = null,
+    val mobile: String? = null
+)
+
+data class ResetPasswordRequest(
+    val mobile: String? = null,
+    val otp: String? = null,
+    val resetToken: String? = null,
+    val newPassword: String
+)
+
+data class ResetPasswordResponse(
+    val message: String
+)

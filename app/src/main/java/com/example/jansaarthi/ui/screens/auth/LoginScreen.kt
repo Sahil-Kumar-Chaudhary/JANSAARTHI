@@ -50,6 +50,7 @@ import com.example.jansaarthi.ui.theme.isAppInDarkTheme
 fun LoginScreen(
     onNavigateToHome: () -> Unit,
     onNavigateToRegister: () -> Unit,
+    onNavigateToForgotPassword: () -> Unit = {},
     viewModel: AuthViewModel = viewModel()
 ) {
     val isDark = isAppInDarkTheme()
@@ -71,7 +72,6 @@ fun LoginScreen(
 
     var mobileError by remember { mutableStateOf<String?>(null) }
     var passwordError by remember { mutableStateOf<String?>(null) }
-    var showForgotDialog by remember { mutableStateOf(false) }
 
     val authState by viewModel.authState.collectAsState()
     val isLoading = authState is AuthState.Loading
@@ -111,38 +111,6 @@ fun LoginScreen(
         if (!hasError && !isLoading) {
             viewModel.login(trimmedMobile, trimmedPassword)
         }
-    }
-
-    if (showForgotDialog) {
-        AlertDialog(
-            onDismissRequest = { showForgotDialog = false },
-            title = {
-                Text(
-                    text = "Forgot Password",
-                    fontWeight = FontWeight.Bold,
-                    color = navyColor,
-                    fontSize = 18.sp
-                )
-            },
-            text = {
-                Text(
-                    text = "Please contact support or follow the recovery process to reset your password.",
-                    color = secondaryTextColor,
-                    fontSize = 14.sp
-                )
-            },
-            confirmButton = {
-                TextButton(onClick = { showForgotDialog = false }) {
-                    Text(
-                        text = "OK",
-                        color = goldPrimary,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            },
-            containerColor = cardBgColor,
-            shape = RoundedCornerShape(16.dp)
-        )
     }
 
     Box(
@@ -484,7 +452,7 @@ fun LoginScreen(
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 13.5.sp,
                             modifier = Modifier
-                                .clickable { showForgotDialog = true }
+                                .clickable { onNavigateToForgotPassword() }
                                 .padding(vertical = 4.dp, horizontal = 8.dp)
                         )
                     }

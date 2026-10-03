@@ -31,6 +31,7 @@ object Routes {
     // Auth Routes
     const val LOGIN = "login"
     const val REGISTER = "register"
+    const val FORGOT_PASSWORD = "forgot_password"
     
     // Bottom Nav Routes
     const val HOME = "home"
@@ -123,6 +124,22 @@ fun AppNavGraph(
                     },
                     onNavigateToRegister = {
                         navController.navigate(Routes.REGISTER)
+                    },
+                    onNavigateToForgotPassword = {
+                        navController.navigate(Routes.FORGOT_PASSWORD)
+                    }
+                )
+            }
+
+            composable(Routes.FORGOT_PASSWORD) {
+                com.example.jansaarthi.ui.screens.auth.ForgotPasswordScreen(
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    },
+                    onNavigateToLogin = {
+                        navController.navigate(Routes.LOGIN) {
+                            popUpTo(Routes.FORGOT_PASSWORD) { inclusive = true }
+                        }
                     }
                 )
             }

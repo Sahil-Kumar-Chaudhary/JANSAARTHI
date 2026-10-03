@@ -1,8 +1,14 @@
 package com.example.jansaarthi.data.network
 
 import com.example.jansaarthi.data.model.AuthResponse
+import com.example.jansaarthi.data.model.ForgotPasswordRequest
+import com.example.jansaarthi.data.model.ForgotPasswordResponse
 import com.example.jansaarthi.data.model.LoginRequest
 import com.example.jansaarthi.data.model.RegisterRequest
+import com.example.jansaarthi.data.model.ResetPasswordRequest
+import com.example.jansaarthi.data.model.ResetPasswordResponse
+import com.example.jansaarthi.data.model.VerifyResetOtpRequest
+import com.example.jansaarthi.data.model.VerifyResetOtpResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -19,6 +25,15 @@ interface AuthApi {
 
     @POST("/api/auth/login")
     suspend fun login(@Body request: LoginRequest): Response<AuthResponse>
+
+    @POST("/api/auth/forgot-password")
+    suspend fun forgotPassword(@Body request: ForgotPasswordRequest): Response<ForgotPasswordResponse>
+
+    @POST("/api/auth/verify-reset-otp")
+    suspend fun verifyResetOtp(@Body request: VerifyResetOtpRequest): Response<VerifyResetOtpResponse>
+
+    @POST("/api/auth/reset-password")
+    suspend fun resetPassword(@Body request: ResetPasswordRequest): Response<ResetPasswordResponse>
     
     @GET("/api/auth/me")
     suspend fun getMe(@Header("Authorization") token: String): Response<com.example.jansaarthi.data.model.User>
