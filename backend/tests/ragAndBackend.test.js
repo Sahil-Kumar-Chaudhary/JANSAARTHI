@@ -243,6 +243,10 @@ async function runTests() {
             const res = await makeRequest('GET', '/api/recommendations');
             assert.strictEqual(res.statusCode, 503);
             assert.strictEqual(res.body.code, 'DATABASE_UNAVAILABLE');
+
+            const forgotRes = await makeRequest('POST', '/api/auth/forgot-password', { mobile: '9876543210' });
+            assert.strictEqual(forgotRes.statusCode, 503);
+            assert.strictEqual(forgotRes.body.code, 'DATABASE_UNAVAILABLE');
         });
 
         // Test 11: MongoDB database name configuration

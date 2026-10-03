@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema({
     email: { type: String, sparse: true, index: true },
     passwordHash: { type: String, required: true },
     
+    // Password Reset
+    resetOtp: { type: String },
+    resetOtpExpires: { type: Date },
+    
     // Mandatory for new users
     age: { type: Number },
     gender: { type: String },

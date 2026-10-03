@@ -5,6 +5,9 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/register', authController.register);
 router.post('/login', authController.login);
+router.post('/forgot-password', authController.forgotPassword);
+router.post('/verify-reset-otp', authController.verifyResetOtp);
+router.post('/reset-password', authController.resetPassword);
 router.get('/me', authMiddleware, authController.getMe);
 router.post('/logout', authMiddleware, (req, res) => {
     // In a stateless JWT setup, logout is handled client-side by dropping the token.

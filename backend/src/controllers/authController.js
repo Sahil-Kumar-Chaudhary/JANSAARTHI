@@ -94,6 +94,150 @@ exports.login = async (req, res) => {
     }
 };
 
+exports.forgotPassword = async (req, res) => {
+    try {
+        const { mobile } = req.body;
+
+        if (!mobile || !mobile.trim()) {
+            return res.status(400).json({ message: 'Mobile number is required.' });
+        }
+
+        const trimmedMobile = mobile.trim();
+        if (!/^[0-9]{10}$/.test(trimmedMobile)) {
+            return res.status(400).json({ message: 'Please enter a valid 10-digit mobile number.' });
+        }
+
+        const user = await User.findOne({ mobile: trimmedMobile });
+        if (!user) {
+            return res.status(404).json({ message: 'No account registered with this mobile number.' });
+        }
+
+        // Generate secure 6-digit OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+        user.resetOtp = otp;
+        user.resetOtpExpires = otpExpires;
+        await user.save();
+
+        console.log(`[Auth] Password reset OTP generated for ${user.mobile}: ${otp}`);
+
+        res.status(200).json({
+            message: 'OTP sent successfully to registered mobile number.',
+            mobile: user.mobile,
+            otp: otp // Provided in response for testing/demo/hackathon verification
+        });
+    } catch (error) {
+        console.error('Forgot password error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+exports.verifyResetOtp = async (req, res) => {
+    try {
+        const { mobile, otp } = req.body;
+
+        if (!mobile || !otp) {
+            return res.status(400).json({ message: 'Mobile number and OTP are required.' });
+        }
+
+        const trimmedMobile = mobile.trim();
+        const trimmedOtp = otp.trim();
+
+        const user = await User.findOne({ mobile: trimmedMobile });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        if (!user.resetOtp || user.resetOtp !== trimmedOtp) {
+            return res.status(400).json({ message: 'Invalid OTP. Please check and try again.' });
+        }
+
+        if (!user.resetOtpExpires || user.resetOtpExpires < new Date()) {
+            return res.status(400).json({ message: 'OTP has expired. Please request a new verification code.' });
+        }
+
+        const resetToken = jwt.sign(
+            { userId: user._id, mobile: user.mobile, purpose: 'pwd_reset' },
+            JWT_SECRET,
+            { expiresIn: '15m' }
+        );
+
+        res.status(200).json({
+            message: 'OTP verified successfully.',
+            resetToken,
+            mobile: user.mobile
+        });
+    } catch (error) {
+        console.error('Verify reset OTP error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+exports.resetPassword = async (req, res) => {
+    try {
+        const { mobile, otp, resetToken, newPassword } = req.body;
+
+        if (!newPassword) {
+            return res.status(400).json({ message: 'New password is required.' });
+        }
+
+        if (newPassword.length < 8) {
+            return res.status(400).json({ message: 'Password must be at least 8 characters long.' });
+        }
+
+        if (!/[A-Z]/.test(newPassword) || !/[a-z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+            return res.status(400).json({ message: 'Password must include uppercase, lowercase letters, and at least one number.' });
+        }
+
+        let user = null;
+
+        if (resetToken) {
+            try {
+                const decoded = jwt.verify(resetToken, JWT_SECRET);
+                if (decoded.purpose !== 'pwd_reset') {
+                    return res.status(401).json({ message: 'Invalid reset token.' });
+                }
+                user = await User.findById(decoded.userId);
+            } catch (err) {
+                return res.status(401).json({ message: 'Reset session expired or invalid. Please verify OTP again.' });
+            }
+        } else if (mobile && otp) {
+            const trimmedMobile = mobile.trim();
+            const trimmedOtp = otp.trim();
+            user = await User.findOne({ mobile: trimmedMobile });
+            if (!user) {
+                return res.status(404).json({ message: 'User not found.' });
+            }
+            if (!user.resetOtp || user.resetOtp !== trimmedOtp) {
+                return res.status(400).json({ message: 'Invalid OTP. Please verify your OTP.' });
+            }
+            if (!user.resetOtpExpires || user.resetOtpExpires < new Date()) {
+                return res.status(400).json({ message: 'OTP has expired. Please request a new one.' });
+            }
+        } else {
+            return res.status(400).json({ message: 'Verification details missing.' });
+        }
+
+        if (!user) {
+            return res.status(404).json({ message: 'User account not found.' });
+        }
+
+        const passwordHash = await bcrypt.hash(newPassword, 10);
+        user.passwordHash = passwordHash;
+        user.resetOtp = undefined;
+        user.resetOtpExpires = undefined;
+        await user.save();
+
+        res.status(200).json({
+            message: 'Password reset successful! You can now log in with your new password.'
+        });
+    } catch (error) {
+        console.error('Reset password error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
 exports.getMe = async (req, res) => {
     try {
         const user = await User.findById(req.userId).select('-passwordHash');
