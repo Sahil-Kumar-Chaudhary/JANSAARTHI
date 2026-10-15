@@ -82,6 +82,7 @@ fun LoginScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(horizontal = 24.dp)
+                .imePadding()
                 .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -93,9 +94,7 @@ fun LoginScreen(
                     .size(100.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.jansaarthi_logo),
-                    contentDescription = "JANSAARTHI Logo",
+                com.example.jansaarthi.ui.theme.AppLogo(
                     modifier = Modifier.fillMaxSize()
                 )
             }

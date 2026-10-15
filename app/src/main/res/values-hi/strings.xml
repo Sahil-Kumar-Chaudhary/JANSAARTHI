@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">जनसारथी</string>
+    <string name="home_greeting">नमस्ते!</string>
+    <string name="home_subtitle">आइए आपके लिए सही सहायता खोजें।</string>
+    <string name="quick_services">त्वरित सेवाएं</string>
+    <string name="business_loan">व्यापार ऋण</string>
+    <string name="education_loan">शिक्षा ऋण</string>
+    <string name="check_eligibility">पात्रता जांचें</string>
+    <string name="calculate_emi">EMI की गणना करें</string>
+    <string name="recommended_for_you">आपके लिए अनुशंसित</string>
+    <string name="view_scheme">योजना देखें</string>
+    <string name="profile_details">प्रोफ़ाइल विवरण</string>
+    <string name="my_profile">मेरी प्रोफ़ाइल</string>
+    <string name="basic_details">मूल विवरण</string>
+    <string name="basic_details_desc">व्यक्तिगत और स्थान की जानकारी</string>
+    <string name="category_income">श्रेणी और आय</string>
+    <string name="category_income_desc">आय, व्यवसाय और श्रेणी</string>
+    <string name="business_credit">व्यापार और ऋण</string>
+    <string name="business_credit_desc">व्यापार और वित्तीय आवश्यकता</string>
+    <string name="identity_verification">पहचान सत्यापन</string>
+    <string name="app_settings">ऐप सेटिंग्स</string>
+    <string name="language_setting">भाषा</string>
+    <string name="theme_setting">थीम</string>
+    <string name="notifications">सूचनाएं</string>
+    <string name="help_support">सहायता एवं समर्थन</string>
+    <string name="logout">लॉग आउट</string>
+    <string name="save_changes">परिवर्तन सहेजें</string>
+    <string name="change_photo">फोटो बदलें</string>
+    <string name="remove_photo">फोटो हटाएं</string>
+    <string name="select_language">भाषा चुनें</string>
+    <string name="select_theme">थीम चुनें</string>
+    <string name="cancel">रद्द करें</string>
+</resources>

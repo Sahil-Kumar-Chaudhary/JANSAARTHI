@@ -28,11 +28,7 @@ fun PartnersScreen(navController: NavController) {
         topBar = {
             TopAppBar(
                 title = { Text("Partners", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground) },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = MaterialTheme.colorScheme.onBackground)
-                    }
-                },
+                
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background)
             )
         }
@@ -69,11 +65,12 @@ fun PartnersScreen(navController: NavController) {
             
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(bottom = 96.dp) // Leave space for floating bottom nav
+                contentPadding = PaddingValues(bottom = 16.dp)
             ) {
                 items(3) { index ->
                     PartnerCard(
-                        name = if (index == 0) "State Bank of India" else if (index == 1) "District Industries Centre" else "Punjab National Bank",
+                          onNavigate = { navController.navigate(com.example.jansaarthi.ui.navigation.Routes.PARTNER_DETAILS) },
+                          name = if (index == 0) "State Bank of India" else if (index == 1) "District Industries Centre" else "Punjab National Bank",
                         type = if (index == 1) "Govt. Nodal Agency" else "Authorized Bank",
                         address = "Sector 14, Main Market",
                         distance = "2.5 km",
@@ -86,7 +83,7 @@ fun PartnersScreen(navController: NavController) {
 }
 
 @Composable
-fun PartnerCard(name: String, type: String, address: String, distance: String, status: String) {
+fun PartnerCard(name: String, type: String, address: String, distance: String, status: String, onNavigate: () -> Unit) {
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
@@ -144,3 +141,5 @@ fun PartnerCard(name: String, type: String, address: String, distance: String, s
         }
     }
 }
+
+

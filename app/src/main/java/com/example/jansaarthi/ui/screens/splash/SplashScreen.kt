@@ -66,9 +66,7 @@ fun SplashScreen(onNavigateToHome: () -> Unit, onNavigateToOnboarding: () -> Uni
                     .alpha(logoAlpha),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.jansaarthi_logo),
-                    contentDescription = "JANSAARTHI Logo",
+                com.example.jansaarthi.ui.theme.AppLogo(
                     modifier = Modifier.fillMaxSize()
                 )
             }

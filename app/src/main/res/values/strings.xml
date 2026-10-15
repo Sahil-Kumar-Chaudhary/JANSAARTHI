@@ -1,30 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">JANSAARTHI</string>
-    
-    <!-- Home Screen -->
-    <string name="how_can_we_help">Namaste, Ramesh ji! 🙏</string>
-    <string name="instant_match">Instant Match</string>
-    <string name="voice_assistance">VOICE &amp; AI ASSISTANCE</string>
-    <string name="tell_us_what_you_need">Tell us what financial support you need.</string>
-    
-    <!-- Services -->
+    <string name="home_greeting">Welcome!</string>
+    <string name="home_subtitle">Let\'s find the right support for you.</string>
+    <string name="quick_services">Quick Services</string>
     <string name="business_loan">Business Loan</string>
     <string name="education_loan">Education Loan</string>
     <string name="check_eligibility">Check Eligibility</string>
     <string name="calculate_emi">Calculate EMI</string>
-    <string name="find_partner">Find Partner</string>
-    
-    <!-- Scheme Info -->
-    <string name="why_jansaarthi">Why JANSAARTHI?</string>
-    <string name="official_criteria">Official Source-Based Criteria</string>
-    <string name="direct_guidance">Direct Step-by-Step Guidance</string>
-    <string name="zero_fees">Zero Fees &amp; No Middlemen</string>
-    
-    <!-- Navigation -->
-    <string name="home">Home</string>
-    <string name="schemes">Schemes</string>
-    <string name="calculator">Calculator</string>
-    <string name="partners">Partners</string>
-    <string name="profile">Profile</string>
+    <string name="recommended_for_you">Recommended for you</string>
+    <string name="view_scheme">View Scheme</string>
+    <string name="profile_details">Profile Details</string>
+    <string name="my_profile">My Profile</string>
+    <string name="basic_details">Basic Details</string>
+    <string name="basic_details_desc">Personal and location information</string>
+    <string name="category_income">Category &amp; Income</string>
+    <string name="category_income_desc">Income, occupation and category</string>
+    <string name="business_credit">Business &amp; Credit</string>
+    <string name="business_credit_desc">Business and financial requirement</string>
+    <string name="identity_verification">Identity Verification</string>
+    <string name="app_settings">App Settings</string>
+    <string name="language_setting">Language</string>
+    <string name="theme_setting">Theme</string>
+    <string name="notifications">Notifications</string>
+    <string name="help_support">Help &amp; Support</string>
+    <string name="logout">Logout</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="change_photo">Change Photo</string>
+    <string name="remove_photo">Remove Photo</string>
+    <string name="select_language">Select Language</string>
+    <string name="select_theme">Select Theme</string>
+    <string name="cancel">Cancel</string>
 </resources>

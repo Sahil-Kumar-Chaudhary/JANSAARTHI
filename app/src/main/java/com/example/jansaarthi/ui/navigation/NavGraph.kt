@@ -37,6 +37,10 @@ object Routes {
     
     // Profile Sub-Routes
     const val PROFILE_KYC = "profile_kyc"
+    const val PROFILE_BASIC = "profile_basic"
+    const val PROFILE_CATEGORY_INCOME = "profile_category_income"
+    const val PROFILE_BUSINESS_CREDIT = "profile_business_credit"
+    const val PROFILE_IDENTITY_VERIFICATION = "profile_identity_verification"
     const val PROFILE_BUSINESS = "profile_business"
     const val PROFILE_CATEGORY = "profile_category"
     const val PROFILE_LANGUAGE = "profile_language"
@@ -45,6 +49,12 @@ object Routes {
     
     // Feature Routes
     const val REQUIREMENT = "requirement"
+    const val SCHEME_DETAILS = "scheme_details"
+    const val RECOMMENDATIONS = "recommendations"
+    const val ELIGIBILITY = "eligibility"
+    const val PARTNER_DETAILS = "partner_details"
+    const val DOCUMENTS = "documents"
+    const val ACTION_PLAN = "action_plan"
 }
 
 @Composable
@@ -131,19 +141,27 @@ fun AppNavGraph(navController: NavHostController) {
             composable(Routes.PROFILE) {
                 ProfileScreen(navController)
             }
-            composable(Routes.PROFILE_KYC) { KycStatusScreen(navController) }
-            composable(Routes.PROFILE_BUSINESS) { BusinessDetailsScreen(navController) }
-            composable(Routes.PROFILE_CATEGORY) { SocialCategoryScreen(navController) }
-            composable(Routes.PROFILE_LANGUAGE) { LanguageSelectionScreen(navController) }
-            composable(Routes.PROFILE_NOTIFICATIONS) { NotificationSettingsScreen(navController) }
-            composable(Routes.PROFILE_SUPPORT) { HelpSupportScreen(navController) }
-            
+                        composable(Routes.PROFILE_BASIC) { BasicDetailsScreen(navController) }
+            composable(Routes.PROFILE_CATEGORY_INCOME) { CategoryIncomeScreen(navController) }
+            composable(Routes.PROFILE_BUSINESS_CREDIT) { BusinessCreditScreen(navController) }
+            composable(Routes.PROFILE_IDENTITY_VERIFICATION) { IdentityVerificationScreen(navController) }
+            composable(Routes.PROFILE_SUPPORT) { com.example.jansaarthi.ui.screens.PlaceholderScreen(navController, "Help & Support") }
+                                                                        
             composable(Routes.REQUIREMENT) {
                 RequirementScreen(
                     onBack = { navController.popBackStack() },
-                    onContinue = { /* Navigate to profile verification */ }
+                    onContinue = { navController.navigate(Routes.RECOMMENDATIONS) }
                 )
             }
+
+            composable(Routes.SCHEME_DETAILS) { com.example.jansaarthi.ui.screens.PlaceholderScreen(navController, "Scheme Details") }
+            composable(Routes.RECOMMENDATIONS) { com.example.jansaarthi.ui.screens.PlaceholderScreen(navController, "Recommendations", Routes.ELIGIBILITY) }
+            composable(Routes.ELIGIBILITY) { com.example.jansaarthi.ui.screens.PlaceholderScreen(navController, "Eligibility", Routes.CALCULATOR) }
+            composable(Routes.PARTNER_DETAILS) { com.example.jansaarthi.ui.screens.PlaceholderScreen(navController, "Partner Details", Routes.DOCUMENTS) }
+            composable(Routes.DOCUMENTS) { com.example.jansaarthi.ui.screens.PlaceholderScreen(navController, "Documents", Routes.ACTION_PLAN) }
+            composable(Routes.ACTION_PLAN) { com.example.jansaarthi.ui.screens.PlaceholderScreen(navController, "Action Plan", Routes.HOME) }
         }
     }
 }
+
+

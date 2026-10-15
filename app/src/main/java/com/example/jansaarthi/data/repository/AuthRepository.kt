@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.json.JSONObject
+import okhttp3.MultipartBody
 
 class AuthRepository(private val tokenManager: TokenManager) {
     private val api = RetrofitClient.instance
@@ -88,6 +89,36 @@ class AuthRepository(private val tokenManager: TokenManager) {
         }
     }
 
+    suspend fun uploadPhoto(photoPart: MultipartBody.Part): Result<User> {
+        val token = tokenManager.getToken() ?: return Result.failure(Exception("No token"))
+        return try {
+            val response = api.uploadPhoto("Bearer $token", photoPart)
+            if (response.isSuccessful && response.body()?.user != null) {
+                _currentUser.value = response.body()?.user
+                Result.success(response.body()?.user!!)
+            } else {
+                Result.failure(Exception("Failed to upload photo"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun deletePhoto(): Result<User> {
+        val token = tokenManager.getToken() ?: return Result.failure(Exception("No token"))
+        return try {
+            val response = api.deletePhoto("Bearer $token")
+            if (response.isSuccessful && response.body()?.user != null) {
+                _currentUser.value = response.body()?.user
+                Result.success(response.body()?.user!!)
+            } else {
+                Result.failure(Exception("Failed to delete photo"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     fun isLoggedIn(): Boolean {
         return tokenManager.getToken() != null
     }
@@ -110,3 +141,4 @@ class AuthRepository(private val tokenManager: TokenManager) {
         }
     }
 }
+

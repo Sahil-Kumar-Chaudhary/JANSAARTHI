@@ -6,7 +6,7 @@
         <item name="postSplashScreenTheme">@style/Theme.JANSAARTHI</item>
     </style>
 
-    <style name="Theme.JANSAARTHI" parent="@android:style/Theme.Light.NoTitleBar">
+    <style name="Theme.JANSAARTHI" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:statusBarColor">@color/jansaarthi_status_bar</item>
         <item name="android:navigationBarColor">@color/jansaarthi_nav_bar</item>
     </style>

@@ -6,13 +6,25 @@ const JWT_SECRET = process.env.JWT_SECRET || 'jansaarthi_secret';
 
 exports.register = async (req, res) => {
     try {
-        const { name, mobile, email, password } = req.body;
+        const { 
+            name, mobile, email, password,
+            age, gender, state, district,
+            verificationDocType, verificationDocUrl,
+            scCategory, annualFamilyIncome, occupation,
+            businessType, businessRegistrationStatus,
+            purpose, requestedAmount, projectCost
+        } = req.body;
         
-        if (!name || !mobile || !email || !password) {
-            return res.status(400).json({ message: 'Name, mobile, email, and password are required.' });
+        if (!name || !mobile || !password || !age || !gender || !state || !district || !verificationDocType || !verificationDocUrl) {
+            return res.status(400).json({ message: 'Missing mandatory fields.' });
         }
 
-        const existingUser = await User.findOne({ $or: [{ mobile }, { email }] });
+        const query = [{ mobile }];
+        if (email) {
+            query.push({ email });
+        }
+
+        const existingUser = await User.findOne({ $or: query });
         if (existingUser) {
             return res.status(409).json({ message: 'Account with this mobile or email already exists.' });
         }
@@ -20,10 +32,12 @@ exports.register = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, 10);
 
         const newUser = new User({
-            name,
-            mobile,
-            email,
-            passwordHash
+            name, mobile, email, passwordHash,
+            age, gender, state, district,
+            verificationDocType, verificationDocUrl,
+            scCategory, annualFamilyIncome, occupation,
+            businessType, businessRegistrationStatus,
+            purpose, requestedAmount, projectCost
         });
 
         await newUser.save();
@@ -109,6 +123,70 @@ exports.updateProfile = async (req, res) => {
         });
     } catch (error) {
         console.error('Update profile error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+exports.uploadPhoto = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ message: 'No photo provided.' });
+        }
+
+        const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+        
+        const user = await User.findByIdAndUpdate(
+            req.userId, 
+            { profilePhoto: base64Image }, 
+            { new: true }
+        ).select('-passwordHash');
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({
+            message: 'Profile photo updated successfully',
+            user
+        });
+    } catch (error) {
+        console.error('Upload photo error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+exports.getPhoto = async (req, res) => {
+    try {
+        const user = await User.findById(req.userId).select('profilePhoto');
+        if (!user || !user.profilePhoto) {
+            return res.status(404).json({ message: 'Photo not found' });
+        }
+        
+        res.status(200).json({ photo: user.profilePhoto });
+    } catch (error) {
+        console.error('Get photo error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+exports.deletePhoto = async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(
+            req.userId,
+            { $unset: { profilePhoto: 1 } },
+            { new: true }
+        ).select('-passwordHash');
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({
+            message: 'Profile photo deleted successfully',
+            user
+        });
+    } catch (error) {
+        console.error('Delete photo error:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };

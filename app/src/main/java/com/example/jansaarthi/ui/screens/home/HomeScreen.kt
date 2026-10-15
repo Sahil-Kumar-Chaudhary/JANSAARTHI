@@ -49,7 +49,7 @@ fun HomeScreen(navController: NavController) {
             .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 24.dp, vertical = 32.dp)
-            .padding(bottom = 80.dp) // Extra padding to avoid content being hidden under FAB/BottomNav
+            
     ) {
         HomeHeader(
             strings = strings,
@@ -295,3 +295,4 @@ fun WhyItem(icon: ImageVector, text: String) {
         Text(text, fontSize = 16.sp, color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Medium)
     }
 }
+

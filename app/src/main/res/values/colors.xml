@@ -12,6 +12,7 @@
     <color name="background">#FFFFFF</color>
     <color name="surface">#F9FAFB</color>
     <color name="on_surface">#1F2937</color>
+    <color name="ic_launcher_background">#FFFFFF</color>
     
     <!-- Semantic colors -->
     <color name="success_green">#22C55E</color>

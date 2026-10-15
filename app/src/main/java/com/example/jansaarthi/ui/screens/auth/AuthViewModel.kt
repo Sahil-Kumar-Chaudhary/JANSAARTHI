@@ -48,31 +48,42 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun register(fullName: String, mobile: String, email: String, pass: String, confirmPass: String) {
-        if (fullName.isBlank()) {
-            _authState.value = AuthState.Error("Full Name is required.")
+    fun registerFull(
+        name: String, mobile: String, email: String?, password: String,
+        age: Int, gender: String, state: String, district: String,
+        verificationDocType: String, verificationDocUrl: String,
+        scCategory: String?, annualFamilyIncome: Int?, occupation: String?,
+        businessType: String?, businessRegistrationStatus: String?,
+        purpose: String?, requestedAmount: Int?, projectCost: Int?
+    ) {
+        if (name.isBlank() || mobile.isBlank() || password.isBlank()) {
+            _authState.value = AuthState.Error("Please fill mandatory fields.")
             return
         }
-        if (mobile.isBlank() || !mobile.matches(Regex("^[6-9]\\d{9}\$"))) {
+        if (!mobile.matches(Regex("^[6-9]\\d{9}$"))) {
             _authState.value = AuthState.Error("Please enter a valid 10-digit Indian mobile number.")
             return
         }
-        if (email.isBlank() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (email != null && !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _authState.value = AuthState.Error("Please enter a valid email address.")
             return
         }
-        if (pass.isBlank() || pass.length < 8) {
+        if (password.length < 8) {
             _authState.value = AuthState.Error("Password must be at least 8 characters.")
-            return
-        }
-        if (pass != confirmPass) {
-            _authState.value = AuthState.Error("Passwords do not match.")
             return
         }
 
         _authState.value = AuthState.Loading
         viewModelScope.launch {
-            val result = authRepository.register(RegisterRequest(name = fullName, mobile = mobile, email = email, password = pass))
+            val request = RegisterRequest(
+                name = name, mobile = mobile, email = email, password = password,
+                age = age, gender = gender, state = state, district = district,
+                verificationDocType = verificationDocType, verificationDocUrl = verificationDocUrl,
+                scCategory = scCategory, annualFamilyIncome = annualFamilyIncome, occupation = occupation,
+                businessType = businessType, businessRegistrationStatus = businessRegistrationStatus,
+                purpose = purpose, requestedAmount = requestedAmount, projectCost = projectCost
+            )
+            val result = authRepository.register(request)
             if (result.isSuccess) {
                 _authState.value = AuthState.Success
             } else {

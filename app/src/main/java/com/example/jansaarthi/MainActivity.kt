@@ -1,23 +1,26 @@
 package com.example.jansaarthi
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.example.jansaarthi.data.repository.ThemeMode
 import com.example.jansaarthi.data.repository.AppLanguage
 import com.example.jansaarthi.ui.navigation.AppNavGraph
-import com.example.jansaarthi.ui.theme.*
+import com.example.jansaarthi.ui.theme.JANSAARTHITheme
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: android.os.Bundle?) {
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         splashScreen.setKeepOnScreenCondition { false }
+        androidx.core.view.WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         
         val settingsRepo = App.instance.settingsRepository
@@ -32,13 +35,15 @@ class MainActivity : ComponentActivity() {
                 ThemeMode.SYSTEM -> isSystemInDarkTheme()
             }
             
-            val strings = if (appLanguage == AppLanguage.HI) HindiStrings else EnglishStrings
+            LaunchedEffect(appLanguage) {
+                val langTag = if (appLanguage == AppLanguage.HI) "hi" else "en"
+                val appLocale = LocaleListCompat.forLanguageTags(langTag)
+                AppCompatDelegate.setApplicationLocales(appLocale)
+            }
             
-            CompositionLocalProvider(LocalAppStrings provides strings) {
-                JANSAARTHITheme(darkTheme = darkTheme) {
-                    val navController = rememberNavController()
-                    AppNavGraph(navController = navController)
-                }
+            JANSAARTHITheme(darkTheme = darkTheme) {
+                val navController = rememberNavController()
+                AppNavGraph(navController = navController)
             }
         }
     }

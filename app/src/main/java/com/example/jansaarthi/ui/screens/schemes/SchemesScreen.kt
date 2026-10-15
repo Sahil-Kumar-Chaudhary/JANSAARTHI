@@ -33,11 +33,6 @@ fun SchemesScreen(navController: NavController) {
         topBar = {
             TopAppBar(
                 title = { Text("Schemes", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground) },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = MaterialTheme.colorScheme.onBackground)
-                    }
-                },
                 actions = {
                     IconButton(onClick = { /* Filter */ }) {
                         Icon(Icons.Default.FilterList, contentDescription = "Filter", tint = MaterialTheme.colorScheme.onBackground)
@@ -53,18 +48,18 @@ fun SchemesScreen(navController: NavController) {
                 .background(MaterialTheme.colorScheme.background)
                 .padding(paddingValues)
                 .padding(horizontal = 16.dp),
-            contentPadding = PaddingValues(bottom = 96.dp, top = 8.dp), // Extra bottom padding for floating nav
+            contentPadding = PaddingValues(bottom = 16.dp, top = 8.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(schemes) { scheme ->
-                SchemeListItem(scheme)
+                SchemeListItem(scheme) { navController.navigate(com.example.jansaarthi.ui.navigation.Routes.SCHEME_DETAILS) }
             }
         }
     }
 }
 
 @Composable
-fun SchemeListItem(scheme: Scheme) {
+fun SchemeListItem(scheme: Scheme, onNavigate: () -> Unit) {
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
@@ -127,7 +122,7 @@ fun SchemeListItem(scheme: Scheme) {
             
             Spacer(modifier = Modifier.height(20.dp))
             Button(
-                onClick = {},
+                onClick = onNavigate,
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
@@ -140,3 +135,4 @@ fun SchemeListItem(scheme: Scheme) {
         }
     }
 }
+
