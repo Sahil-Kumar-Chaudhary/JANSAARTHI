@@ -8,7 +8,8 @@
     "dev": "nodemon server.js",
     "build": "node scripts/sync-rag.js",
     "sync-rag": "node scripts/sync-rag.js",
-    "test": "node tests/authForgotPassword.test.js && node tests/ragAndBackend.test.js"
+    "import-schemes": "node scripts/import-schemes.js",
+    "test": "node tests/authForgotPassword.test.js && node tests/ragAndBackend.test.js && node tests/schemeDatabase.test.js"
   },
   "keywords": [
     "jansaarthi",

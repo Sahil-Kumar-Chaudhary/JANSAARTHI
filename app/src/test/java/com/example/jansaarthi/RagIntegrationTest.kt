@@ -339,12 +339,14 @@ class RagIntegrationTest {
         assertEquals(RetrofitClient.EnvironmentTarget.EMULATOR, RetrofitClient.getActiveEnvironment())
         assertTrue(RetrofitClient.isEmulatorActive())
 
-        // Test explicit debug environment controls and defaults
-        RetrofitClient.setExplicitDebugEnvironment(null, RetrofitClient.EnvironmentTarget.PRODUCTION)
-        assertEquals(RetrofitClient.PROD_BASE_URL, RetrofitClient.getBaseUrl())
+        // Test explicit debug environment controls and defaults (only active in DEBUG builds)
+        if (com.example.jansaarthi.BuildConfig.DEBUG) {
+            RetrofitClient.setExplicitDebugEnvironment(null, RetrofitClient.EnvironmentTarget.PRODUCTION)
+            assertEquals(RetrofitClient.PROD_BASE_URL, RetrofitClient.getBaseUrl())
 
-        RetrofitClient.setExplicitDebugEnvironment(null, RetrofitClient.EnvironmentTarget.STAGING)
-        assertEquals(RetrofitClient.STAGING_BASE_URL, RetrofitClient.getBaseUrl())
+            RetrofitClient.setExplicitDebugEnvironment(null, RetrofitClient.EnvironmentTarget.STAGING)
+            assertEquals(RetrofitClient.STAGING_BASE_URL, RetrofitClient.getBaseUrl())
+        }
 
         RetrofitClient.initEnvironment(null)
         assertNotNull(RetrofitClient.getBaseUrl())

@@ -33,6 +33,12 @@ __pycache__/
 # Distribution Archives & Local SDKs
 *.zip
 jdk17/
+distribution/
+
+# Android Signing Keystores & Properties (Never Commit Secrets)
+*.jks
+*.keystore
+keystore.properties
 
 # OS Specific
 .DS_Store

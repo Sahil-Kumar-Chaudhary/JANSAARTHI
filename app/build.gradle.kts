@@ -11,12 +11,33 @@ android {
         applicationId = "com.example.jansaarthi"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "0.1.0-alpha.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+    }
+
+    val keystorePropertiesFile = rootProject.file("keystore.properties")
+    val keystoreProperties = java.util.Properties()
+    val hasSigningConfig = keystorePropertiesFile.exists()
+    if (hasSigningConfig) {
+        keystoreProperties.load(java.io.FileInputStream(keystorePropertiesFile))
+    }
+
+    signingConfigs {
+        if (hasSigningConfig) {
+            create("release") {
+                val storeFilePath = keystoreProperties.getProperty("storeFile")
+                if (storeFilePath != null) {
+                    storeFile = rootProject.file(storeFilePath)
+                }
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+            }
         }
     }
 
@@ -27,6 +48,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            if (hasSigningConfig) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 

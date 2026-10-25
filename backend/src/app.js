@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const recommendationRoutes = require('./routes/recommendationRoutes');
+const schemeRoutes = require('./routes/schemeRoutes');
 const ragRoutes = require('./routes/ragRoutes');
 const dbCheck = require('./middleware/dbCheck');
 
@@ -66,7 +67,7 @@ app.use('/api/rag', ragRoutes);
 app.use('/api/auth', dbCheck, authRoutes);
 app.use('/api/profile', dbCheck, profileRoutes);
 app.use('/api/recommendations', dbCheck, recommendationRoutes);
-app.use('/api/schemes', dbCheck, (req, res) => res.json([]));
+app.use('/api/schemes', dbCheck, schemeRoutes);
 app.use('/api/requirements', dbCheck, (req, res) => res.json([]));
 app.use('/api/eligibility', dbCheck, (req, res) => res.json({}));
 app.use('/api/calculator', dbCheck, (req, res) => res.json({}));
