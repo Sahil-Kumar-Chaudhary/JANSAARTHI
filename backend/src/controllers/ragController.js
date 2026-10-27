@@ -10,13 +10,17 @@ function resolvePythonBinary() {
         return process.env.PYTHON_BIN;
     }
 
-    // Check project isolated virtualenv first
+    // Check project isolated virtualenv first (repo root or nested)
     const projectRoot = path.resolve(__dirname, '../../../');
     const winVenv = path.join(projectRoot, 'RAG', 'venv', 'Scripts', 'python.exe');
     const linuxVenv = path.join(projectRoot, 'RAG', 'venv', 'bin', 'python');
+    const nestedWinVenv = path.resolve(__dirname, '../../RAG/venv/Scripts/python.exe');
+    const nestedLinuxVenv = path.resolve(__dirname, '../../RAG/venv/bin/python');
 
     if (fs.existsSync(winVenv)) return winVenv;
     if (fs.existsSync(linuxVenv)) return linuxVenv;
+    if (fs.existsSync(nestedWinVenv)) return nestedWinVenv;
+    if (fs.existsSync(nestedLinuxVenv)) return nestedLinuxVenv;
 
     // Check localappdata Python on Windows
     if (process.env.LOCALAPPDATA) {
@@ -62,10 +66,17 @@ exports.askQuestion = (req, res) => {
         mode = String(req.body.mode).toLowerCase();
     }
 
-    // 2. Resolve script and database paths
+    // 2. Resolve script and database paths (supports repo root or backend-nested RAG)
     const projectRoot = path.resolve(__dirname, '../../../');
-    const scriptPath = path.join(projectRoot, 'RAG', 'src', 'query_engine.py');
-    const dbPath = path.join(projectRoot, 'RAG', 'chroma_db', 'chroma.sqlite3');
+    let ragDir = path.join(projectRoot, 'RAG');
+    if (!fs.existsSync(ragDir)) {
+        const nestedRagDir = path.resolve(__dirname, '../../RAG');
+        if (fs.existsSync(nestedRagDir)) {
+            ragDir = nestedRagDir;
+        }
+    }
+    const scriptPath = path.join(ragDir, 'src', 'query_engine.py');
+    const dbPath = path.join(ragDir, 'chroma_db', 'chroma.sqlite3');
 
     if (!fs.existsSync(dbPath)) {
         console.error('[RAG Controller] Chroma database not found at:', dbPath);
@@ -98,7 +109,7 @@ exports.askQuestion = (req, res) => {
     let pyProcess;
     try {
         pyProcess = spawn(pythonBin, [scriptPath, '--stdin'], {
-            cwd: path.join(projectRoot, 'RAG'),
+            cwd: ragDir,
             env: {
                 ...process.env,
                 PYTHONIOENCODING: 'utf-8'
