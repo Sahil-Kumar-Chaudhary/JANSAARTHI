@@ -25,32 +25,93 @@ try:
 except ImportError:
     pass
 
+# Domain synonym expansion map mapping citizen language to scheme vocabulary
+SYNONYM_MAP = {
+    "female": ["women", "woman", "mahila"],
+    "females": ["women", "woman", "mahila"],
+    "woman": ["women", "female"],
+    "women": ["female", "woman", "mahila"],
+    "founder": ["entrepreneur", "enterprise"],
+    "founders": ["entrepreneurs", "enterprise"],
+    "financial": ["finance", "credit", "grant"],
+    "cultivator": ["farmer", "kisan", "krishi", "agriculture"],
+    "cultivators": ["farmers", "kisan", "krishi", "agriculture"],
+    "grower": ["farmer", "kisan", "agriculture"],
+    "growers": ["farmers", "kisan", "agriculture"],
+    "farming": ["agriculture", "farmer", "kisan"],
+    "shopkeeper": ["retail", "micro", "enterprise", "vendor", "trader"],
+    "shopkeepers": ["retail", "micro", "enterprise", "vendors", "traders"],
+    "loan": ["credit", "mudra", "advance", "borrowing"],
+    "loans": ["credit", "mudra", "advances", "borrowings"],
+    "subsidy": ["grant", "rebate", "subvention"],
+    "pension": ["maandhan", "old-age", "vridha"],
+    "youth": ["young", "student", "employment", "skill"],
+    "drought": ["crop", "insurance", "fasal", "agriculture"],
+    "calamity": ["crop", "insurance", "fasal", "agriculture"],
+}
+
+STOP_WORDS = {
+    'what', 'when', 'where', 'which', 'who', 'whom', 'this', 'that', 'these',
+    'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have',
+    'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the',
+    'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at',
+    'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through',
+    'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down',
+    'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then',
+    'once', 'here', 'there', 'all', 'any', 'both', 'each', 'few', 'more',
+    'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own',
+    'same', 'so', 'than', 'too', 'very', 'can', 'will', 'just', 'should',
+    'now', 'tell', 'me', 'about', 'explain', 'schemes', 'scheme', 'government',
+    'sarkari', 'yojana', 'help', 'give', 'need', 'want', 'available', 'details'
+}
+
+LOW_WEIGHT_TERMS = {'support', 'assistance', 'india', 'pradhan', 'mantri', 'national', 'state', 'centre', 'central'}
+
+def clean_scheme_content(raw_text: str) -> str:
+    """Removes administrative boilerplate lines from search matching."""
+    lines = raw_text.split('\n')
+    filtered = []
+    for line in lines:
+        lower = line.strip().lower()
+        if lower.startswith(('scheme_launch_date:', 'data_status:', 'source_platform:', 'scheme_id:')):
+            continue
+        filtered.append(line)
+    return '\n'.join(filtered)
+
+def tokenize(text: str) -> set[str]:
+    """Tokenizes text using exact alphanumeric word boundaries."""
+    return set(re.findall(r'\b[a-zA-Z0-9]{2,}\b', text.lower()))
+
+def build_concept_groups(tokens: list[str]) -> list[set[str]]:
+    """Builds deduplicated concept groups with synonym expansion."""
+    groups = []
+    seen = set()
+    for t in tokens:
+        group = {t}
+        if t in SYNONYM_MAP:
+            group.update(SYNONYM_MAP[t])
+        frozen = frozenset(group)
+        if frozen not in seen:
+            seen.add(frozen)
+            groups.append(group)
+    return groups
+
 def retrieve_schemes_from_chroma(query: str, k: int = 5, db_path: Path = CHROMA_DB_PATH):
     """
     Retrieves matching schemes from the local Chroma database.
-    Ranks documents based on keyword/token matches in title, category, purpose, and body.
+    Ranks documents based on keyword/token matches in title, category, purpose, and body,
+    with synonym expansion, boilerplate filtering, and multi-concept coverage scoring.
     """
     if not db_path.exists():
         raise FileNotFoundError(f"Chroma SQLite database not found at: {db_path}")
 
-    # Extract alphanumeric tokens of length >= 3
-    tokens = [t.lower() for t in re.findall(r'[a-zA-Z0-9]+', query) if len(t) >= 3]
-    # Filter common stop words
-    stop_words = {'what', 'when', 'where', 'which', 'who', 'whom', 'this', 'that', 'these',
-                  'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have',
-                  'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the',
-                  'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at',
-                  'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through',
-                  'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down',
-                  'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then',
-                  'once', 'here', 'there', 'all', 'any', 'both', 'each', 'few', 'more',
-                  'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own',
-                  'same', 'so', 'than', 'too', 'very', 'can', 'will', 'just', 'should',
-                  'now', 'tell', 'me', 'about', 'explain', 'schemes', 'scheme', 'government',
-                  'sarkari', 'yojana'}
-    meaningful_tokens = [t for t in tokens if t not in stop_words]
+    # Extract tokens from query
+    raw_tokens = [t.lower() for t in re.findall(r'\b[a-zA-Z0-9]+\b', query) if len(t) >= 2]
+    meaningful_tokens = [t for t in raw_tokens if t not in STOP_WORDS]
     if not meaningful_tokens:
-        meaningful_tokens = tokens or ['yojana']
+        meaningful_tokens = raw_tokens
+
+    concept_groups = build_concept_groups(meaningful_tokens)
 
     conn = sqlite3.connect(str(db_path))
     cur = conn.cursor()
@@ -74,33 +135,63 @@ def retrieve_schemes_from_chroma(query: str, k: int = 5, db_path: Path = CHROMA_
 
     conn.close()
 
-    # Score each document based on term matches with title/category weighting
     scored_docs = []
     for row in rows:
         embedding_id, scheme_id, scheme_name, category, source_platform, document = row
         if not document:
             continue
 
-        doc_lower = (document or "").lower()
-        title_lower = (scheme_name or "").lower()
-        cat_lower = (category or "").lower()
+        clean_doc = clean_scheme_content(document)
+        title_tokens = tokenize(scheme_name or "")
+        cat_tokens = tokenize(category or "")
+        body_tokens = tokenize(clean_doc)
 
-        score = 0
+        matched_groups_count = 0
+        base_score = 0
         matched_terms = []
-        for token in meaningful_tokens:
-            if token in title_lower:
-                score += 10
-                matched_terms.append(token)
-            elif token in cat_lower:
-                score += 5
-                matched_terms.append(token)
-            elif token in doc_lower:
-                score += 2
-                matched_terms.append(token)
+        used_doc_tokens = set()
 
-        if score > 0:
+        for group in concept_groups:
+            best_group_score = 0
+            best_token_matched = None
+            best_loc = None
+
+            for t in group:
+                if t in used_doc_tokens:
+                    continue
+                weight_mult = 0.5 if t in LOW_WEIGHT_TERMS else 1.0
+
+                if t in title_tokens:
+                    best_group_score = 16 * weight_mult
+                    best_token_matched = t
+                    best_loc = "title"
+                    break
+                elif t in cat_tokens:
+                    best_group_score = 8 * weight_mult
+                    best_token_matched = t
+                    best_loc = "cat"
+                    break
+                elif t in body_tokens:
+                    best_group_score = 5 * weight_mult
+                    best_token_matched = t
+                    best_loc = "body"
+                    break
+
+            if best_group_score > 0:
+                base_score += best_group_score
+                matched_groups_count += 1
+                matched_terms.append(best_token_matched)
+                used_doc_tokens.add(best_token_matched)
+
+        # Multi-concept coverage bonus heavily rewards schemes covering multiple query intents
+        coverage_ratio = matched_groups_count / len(concept_groups) if concept_groups else 0
+        total_score = base_score * (1.0 + (coverage_ratio * 1.5))
+
+        # Minimum score threshold to prevent irrelevant noise
+        min_concepts_needed = 1 if len(concept_groups) == 1 else 2
+        if total_score >= 8.0 and matched_groups_count >= min_concepts_needed:
             scored_docs.append({
-                "score": score,
+                "score": round(total_score, 1),
                 "schemeId": scheme_id or embedding_id,
                 "schemeName": scheme_name or "Unknown Scheme",
                 "category": category or "General",
