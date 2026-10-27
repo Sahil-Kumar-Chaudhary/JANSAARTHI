@@ -83,7 +83,9 @@ class GroqJudge(DeepEvalBaseLLM):
         return self.model_name
 
 
-GOLDEN_PATH = "/home/s/Desktop/JANSAARTHI/RAG/evals/goldens/generator_golden.json"
+from pathlib import Path
+
+GOLDEN_PATH = str(Path(__file__).resolve().parent / "goldens" / "generator_golden.json")
 THRESHOLD = 0.7
 
 

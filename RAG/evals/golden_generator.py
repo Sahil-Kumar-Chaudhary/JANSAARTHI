@@ -1,3 +1,4 @@
+from pathlib import Path
 import os
 import json
 import random
@@ -17,7 +18,7 @@ load_dotenv()
 # CONFIG
 # ============================================================
 
-TXT_PATH = "/home/s/Desktop/JANSAARTHI/RAG/knowledge_base/data.txt"   # <-- your knowledge base file
+TXT_PATH = str(Path(__file__).resolve().parents[1] / "knowledge_base" / "data.txt")   # <-- your knowledge base file
 
 OUTPUT_PATH = "goldens/retriever_deepeval_goldens.json"
 

@@ -1,3 +1,4 @@
+from pathlib import Path
 import os
 import json
 
@@ -123,10 +124,7 @@ class GroqJudge(DeepEvalBaseLLM):
 # Configuration
 # --------------------------------------------------
 
-GOLDEN_PATH = (
-    "/home/s/Desktop/JANSAARTHI/RAG/"
-    "evals/goldens/retriever_deepeval_goldens.json"
-)
+GOLDEN_PATH = str(Path(__file__).resolve().parent / "goldens" / "retriever_deepeval_goldens.json")
 
 THRESHOLD = 0.7
 
