@@ -1,0 +1,7 @@
+# Production Python dependencies for JANSAARTHI RAG on Render
+# Lightweight ONNX runtime - fits comfortably within Render 512 MB Free Tier (< 140 MB RSS)
+python-dotenv>=1.0.0
+numpy>=1.26.0
+onnxruntime>=1.17.0
+fastembed>=0.9.1
+groq>=1.7.0

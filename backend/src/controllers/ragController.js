@@ -57,6 +57,11 @@ exports.askQuestion = (req, res) => {
     if (isNaN(k) || k < 1) k = 5;
     if (k > 10) k = 10;
 
+    let mode = 'hybrid';
+    if (req.body.mode && ['hybrid', 'semantic', 'lexical'].includes(String(req.body.mode).toLowerCase())) {
+        mode = String(req.body.mode).toLowerCase();
+    }
+
     // 2. Resolve script and database paths
     const projectRoot = path.resolve(__dirname, '../../../');
     const scriptPath = path.join(projectRoot, 'RAG', 'src', 'query_engine.py');
@@ -88,7 +93,7 @@ exports.askQuestion = (req, res) => {
     let stdoutData = '';
     let stderrData = '';
 
-    const payload = JSON.stringify({ query, k });
+    const payload = JSON.stringify({ query, k, mode });
 
     let pyProcess;
     try {
