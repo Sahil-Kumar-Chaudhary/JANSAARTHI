@@ -1,0 +1,82 @@
+[
+  {
+    "id": "g001",
+    "query": "Imagine adding a remote branch; how would a refspec map references during fetch and push?",
+    "ideal_answer": "A refspec tells Git which remote reference corresponds to which local reference when you fetch or push.\n\n* **Fetch** – The refspec `+refs/heads/<remote‑branch>:refs/remotes/<remote>/<remote‑branch>` copies the remote branch `<remote‑branch>` into a local remote‑tracking branch `refs/remotes/<remote>/<remote‑branch>`. The “+” forces an update even if it’s a non‑fast‑forward.\n\n* **Push** – The refspec `refs/heads/<local‑branch>:refs/heads/<remote‑branch>` sends your local branch `<local‑branch>` to the remote, creating or updating the remote branch `<remote‑branch>`.\n\nThus, when you add a new remote branch, the fetch refspec maps the remote’s branch to a local remote‑tracking branch, and the push refspec maps your local branch to the remote branch you want to update.",
+    "source": {
+      "chunk_id": "chunk_0040",
+      "chunk_index": 40,
+      "text": "Git Refspec\n\nA refspec describes how references are mapped during operations such as fetch and push. It specifies relationships between local and remote references.\n\nFor example, remote-tracking branch updates are based on configured fetch refspecs. Understanding refspecs becomes useful when working with advanced Git workflows, multiple remotes, selective fetching, or unusual branch mappings.\n\nGit Aliases\n\nGit aliases provide custom shortcuts for Git commands. An alias can simplify frequently repeated commands or create convenient combinations of options.\n\nFor example, developers commonly create a short alias for a graph-style git log. Aliases are personal configuration and do not change the underlying Git behavior.\n\nGit Clean\n\ngit clean removes untracked files from the working tree. Because it can permanently delete untracked data, it should be used carefully. Running a preview before deleting files is safer when the contents are uncertain."
+    }
+  },
+  {
+    "id": "g002",
+    "query": "Compare git commit --amend with git log regarding functionality and potential risks of altering history.",
+    "ideal_answer": "**Functionality**\n\n- **`git commit --amend`** – Rewrites the most recent commit. It lets you change the commit message or add new changes, creating a new commit ID that replaces the old one.  \n- **`git log`** – Purely a read‑only command that displays the commit history (IDs, authors, dates, messages, etc.). It does not modify any commits.\n\n**Potential risks of altering history**\n\n- **`git commit --amend`** changes the commit’s identity. If the original commit has already been pushed or shared with others, amending it rewrites history and can cause merge conflicts, duplicated commits, or broken references for collaborators. Use it only on local or unpublished commits.  \n- **`git log`** carries no risk of history alteration because it only shows information; it never changes the repository.",
+    "source": {
+      "chunk_id": "chunk_0007",
+      "chunk_index": 7,
+      "text": "The git commit --amend command modifies the most recent commit. It can be used to correct a commit message or add additional changes to the previous commit. Amending a commit changes its identity, so it should be used carefully when the original commit has already been shared with others.\n\nGit Log and History\n\ngit log displays commit history. It can show commit IDs, authors, dates, commit messages, and other information. Options can format the output, limit the number of commits, filter by author, search commit messages, and display graph information.\n\ngit show displays information about a particular Git object, commonly a commit. It can show the commit metadata and associated patch. git diff compares changes between commits, branches, the working tree, or the staging area."
+    }
+  },
+  {
+    "id": "g003",
+    "query": "Investigate Git's object DB enabling offline bisect across independent clones.",
+    "ideal_answer": "Git’s object database (the repository) stores the complete commit history locally in every clone. Because each clone contains its own full object DB, you can run `git bisect` entirely offline—no remote access is needed. The workflow is simply:\n\n1. Ensure the clone has the relevant commits (the full history is already present).  \n2. Use `git bisect start`, `git bisect good`, and `git bisect bad` to narrow down the offending commit.  \n\nSince the repository database holds all objects, the bisect operates independently of any remote, even across separate clones.",
+    "source": {
+      "chunk_id": "chunk_0001",
+      "chunk_index": 1,
+      "text": "Git follows a distributed model. Each clone of a repository normally contains its own repository history, allowing many operations to be performed locally. A developer can create commits, inspect history, create branches, compare changes, and perform many other operations without network access. A remote repository can later be used to exchange changes with other repositories. A remote is simply another repository that the local repository knows about, often identified by a name such as origin.\n\nA Git repository has three important areas in the everyday workflow: the working tree, the staging area or index, and the repository database. The working tree contains the files currently being edited. The staging area contains changes selected for the next commit. The repository contains committed history. The common workflow is therefore to modify files, inspect the changes, stage selected changes with git add, and create a commit with git commit."
+    }
+  },
+  {
+    "id": "g004",
+    "query": "What Git steps rewrite history to purge a committed secret and ensure credential revocation?",
+    "ideal_answer": "**Steps to purge a committed secret and revoke the credential**\n\n1. **Identify the secret** – locate the file/commit that introduced the password, token, key, etc.  \n\n2. **Rewrite the repository history**  \n   * **Option A – BFG Repo‑Cleaner** (quick for large repos)  \n     ```bash\n     java -jar bfg.jar --delete-files <filename>   # or --replace-text <rules.txt>\n     git reflog expire --expire=now --all\n     git gc --prune=now --aggressive\n     ```  \n   * **Option B – git filter‑repo** (official replacement for filter‑branch)  \n     ```bash\n     git filter-repo --path <filename> --invert-paths   # remove the file\n     # or to replace a string:\n     git filter-repo --replace-text <rules.txt>\n     ```  \n\n3. **Force‑push the cleaned history** (only if you control the remote)  \n   ```bash\n   git push --force --no-verify origin <branch>\n   ```  \n   *All collaborators must re‑clone or reset to the new history.*\n\n4. **Add the secret to `.gitignore`** to prevent future accidental commits.  \n\n5. **Revoke / rotate the exposed credential**  \n   * In the service that issued the secret (API portal, cloud console, etc.), **revoke** the old token/key.  \n   * Generate a **new** credential and update any applications or CI pipelines that used the old one.  \n\n6. **Verify**  \n   * Run `git log --all -- <filename>` or search for the secret string to confirm it no longer appears.  \n   * Test that the new credential works and the old one is invalid.  \n\nFollowing these steps removes the secret from every commit in the repo and ensures the compromised credential can no longer be used.",
+    "source": {
+      "chunk_id": "chunk_0047",
+      "chunk_index": 47,
+      "text": "Git Credential Management\n\nGit can use credential helpers to securely store or retrieve authentication information. Credential handling should be configured according to the operating system and security requirements.\n\nDevelopers should avoid placing passwords, access tokens, private keys, or other secrets directly in shell history, source code, or repository files.\n\nGit Security\n\nGit repositories can accidentally contain secrets such as passwords, API keys, private certificates, cloud credentials, and tokens. Adding a secret to .gitignore after it has already been committed does not remove it from historical commits.\n\nRemoving sensitive information from Git history may require history rewriting and credential rotation. If a credential has been exposed, simply deleting the latest copy is not sufficient; the credential itself should generally be revoked or rotated.\n\nSigned Commits"
+    }
+  },
+  {
+    "id": "g005",
+    "query": "How do Git tags provide human‑readable references to specific commits for stable releases?",
+    "ideal_answer": "Git tags are named pointers (e.g., `v1.0`, `release‑2023‑09`) that are attached to a specific commit. Because the tag name is human‑readable, it serves as an easy reference to that exact commit, allowing developers to identify and check out stable release versions without needing the commit hash.",
+    "source": {
+      "chunk_id": "chunk_0017",
+      "chunk_index": 17,
+      "text": "Tags are useful for identifying stable release versions because a tag provides a human-readable reference to a specific commit.\n\nGit Remote\n\nA remote represents another repository that a local repository communicates with. The most common remote name is origin. git remote -v displays configured remote URLs. git remote add adds a remote. git remote remove removes one. git remote rename changes its name.\n\nRemote configuration includes information such as the remote URL and fetch configuration. Git documentation describes remote.origin.url and remote.origin.fetch as important parts of remote configuration.\n\nGit Fetch\n\ngit fetch downloads changes and references from a remote repository without integrating those changes into the current working branch. It updates remote-tracking references such as origin/main.\n\nFetching is useful because it allows developers to inspect remote changes before deciding whether to merge, rebase, or otherwise integrate them."
+    }
+  },
+  {
+    "id": "g006",
+    "query": "Explain how git stash saves changes, cleans the working tree, and prevents creating permanent commits.",
+    "ideal_answer": "`git stash` takes the current, uncommitted changes and writes them to a hidden stash entry.  \n- **Saving changes** – `git stash push` records the modifications (both staged and unstaged) in a new stash object.  \n- **Cleaning the working tree** – after the stash is created, Git resets the working directory to the last commit, leaving a clean tree so you can switch branches or perform other work.  \n- **No permanent commit** – the stash is stored only in the reflog‑like stash list (`git stash list`) and is not part of any branch history; it can be applied later with `git stash apply` or removed with `git stash pop`. Thus the changes are saved temporarily without creating a permanent commit.",
+    "source": {
+      "chunk_id": "chunk_0015",
+      "chunk_index": 15,
+      "text": "A developer can use git restore to discard working-tree modifications or use git restore --staged to remove a file from the staging area while keeping its working-tree changes.\n\nGit Stash\n\ngit stash temporarily stores local modifications so that the working tree can be cleaned without creating a permanent commit. This is useful when a developer has unfinished work but needs to switch branches or handle another task.\n\ngit stash push creates a stash from selected changes. git stash list displays saved stashes. git stash pop applies a stash and removes it from the stash list if the application succeeds. git stash apply applies a stash without automatically removing it.\n\nStashes can also produce conflicts when their changes overlap with modifications in the current working tree.\n\nGit Cherry-Pick\n\ngit cherry-pick applies the changes introduced by specific existing commits to the current branch. Unlike merge, which integrates branch histories, cherry-pick selects individual commits."
+    }
+  },
+  {
+    "id": "g007",
+    "query": "How do reset, revert, and restore differ in undoing changes and preserving history?",
+    "ideal_answer": "**git reset** – Moves the branch pointer to another commit.  \n- `--hard` discards uncommitted changes, potentially deleting work.  \n- Rewrites history, so it should be avoided on commits that have already been shared.\n\n**git revert** – Creates a new commit that undoes the effect of a previous commit.  \n- Leaves the original commit in the history.  \n- Safe for shared branches because it does not rewrite history.\n\n**git restore** – Restores files in the working tree or staging area to a previous state.  \n- Does not create or move commits; it only changes the contents of files locally.  \n- Useful for discarding local edits without affecting commit history.",
+    "source": {
+      "chunk_id": "chunk_0014",
+      "chunk_index": 14,
+      "text": "Because git reset --hard can remove uncommitted work, it should be used carefully. Reset can also be used to move a branch to an earlier commit, but its effect on shared history should be considered before using it.\n\nGit Revert\n\ngit revert creates a new commit that reverses the effect of an earlier commit. Unlike reset, revert does not normally remove the existing commit from history. This makes revert useful for undoing changes that have already been shared.\n\nFor example, if a problematic commit has been pushed to a shared branch, creating a revert commit can preserve the historical record while applying an inverse change.\n\nGit Restore\n\ngit restore is used to restore files in the working tree or staging area. It provides a clearer command for file restoration compared with the older multi-purpose git checkout command."
+    }
+  },
+  {
+    "id": "g008",
+    "query": "Define Git branches, their movable reference nature, and how they differ from git switch usage.",
+    "ideal_answer": "Git branches are **movable references** that point to specific commits. They let you maintain independent lines of development without copying the whole repository; creating a branch simply adds a new reference that can be moved forward as new commits are made.\n\n`git switch` (the modern command) is **not** a branch itself—it’s the tool used to change the current HEAD to point to a different branch (or to create and check out a new branch). In other words, a branch is the reference, while `git switch` is the command that makes that reference the active one in your working directory.",
+    "source": {
+      "chunk_id": "chunk_0008",
+      "chunk_index": 8,
+      "text": "Git history can be navigated using references such as branch names, tags, HEAD, and commit IDs. HEAD generally represents the currently checked-out commit or branch. HEAD~1 refers to the first parent of the current commit, while HEAD~2 refers to an earlier ancestor.\n\nGit Branches\n\nA branch in Git is a movable reference to a commit. Branches allow different lines of development to progress independently. Creating a branch does not copy the entire repository. Instead, Git creates a new reference pointing to an existing commit.\n\ngit branch lists branches and can create, delete, rename, and inspect them. git switch is the modern command for switching branches and creating new branches. git checkout is an older, multi-purpose command that can also switch branches, create branches, and restore files. For new workflows, git switch and git restore provide clearer separation of responsibilities."
+    }
+  }
+]
