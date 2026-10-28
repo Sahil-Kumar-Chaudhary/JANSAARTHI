@@ -567,15 +567,26 @@ Output: app/build/outputs/apk/debug/app-debug.apk (20.8 MB)
 
 ## K. Phase 1.4: Production Deployment Readiness & Final Integration Audit
 
-### 1. Packaging & Render Root Directory Resolution
+### 1. Packaging & Definitive Render Configuration
 
 - **The Problem Identified**:
-  Render services configured with **Root Directory** `backend` package only files within `backend/` into the slug. Repository root files (such as `RAG/`) are inaccessible in the runtime container slug if Root Directory is left as `backend`.
-- **The Solution (Dual-Path Resilience)**:
+  Render services configured with **Root Directory** `backend` package only files within `backend/` into the slug. Repository root files (such as `RAG/`) are inaccessible in the runtime container slug if Root Directory is left as `backend`. Furthermore, if the build command does not invoke `npm run build`, `backend/RAG/` can become stale compared to canonical `RAG/`.
+- **The Solution (Definitive Build & Runtime Alignment)**:
   1. Created [`backend/scripts/sync-rag.js`](file:///c:/Users/sahil/OneDrive/Documents/JANSAARTHI/backend/scripts/sync-rag.js) which copies the minimal RAG runtime bundle (`src/query_engine.py`, `semantic_index/scheme_metadata.json`, and `scheme_embeddings.npy` — totaling **237 KB**) into `backend/RAG/`.
   2. Updated `backend/package.json` with `"build": "node scripts/sync-rag.js"` and `"sync-rag": "node scripts/sync-rag.js"`.
-  3. Updated [`ragController.js`](file:///c:/Users/sahil/OneDrive/Documents/JANSAARTHI/backend/src/controllers/ragController.js) to resolve `backend/RAG` primarily and fall back to repository root `RAG/`.
-  4. Both deployment architectures (Root Directory `.` or Root Directory `backend`) are now 100% supported without code breakage.
+  3. Formulated the definitive single Render Web Service specification:
+     - **Root Directory**: `.` (leave empty / repository root).
+     - **Build Command**:
+       ```bash
+       cd backend && npm install && npm run build && pip install -r ../RAG/requirements_render.txt && python -c "import os; from fastembed import TextEmbedding; TextEmbedding(model_name='sentence-transformers/all-MiniLM-L6-v2', cache_dir=os.environ.get('FASTEMBED_CACHE_PATH', 'RAG/.cache'))"
+       ```
+     - **Start Command**:
+       ```bash
+       cd backend && node server.js
+       ```
+     - **Runtime RAG Path**: `backend/RAG` (synchronized at build time from `RAG/`).
+     - **FastEmbed Model Cache Path**: `backend/RAG/.cache` (pre-warmed during build step).
+     - **Required Environment Variables**: `PORT` (auto-assigned), `NODE_ENV=production`, `MONGODB_URI`, `JWT_SECRET`, and optional `GROQ_API_KEY`.
 
 ### 2. FastEmbed Model Pre-Caching & Cold-Start Findings
 
