@@ -133,6 +133,26 @@ async function runTests() {
             assert.strictEqual(res.body.sources[0].sourcePlatform, 'myScheme.gov.in');
         });
 
+        // Test 4b: Phase 1.6 Mudra Relevance & Unrelated Scheme Suppression
+        await test('POST /api/rag/ask suppresses unrelated schemes and avoids padding for Mudra query', async () => {
+            const res = await makeRequest('POST', '/api/rag/ask', {
+                query: 'Pradhan Mantri Mudra Yojana loan eligibility',
+                mode: 'hybrid',
+                k: 5
+            });
+            assert.strictEqual(res.statusCode, 200);
+            assert.strictEqual(res.body.status, 'success');
+            assert.strictEqual(res.body.sources.length >= 1, true);
+            assert.strictEqual(res.body.sources[0].schemeId, 'SCH002');
+            const retrievedIds = res.body.sources.map(s => s.schemeId);
+            // Unrelated schemes that previously padded the top 5 must NOT be present
+            const unrelated = ['SCH022', 'SCH048', 'SCH041'];
+            const forbiddenPresent = retrievedIds.filter(id => unrelated.includes(id));
+            assert.strictEqual(forbiddenPresent.length, 0, `Unrelated schemes appeared: ${forbiddenPresent}`);
+            // Result count should be concise (1 or 2), never padded blindly to 5
+            assert.strictEqual(res.body.sources.length <= 2, true);
+        });
+
         // Test 5: RAG query - Semantic mode
         await test('POST /api/rag/ask handles Semantic mode for conceptual paraphrase', async () => {
             const res = await makeRequest('POST', '/api/rag/ask', {

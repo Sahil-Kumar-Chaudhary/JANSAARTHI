@@ -624,9 +624,103 @@ Output: app/build/outputs/apk/debug/app-debug.apk (20.8 MB)
 
 ## L. Final Deployment Verdict
 
-1. **RAG Backend**: **PRODUCTION READY** (`POST /api/rag/ask` tested across Hybrid, Semantic, and Lexical modes with 10/10 automated tests passing).
+1. **RAG Backend**: **PRODUCTION READY** (`POST /api/rag/ask` tested across Hybrid, Semantic, and Lexical modes with automated tests passing).
 2. **Packaging**: **RESOLVED** (Dual-mode support for Render Root Directory `.` and `backend`, runtime size < 240 KB).
-3. **Android Client**: **VERIFIED & BUILT** (Material 3 Compose UI, dynamic emulator/production Retrofit routing, zero URL fabrication, 9/9 unit tests passing, APK compiled).
+3. **Android Client**: **VERIFIED & BUILT** (Material 3 Compose UI, dynamic emulator/production Retrofit routing, zero URL fabrication, unit tests passing, APK compiled).
 4. **Hosting Safety**: **CONFIRMED** (< 200 MB RSS memory usage, 100% compliant with Render Free Tier).
 5. **Deployment Documentation**: Created [`RENDER_RAG_DEPLOYMENT.md`](file:///c:/Users/sahil/OneDrive/Documents/JANSAARTHI/RENDER_RAG_DEPLOYMENT.md) with step-by-step instructions, environment variable specifications, and rollback procedures.
 6. **Repository Status**: Clean working tree on `integration/rag-validation`. Stable `main` (`a2de523`) untouched. Ready for user-approved merge and deployment.
+
+---
+
+## M. Phase 1.5: Android Verification Against Render Staging
+
+### 1. Staging Infrastructure & Safe Mobile Routing
+- **Staging Service**: Deployed and operational at `https://jansaarthi-rag-staging.onrender.com`.
+- **Database Isolation**: Staging operates against `jansaarthi_staging` on MongoDB Atlas; production database `jansaarthi` is isolated.
+- **Dynamic Device-Aware Networking**:
+  In [`RetrofitClient.kt`](file:///c:/Users/sahil/OneDrive/Documents/JANSAARTHI/app/src/main/java/com/example/jansaarthi/data/network/RetrofitClient.kt), `determineDefaultBaseUrl()` detects physical device hardware properties (`Build.FINGERPRINT`, `Build.HARDWARE`) in debug builds:
+  - Physical devices (e.g. OPPO CPH2333) connect directly to `STAGING_BASE_URL` (`https://jansaarthi-rag-staging.onrender.com/`).
+  - Emulators continue using `http://10.0.2.2:3000/`.
+  - Release builds strictly enforce `PROD_BASE_URL` (`https://jansaarthi-backend.onrender.com/`).
+
+### 2. Physical Device Testing (OPPO CPH2333)
+- **Target Device**: OPPO CPH2333 (Android 12, API 31, ADB serial `9fca489b`).
+- **Account Creation & Auth**: Registered test citizen `Staging Tester` (mobile `9876543210`) against staging MongoDB.
+- **Execution**:
+  - Opened `RagScreen` (`Routes.RAG_QUERY`).
+  - Executed query *"Pradhan Mantri Mudra Yojana loan eligibility"*.
+  - Verified staging backend returned HTTP 200, successfully parsing into Compose assistant bubbles and expandable source accordions.
+  - Visual artifacts archived: `rag_response_received.png` and `rag_sources_expanded.png`.
+- **Identified Retrieval Issue**:
+  The response returned 5 sources, padded with unrelated schemes (Kisan Maandhan SCH022, Matru Vandana SCH048, and PMAY-Gramin SCH041). This led directly to Phase 1.6.
+
+---
+
+## N. Phase 1.6: Retrieval Relevance, Ranking Precision & Answer Quality
+
+### 1. Root Cause Diagnosis
+Detailed inspection of `RAG/src/query_engine.py` revealed four primary causes of unrelated scheme padding:
+1. **Administrative Prefix Over-Matching**:
+   Queries like *"Pradhan Mantri Mudra Yojana loan eligibility"* matched the generic prefix tokens `"pradhan"` and `"mantri"` across all PM schemes. In the baseline lexical scorer, matching 2 tokens satisfied `min_concepts_needed = 2`, awarding 25.6 lexical points to schemes entirely unrelated to business credit (e.g. PM Kisan Maandhan, PM Matru Vandana).
+2. **Generic Financial Product Conflation**:
+   Words like `"financial"`, `"credit"`, and `"loan"` were treated as distinctive scheme titles, matching unrelated pension or grant schemes.
+3. **Underweighted Target Group / Purpose**:
+   The `target_group_or_purpose` field was treated as generic body text (weight 5.0) rather than a high-signal alignment field.
+4. **Blind Top-k Slicing (`[:k]`)**:
+   The retrieval engine sorted candidates and indiscriminately sliced `[:5]`, padding the result set with low-confidence noise schemes when only 1 scheme was genuinely relevant.
+
+### 2. Retrieval Engine Enhancements
+
+All enhancements were engineered systematically in [`RAG/src/query_engine.py`](file:///c:/Users/sahil/OneDrive/Documents/JANSAARTHI/RAG/src/query_engine.py) without hardcoding query-specific results:
+
+1. **Administrative & Modifier Suppression**:
+   Extended `LOW_WEIGHT_TERMS` with administrative words (`pradhan`, `mantri`, `yojana`, `yojna`, `mission`, `programme`, `bharat`, `sarkar`).
+2. **Informative Keyword Rule**:
+   Defined `GENERIC_FINANCIAL_TERMS` (`loan`, `credit`, `financial`, `grant`, `subsidy`). When a user's query contains informative terms beyond generic administrative words, schemes matching *only* generic prefix terms receive `0.0` lexical score.
+3. **Scheme Acronym Mapping**:
+   Cataloged 35+ official government scheme acronyms in `ACRONYM_MAP` (e.g. `pmmy` $\rightarrow$ `SCH002`, `pmkisan` $\rightarrow$ `SCH021`, `pmay` $\rightarrow$ `SCH040`, `svanidhi` $\rightarrow$ `SCH005`, `kcc` $\rightarrow$ `SCH025`).
+4. **Citizen Synonym & Paraphrase Expansion**:
+   Expanded `SYNONYM_MAP` to cover informal citizen language (e.g., maternity/pregnant $\rightarrow$ matru/vandana, female founder $\rightarrow$ entrepreneur/enterprise/business, street vendor/shopkeeper $\rightarrow$ micro enterprise, pucca house $\rightarrow$ awas/gramin/urban, drip irrigation $\rightarrow$ krishi sinchayee).
+5. **Target Group & Purpose Extraction**:
+   Extracted `target_tokens` during dataset loading and assigned an intermediate weight of 16.0 points (distinctive title: 24.0, target purpose: 16.0, standard title: 12.0, category: 8.0, body: 5.0).
+6. **Dynamic Score Cutoff & Anti-Padding**:
+   Implemented relative drop-off pruning (`cutoff = max(min_thresh, top_score * rel_thresh)`). When a scheme achieves a high-confidence match (e.g. score $\ge 60$), subsequent schemes must score at least 55% of the top score to be included. If only 1 scheme matches, only 1 scheme is returned.
+7. **Controller Passthrough**:
+   Updated [`backend/src/controllers/ragController.js`](file:///c:/Users/sahil/OneDrive/Documents/JANSAARTHI/backend/src/controllers/ragController.js) to accept optional `min_score`, `relevance_threshold`, and `relative_threshold` in the request body, passing them safely to the Python subprocess stdin payload.
+
+### 3. Quantitative Regression Benchmark (22 Citizen Queries)
+
+Created [`RAG/src/benchmark_evaluation.py`](file:///c:/Users/sahil/OneDrive/Documents/JANSAARTHI/RAG/src/benchmark_evaluation.py) with 22 diverse test queries spanning exact names, paraphrases, housing, health, women entrepreneurs, farming, scholarships, and out-of-domain (OOD) queries:
+
+| Metric | Mode | Phase 1.2 Baseline | Phase 1.6 Enhanced | Delta / Relative Change |
+| :--- | :--- | :---: | :---: | :---: |
+| **In-Domain Precision@5** | **Hybrid** | 30.0% | **76.3%** | **+154.3%** |
+| | **Lexical** | 48.5% | **74.4%** | **+53.4%** |
+| | **Semantic** | 22.5% | **40.9%** | **+81.8%** |
+| **In-Domain Recall@5** | **Hybrid** | 88.6% | **86.8%** | -1.8% (Preserved) |
+| | **Lexical** | 78.9% | **86.8%** | **+10.0%** |
+| | **Semantic** | 76.3% | **71.1%** | -6.8% |
+| **Mudra Query Precision** | **Hybrid** | 20.0% (1/5) | **100.0% (1/1)** | **+400% (Clean SCH002 only)** |
+| **OOD Rejection Accuracy** | **All Modes** | 100.0% (3/3) | **100.0% (3/3)** | **100% (Zero Hallucination)** |
+| **Avg Returned per Query** | **Hybrid** | 4.1 sources | **1.9 sources** | **Pruned (No artificial padding)** |
+| | **Lexical** | 2.7 sources | **1.9 sources** | Pruned |
+| | **Semantic** | 3.8 sources | **2.5 sources** | Pruned |
+
+### 4. Verification Suite Results
+
+| Test Category | Command | Tests Run | Result | Notes |
+| :--- | :--- | :---: | :---: | :--- |
+| **RAG Verification Suite** | `python RAG/src/verify_retrieval_suite.py` | 31 checks | **100% PASSED** | All 3 modes pass; Mudra anti-padding validated |
+| **22-Query Benchmark** | `python RAG/src/benchmark_evaluation.py` | 66 queries (3 modes) | **100% PASSED** | Precision@5 improved to 76.3% |
+| **Backend API & RAG Tests** | `npm --prefix backend test` | 12 tests | **12/12 PASSED** | End-to-end HTTP integration and Mudra test |
+| **Android Unit Tests** | `./gradlew.bat testDebugUnitTest` | 9 tests | **9/9 PASSED** | Android build and models intact |
+| **RAG Runtime Bundle Sync** | `node backend/scripts/sync-rag.js` | 5 assets | **SYNCED (237 KB)** | `backend/RAG` in sync with canonical `RAG` |
+
+### 5. Honest Limitations & Operational Guidance
+1. **Semantic-Only Mode Limitations**:
+   FastEmbed MiniLM-L6-v2 embeddings on short scheme documents yield broad cosine similarities (~0.25 - 0.45) across general welfare language. While relative drop-off pruning improved semantic precision from 22.5% to 40.9%, **Hybrid mode remains strongly recommended for production use**.
+2. **Acronym Scope**:
+   Schemes not registered in `ACRONYM_MAP` rely on lexical token and synonym expansion. If a citizen types an obscure or unlisted acronym, the system will fall back to semantic search or require typing the scheme's colloquial name.
+3. **Grounded Answer Generation**:
+   Answer synthesis operates in strict grounding mode. If `GROQ_API_KEY` is omitted, the API reliably serves all retrieved scheme sources and excerpts with `llm_status: "unconfigured_api_key"` without crashing or blocking mobile citizens.

@@ -66,6 +66,16 @@ exports.askQuestion = (req, res) => {
         mode = String(req.body.mode).toLowerCase();
     }
 
+    const payloadObj = { query, k, mode };
+    const minScore = req.body.min_score !== undefined ? parseFloat(req.body.min_score) : (req.body.relevance_threshold !== undefined ? parseFloat(req.body.relevance_threshold) : undefined);
+    if (minScore !== undefined && !isNaN(minScore)) {
+        payloadObj.min_score = minScore;
+    }
+    const relThreshold = req.body.relative_threshold !== undefined ? parseFloat(req.body.relative_threshold) : undefined;
+    if (relThreshold !== undefined && !isNaN(relThreshold)) {
+        payloadObj.relative_threshold = relThreshold;
+    }
+
     // 2. Resolve script and database paths (prioritizes self-contained backend/RAG, falls back to project root)
     let ragDir = path.resolve(__dirname, '../../RAG');
     const nestedMetaPath = path.join(ragDir, 'semantic_index', 'scheme_metadata.json');
@@ -107,7 +117,7 @@ exports.askQuestion = (req, res) => {
     let stdoutData = '';
     let stderrData = '';
 
-    const payload = JSON.stringify({ query, k, mode });
+    const payload = JSON.stringify(payloadObj);
 
     let pyProcess;
     try {

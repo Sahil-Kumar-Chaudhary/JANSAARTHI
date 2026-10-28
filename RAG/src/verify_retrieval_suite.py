@@ -42,5 +42,31 @@ for q, expected in test_queries:
         print(f"[{mode.upper():8}] \"{q[:42]:42}\" -> {status}")
 
 print(f"\nOverall RAG Retrieval Modes Verification: {'PASSED' if all_passed else 'FAILED'}")
-if not all_passed:
+
+print("\n=== Phase 1.6 Mudra Precision & Anti-Padding Verification ===")
+mudra_query = "Pradhan Mantri Mudra Yojana loan eligibility"
+mudra_results = retrieve_schemes(mudra_query, k=5, mode="hybrid")
+mudra_ids = [r["schemeId"] for r in mudra_results]
+print(f"Query: \"{mudra_query}\"")
+print(f"Returned {len(mudra_results)} scheme(s): {[(r['schemeId'], r['schemeName'], r['score']) for r in mudra_results]}")
+
+mudra_check_passed = True
+if "SCH002" not in mudra_ids:
+    print("FAIL: Expected SCH002 in results")
+    mudra_check_passed = False
+
+unrelated = {"SCH022", "SCH048", "SCH041"}
+present_unrelated = unrelated.intersection(set(mudra_ids))
+if present_unrelated:
+    print(f"FAIL: Unrelated schemes {present_unrelated} appeared in top results!")
+    mudra_check_passed = False
+else:
+    print("PASS: Unrelated schemes (Kisan Maandhan, Matru Vandana, PMAY) cleanly excluded.")
+
+if len(mudra_results) > 2:
+    print(f"WARNING: Returned {len(mudra_results)} schemes, expected concise relevant set (<=2)")
+else:
+    print(f"PASS: Result set count pruned concisely ({len(mudra_results)} sources), no artificial padding to 5.")
+
+if not (all_passed and mudra_check_passed):
     sys.exit(1)
