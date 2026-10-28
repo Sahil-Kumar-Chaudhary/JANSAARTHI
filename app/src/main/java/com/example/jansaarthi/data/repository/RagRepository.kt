@@ -11,10 +11,13 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class RagRepository(
-    private val api: RagApi = RetrofitClient.ragApi,
+    private val api: RagApi? = null,
     private val gson: Gson = Gson(),
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
+    private val activeApi: RagApi
+        get() = api ?: RetrofitClient.ragApi
+
     suspend fun askQuestion(
         query: String,
         k: Int = 5,
@@ -29,7 +32,7 @@ class RagRepository(
         }
 
         try {
-            val response = api.askQuestion(
+            val response = activeApi.askQuestion(
                 RagAskRequest(
                     query = trimmed,
                     k = k,

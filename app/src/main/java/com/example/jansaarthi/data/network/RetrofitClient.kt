@@ -10,6 +10,12 @@ object RetrofitClient {
     const val STAGING_BASE_URL = "https://jansaarthi-rag-staging.onrender.com/"
     const val EMULATOR_BASE_URL = "http://10.0.2.2:3000/"
 
+    enum class EnvironmentTarget {
+        PRODUCTION,
+        STAGING,
+        EMULATOR
+    }
+
     private fun isRunningOnEmulator(): Boolean {
         return try {
             val hardware = android.os.Build.HARDWARE.lowercase()
@@ -34,9 +40,18 @@ object RetrofitClient {
     private fun determineDefaultBaseUrl(): String {
         return try {
             val isEmu = isRunningOnEmulator()
-            val url = if (com.example.jansaarthi.BuildConfig.DEBUG && isEmu) {
-                EMULATOR_BASE_URL
+            val url = if (com.example.jansaarthi.BuildConfig.DEBUG) {
+                // In debug builds:
+                // - Physical test devices (e.g. OPPO CPH2333) default to STAGING_BASE_URL over HTTPS
+                //   to safely test live features and isolate test accounts in jansaarthi_staging.
+                // - Emulators default to EMULATOR_BASE_URL for local development.
+                if (isEmu) {
+                    EMULATOR_BASE_URL
+                } else {
+                    STAGING_BASE_URL
+                }
             } else {
+                // Release builds ALWAYS use production
                 PROD_BASE_URL
             }
             try {
@@ -73,6 +88,28 @@ object RetrofitClient {
         currentBaseUrl = url
         retrofit = buildRetrofit(url)
     }
+
+    fun setEnvironment(target: EnvironmentTarget) {
+        val url = when (target) {
+            EnvironmentTarget.PRODUCTION -> PROD_BASE_URL
+            EnvironmentTarget.STAGING -> STAGING_BASE_URL
+            EnvironmentTarget.EMULATOR -> EMULATOR_BASE_URL
+        }
+        setCustomBaseUrl(url)
+    }
+
+    fun getActiveEnvironment(): EnvironmentTarget {
+        return when (currentBaseUrl) {
+            PROD_BASE_URL -> EnvironmentTarget.PRODUCTION
+            STAGING_BASE_URL -> EnvironmentTarget.STAGING
+            EMULATOR_BASE_URL -> EnvironmentTarget.EMULATOR
+            else -> EnvironmentTarget.STAGING
+        }
+    }
+
+    fun isStagingActive(): Boolean = currentBaseUrl.startsWith(STAGING_BASE_URL)
+    fun isProductionActive(): Boolean = currentBaseUrl.startsWith(PROD_BASE_URL)
+    fun isEmulatorActive(): Boolean = currentBaseUrl.startsWith(EMULATOR_BASE_URL)
 
     fun useStagingBaseUrl() {
         setCustomBaseUrl(STAGING_BASE_URL)

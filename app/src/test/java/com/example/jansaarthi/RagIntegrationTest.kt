@@ -321,5 +321,25 @@ class RagIntegrationTest {
         // Restore original URL
         RetrofitClient.setCustomBaseUrl(originalUrl)
         assertEquals(originalUrl, RetrofitClient.getBaseUrl())
+
+        // Test environment targets
+        RetrofitClient.setEnvironment(RetrofitClient.EnvironmentTarget.STAGING)
+        assertEquals(RetrofitClient.STAGING_BASE_URL, RetrofitClient.getBaseUrl())
+        assertEquals(RetrofitClient.EnvironmentTarget.STAGING, RetrofitClient.getActiveEnvironment())
+        assertTrue(RetrofitClient.isStagingActive())
+        assertFalse(RetrofitClient.isProductionActive())
+
+        RetrofitClient.setEnvironment(RetrofitClient.EnvironmentTarget.PRODUCTION)
+        assertEquals(RetrofitClient.PROD_BASE_URL, RetrofitClient.getBaseUrl())
+        assertEquals(RetrofitClient.EnvironmentTarget.PRODUCTION, RetrofitClient.getActiveEnvironment())
+        assertTrue(RetrofitClient.isProductionActive())
+
+        RetrofitClient.setEnvironment(RetrofitClient.EnvironmentTarget.EMULATOR)
+        assertEquals(RetrofitClient.EMULATOR_BASE_URL, RetrofitClient.getBaseUrl())
+        assertEquals(RetrofitClient.EnvironmentTarget.EMULATOR, RetrofitClient.getActiveEnvironment())
+        assertTrue(RetrofitClient.isEmulatorActive())
+
+        // Restore original
+        RetrofitClient.setCustomBaseUrl(originalUrl)
     }
 }
