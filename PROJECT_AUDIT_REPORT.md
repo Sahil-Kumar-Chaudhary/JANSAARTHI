@@ -780,3 +780,39 @@ Live mobile testing on the OPPO CPH2333 phone surfaced two presentation and fact
    The current catalog of 100 schemes in `scheme_metadata.json` stores basic fields (`scheme_id`, `scheme_name`, `category`, `ministry_or_department`, `target_group_or_purpose`, `scheme_launch_date`). Specific current monetary slabs (e.g. Mudra Shishu/Kishore/Tarun limits) are not yet populated in the structured JSON, so the model correctly disclaims them rather than hallucinating. Enriching `scheme_metadata.json` with detailed verified financial slabs in a future phase will enable exact figure reporting.
 2. **Live Application Cycle Tracking**:
    Government application cycles change dynamically throughout the financial year. The assistant's official disclaimer advising citizens to verify open windows on `myScheme.gov.in` remains the safest, most reliable legal posture for citizen guidance.
+
+---
+
+## P. Phase 1.8: Continuous Integration (GitHub Actions) for Pull Request #1
+
+### 1. Workflow Architecture & Configuration
+Configured [`.github/workflows/ci.yml`](file:///c:/Users/sahil/OneDrive/Documents/JANSAARTHI/.github/workflows/ci.yml) targeting `pull_request` to `main`, `push` to `integration/rag-validation`, and manual `workflow_dispatch`.
+
+To ensure maximum speed, jobs execute in parallel across Ubuntu runners with automatic concurrency cancellation:
+
+1. **`backend-and-rag-integration`**:
+   - Environment: Ubuntu Latest, Node.js 20, Python 3.12.
+   - Dependencies: `npm ci` in `backend/`, `pip install -r RAG/requirements_render.txt`.
+   - Execution: Synchronizes RAG bundle (`npm run build`) and runs `npm test` (13 integration tests).
+   - Zero Credential Dependency: Tests execute offline without requiring production MongoDB or Groq credentials.
+2. **`rag-retrieval-verification`**:
+   - Environment: Ubuntu Latest, Python 3.12.
+   - Dependencies: `pip install -r RAG/requirements_render.txt`.
+   - Model Caching: Pre-caches FastEmbed ONNX model (`RAG/.cache`) using `actions/cache@v4`.
+   - Execution: Runs `verify_retrieval_suite.py` (31 retrieval checks + Mudra anti-padding) and `benchmark_evaluation.py` (22 benchmark queries across 3 modes).
+3. **`android-test-and-build`**:
+   - Environment: Ubuntu Latest, Eclipse Temurin JDK 17.
+   - Gradle Optimization: Uses `gradle/actions/setup-gradle@v4` with dependency and wrapper caching.
+   - File Permissions: Sets `chmod +x gradlew` (and index mode `100755`).
+   - Execution: Runs `./gradlew testDebugUnitTest` (16 unit tests) and `./gradlew assembleDebug` (compiles `app-debug.apk`).
+   - Artifacts: Automatically captures test reports on failure via `actions/upload-artifact@v4`.
+
+### 2. Pre-Commit Local Test Verification
+
+| Test Suite | Command / Verification | Result | Status |
+| :--- | :--- | :---: | :---: |
+| **CI Workflow YAML Validation** | PyYAML safe parser | Valid syntax, 3 parallel jobs | **PASSED** |
+| **Backend & RAG API Tests** | `npm --prefix backend test` | 13 passed, 0 failed | **PASSED** |
+| **Python RAG Verification Suite** | `python RAG/src/verify_retrieval_suite.py` | 31 checks passed | **PASSED** |
+| **Android Unit Tests** | `./gradlew testDebugUnitTest` | 16 passed, 0 failed | **PASSED** |
+| **Gradlew File Permissions** | `git ls-files -s gradlew` | Mode `100755` executable | **PASSED** |
