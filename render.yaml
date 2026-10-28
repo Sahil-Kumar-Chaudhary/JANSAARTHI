@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: jansaarthi-rag-staging
+    runtime: node
+    branch: integration/rag-validation
+    plan: free
+    rootDir: .
+    buildCommand: cd backend && npm install && npm run build && pip install -r ../RAG/requirements_render.txt && python -c "import os; from fastembed import TextEmbedding; TextEmbedding(model_name='sentence-transformers/all-MiniLM-L6-v2', cache_dir=os.environ.get('FASTEMBED_CACHE_PATH', 'RAG/.cache'))"
+    startCommand: cd backend && node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_DB_NAME
+        value: jansaarthi_staging
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: GROQ_API_KEY
+        sync: false
