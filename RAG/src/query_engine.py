@@ -197,7 +197,8 @@ def get_embed_model():
         return _EMBED_MODEL
     try:
         from fastembed import TextEmbedding
-        _EMBED_MODEL = TextEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
+        cache_dir = os.environ.get("FASTEMBED_CACHE_PATH") or str(RAG_DIR / ".cache")
+        _EMBED_MODEL = TextEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2", cache_dir=cache_dir)
         return _EMBED_MODEL
     except Exception as e:
         print(f"[Warning] Could not initialize FastEmbed: {e}. Falling back to lexical retrieval.", file=sys.stderr)
@@ -339,7 +340,7 @@ def retrieve_schemes(query: str, k: int = 5, mode: str = "hybrid") -> list[dict]
             return []
 
         # Scale semantic similarity to 0..50 score
-        sem_scaled = np.maximum(0.0, (sem_sims - 0.23) / 0.50 * 50.0)
+        sem_scaled = np.maximum(0.0, (sem_sims - 0.235) / 0.40 * 50.0)
 
         for i, s in enumerate(schemes):
             lex = float(lex_scores[i])
@@ -355,9 +356,9 @@ def retrieve_schemes(query: str, k: int = 5, mode: str = "hybrid") -> list[dict]
             if lex > 0 and sem > 0:
                 final_score = (0.50 * lex) + (0.50 * sem) + 12.0
             elif lex > 0:
-                final_score = lex * 0.80
+                final_score = lex * 0.85
             else:
-                final_score = sem * 0.80
+                final_score = sem + 6.0
 
             if final_score >= 8.0:
                 scored_candidates.append({

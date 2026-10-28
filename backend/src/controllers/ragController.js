@@ -66,20 +66,23 @@ exports.askQuestion = (req, res) => {
         mode = String(req.body.mode).toLowerCase();
     }
 
-    // 2. Resolve script and database paths (supports repo root or backend-nested RAG)
-    const projectRoot = path.resolve(__dirname, '../../../');
-    let ragDir = path.join(projectRoot, 'RAG');
-    if (!fs.existsSync(ragDir)) {
-        const nestedRagDir = path.resolve(__dirname, '../../RAG');
-        if (fs.existsSync(nestedRagDir)) {
-            ragDir = nestedRagDir;
+    // 2. Resolve script and database paths (prioritizes self-contained backend/RAG, falls back to project root)
+    let ragDir = path.resolve(__dirname, '../../RAG');
+    const nestedMetaPath = path.join(ragDir, 'semantic_index', 'scheme_metadata.json');
+    if (!fs.existsSync(nestedMetaPath)) {
+        const projectRoot = path.resolve(__dirname, '../../../');
+        const rootRagDir = path.join(projectRoot, 'RAG');
+        if (fs.existsSync(path.join(rootRagDir, 'semantic_index', 'scheme_metadata.json')) || fs.existsSync(path.join(rootRagDir, 'chroma_db', 'chroma.sqlite3'))) {
+            ragDir = rootRagDir;
         }
     }
+
     const scriptPath = path.join(ragDir, 'src', 'query_engine.py');
+    const semanticIndexPath = path.join(ragDir, 'semantic_index', 'scheme_metadata.json');
     const dbPath = path.join(ragDir, 'chroma_db', 'chroma.sqlite3');
 
-    if (!fs.existsSync(dbPath)) {
-        console.error('[RAG Controller] Chroma database not found at:', dbPath);
+    if (!fs.existsSync(semanticIndexPath) && !fs.existsSync(dbPath)) {
+        console.error('[RAG Controller] Neither semantic index nor Chroma database found at:', ragDir);
         return res.status(503).json({
             status: 'error',
             code: 'VECTOR_INDEX_UNAVAILABLE',
@@ -99,7 +102,7 @@ exports.askQuestion = (req, res) => {
     const pythonBin = resolvePythonBinary();
 
     // 3. Spawn Python process with timeout
-    const timeoutMs = 15000;
+    const timeoutMs = 30000;
     let timedOut = false;
     let stdoutData = '';
     let stderrData = '';
@@ -112,7 +115,8 @@ exports.askQuestion = (req, res) => {
             cwd: ragDir,
             env: {
                 ...process.env,
-                PYTHONIOENCODING: 'utf-8'
+                PYTHONIOENCODING: 'utf-8',
+                FASTEMBED_CACHE_PATH: process.env.FASTEMBED_CACHE_PATH || path.join(ragDir, '.cache')
             }
         });
     } catch (err) {
@@ -127,7 +131,11 @@ exports.askQuestion = (req, res) => {
     const timer = setTimeout(() => {
         timedOut = true;
         try {
-            pyProcess.kill('SIGKILL');
+            if (process.platform === 'win32') {
+                pyProcess.kill();
+            } else {
+                pyProcess.kill('SIGKILL');
+            }
         } catch (e) {}
     }, timeoutMs);
 
