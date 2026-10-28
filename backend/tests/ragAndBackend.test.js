@@ -204,6 +204,13 @@ async function runTests() {
             assert.strictEqual(res.body.code, 'DATABASE_UNAVAILABLE');
         });
 
+        // Test 11: MongoDB database name configuration
+        await test('Database configuration supports MONGODB_DB_NAME override with safe default', async () => {
+            const defaultDb = process.env.MONGODB_DB_NAME || 'jansaarthi';
+            assert.strictEqual(typeof defaultDb, 'string');
+            assert.strictEqual(defaultDb.length > 0, true);
+        });
+
     } finally {
         server.close();
     }

@@ -45,7 +45,7 @@ const healthCheckHandler = (req, res) => {
         server: 'healthy',
         database: {
             status: dbStatusText,
-            name: isDbConnected ? (mongoose.connection.name || 'jansaarthi') : undefined
+            name: isDbConnected ? (mongoose.connection.name || process.env.MONGODB_DB_NAME || 'jansaarthi') : undefined
         },
         timestamp: new Date().toISOString()
     };

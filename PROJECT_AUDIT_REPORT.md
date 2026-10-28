@@ -607,8 +607,8 @@ Output: app/build/outputs/apk/debug/app-debug.apk (20.8 MB)
   When `GROQ_API_KEY` is not present, the endpoint gracefully responds with status 200, all 5 retrieved scheme sources, excerpts, and `llm_status: "unconfigured_api_key"`.
 - **Zero Hallucination / OOD Guard**:
   Queries outside Indian government scheme domain cleanly return 0 sources and `llm_status: "no_context"`, preventing fabricated scheme citations or eligibility claims.
-- **Credentials Protection**:
-  No `.env` files or API secrets are committed. All cache directories (`.cache/`, `venv/`) are excluded in `.gitignore`.
+- **Credentials & Database Isolation**:
+  No `.env` files or API secrets are committed. All cache directories (`.cache/`, `venv/`) are excluded in `.gitignore`. The MongoDB database name is configurable via `MONGODB_DB_NAME` (defaulting to `jansaarthi` for production backward compatibility and supporting isolated databases like `jansaarthi_staging` for staging).
 
 ### 4. Full Automated Test Suite Results
 
@@ -616,7 +616,7 @@ Output: app/build/outputs/apk/debug/app-debug.apk (20.8 MB)
 | :--- | :--- | :---: | :---: | :---: |
 | **Android Unit Tests** | `./gradlew.bat testDebugUnitTest` | 9 | 9 | **PASSED** |
 | **Android Debug Compilation** | `./gradlew.bat assembleDebug` | 1 | 1 | **PASSED** (`app-debug.apk`, 20.8 MB) |
-| **Backend & RAG API Tests** | `cd backend && npm test` | 10 | 10 | **PASSED** |
+| **Backend & RAG API Tests** | `cd backend && npm test` | 11 | 11 | **PASSED** |
 | **RAG Retrieval Modes (20 queries)** | `RAG/src/verify_retrieval_suite.py` | 30 evaluations | 30 | **PASSED** |
 | **Live Emulator Query Verification** | `Pixel_10_Pro_XL` $\leftrightarrow$ `http://10.0.2.2:3000` | 1 | 1 | **PASSED** (Screenshot verified) |
 

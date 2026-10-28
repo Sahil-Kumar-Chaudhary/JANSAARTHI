@@ -20,7 +20,8 @@ const attachEventListeners = () => {
     listenersAttached = true;
 
     mongoose.connection.on('connected', () => {
-        console.log('[MongoDB] Connected successfully to database: jansaarthi');
+        const activeDb = mongoose.connection.name || process.env.MONGODB_DB_NAME || 'jansaarthi';
+        console.log(`[MongoDB] Connected successfully to database: ${activeDb}`);
     });
 
     mongoose.connection.on('disconnected', () => {
@@ -32,7 +33,8 @@ const attachEventListeners = () => {
     });
 
     mongoose.connection.on('reconnected', () => {
-        console.log('[MongoDB] Reconnected to database: jansaarthi');
+        const activeDb = mongoose.connection.name || process.env.MONGODB_DB_NAME || 'jansaarthi';
+        console.log(`[MongoDB] Reconnected to database: ${activeDb}`);
     });
 };
 
@@ -54,11 +56,12 @@ const connectDB = async () => {
         return true;
     }
 
+    const dbName = process.env.MONGODB_DB_NAME || 'jansaarthi';
     isConnecting = true;
     try {
-        console.log(`[MongoDB] Connecting to database jansaarthi...`);
+        console.log(`[MongoDB] Connecting to database: ${dbName}...`);
         await mongoose.connect(uri, {
-            dbName: 'jansaarthi',
+            dbName: dbName,
             serverSelectionTimeoutMS: 5000,
             connectTimeoutMS: 10000,
         });

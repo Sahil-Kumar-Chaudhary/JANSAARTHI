@@ -43,6 +43,7 @@ Configure these variables in the Render Service Dashboard (**Environment** tab):
 | `PORT` | Auto | Render assigns this dynamically. `server.js` automatically reads it. | `10000` |
 | `NODE_ENV` | Yes | Node production environment flag. | `production` |
 | `MONGODB_URI` | Yes | MongoDB Atlas connection string for user accounts and profiles. | `mongodb+srv://...` |
+| `MONGODB_DB_NAME` | Optional | Target MongoDB database name (use `jansaarthi_staging` for staging). | Defaults to `jansaarthi` |
 | `JWT_SECRET` | Yes | Secret key used to sign and verify citizen auth tokens. | High-entropy string |
 | `GROQ_API_KEY` | Optional | Groq cloud API key for grounded natural-language answer synthesis. | `gsk_...` |
 | `FASTEMBED_CACHE_PATH` | Optional | Custom path for FastEmbed ONNX model weights. | Defaults to `RAG/.cache` |
