@@ -7,10 +7,12 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -234,7 +236,7 @@ fun RagModeSelector(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier.horizontalScroll(rememberScrollState()),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -249,7 +251,7 @@ fun RagModeSelector(
         FilterChip(
             selected = currentMode == "hybrid",
             onClick = { onModeSelected("hybrid") },
-            label = { Text("Hybrid", fontSize = 12.sp) },
+            label = { Text("Hybrid", fontSize = 12.sp, maxLines = 1) },
             colors = FilterChipDefaults.filterChipColors(
                 selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
                 selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -259,7 +261,7 @@ fun RagModeSelector(
         FilterChip(
             selected = currentMode == "semantic",
             onClick = { onModeSelected("semantic") },
-            label = { Text("Semantic", fontSize = 12.sp) },
+            label = { Text("Semantic", fontSize = 12.sp, maxLines = 1) },
             colors = FilterChipDefaults.filterChipColors(
                 selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
                 selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -269,7 +271,7 @@ fun RagModeSelector(
         FilterChip(
             selected = currentMode == "lexical",
             onClick = { onModeSelected("lexical") },
-            label = { Text("Keyword", fontSize = 12.sp) },
+            label = { Text("Keyword", fontSize = 12.sp, maxLines = 1) },
             colors = FilterChipDefaults.filterChipColors(
                 selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
                 selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -447,12 +449,9 @@ fun RagMessageItem(
 
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        Text(
+                        FormattedMessageText(
                             text = message.text,
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                lineHeight = 20.sp
-                            )
+                            textColor = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }

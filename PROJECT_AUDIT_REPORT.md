@@ -724,3 +724,59 @@ Created [`RAG/src/benchmark_evaluation.py`](file:///c:/Users/sahil/OneDrive/Docu
    Schemes not registered in `ACRONYM_MAP` rely on lexical token and synonym expansion. If a citizen types an obscure or unlisted acronym, the system will fall back to semantic search or require typing the scheme's colloquial name.
 3. **Grounded Answer Generation**:
    Answer synthesis operates in strict grounding mode. If `GROQ_API_KEY` is omitted, the API reliably serves all retrieved scheme sources and excerpts with `llm_status: "unconfigured_api_key"` without crashing or blocking mobile citizens.
+
+---
+
+## O. Phase 1.7: AI Answer Formatting, Factual Reliability & Benefit Type Distinction
+
+### 1. Problem Statement & Root Cause
+Live mobile testing on the OPPO CPH2333 phone surfaced two presentation and factual reliability defects:
+1. **Raw Markdown Leakage on Android**:
+   Assistant responses in `RagScreen.kt` displayed raw markdown formatting (`**bold text**`, `|` pipe-delimited tables, and `*italic*`), resulting in an unpolished citizen experience. Wide Markdown tables wrapped awkwardly on mobile screens, and the search mode chip row broke the word *"Keyword"* into *"Keywo\nrd"*.
+2. **Factual Conflation & Unverified Loan Caps**:
+   When queried about *"Financial grants for women entrepreneurs"*, the model hallucinated loan caps (*"up to ₹10 lakhs"* for Stand Up India `SCH003`, whereas the official scheme limit is ₹10 Lakhs to ₹1 Crore) and failed to distinguish repayable bank loans from non-repayable grants. Historical launch dates (2016-04-05) were presented without clarifying whether application windows were currently open.
+
+### 2. Solutions Implemented
+
+#### A. Mobile-Native Material 3 Formatting (`FormattedMessageText.kt`)
+- Created [`FormattedMessageText.kt`](file:///c:/Users/sahil/OneDrive/Documents/JANSAARTHI/app/src/main/java/com/example/jansaarthi/ui/screens/rag/FormattedMessageText.kt) using Jetpack Compose Material 3 without introducing third-party dependencies.
+- **Semantic Block Parser (`parseMessageBlocks`)**:
+  - Headings (`#`, `##`, `###`, standalone bold lines) $\rightarrow$ Rendered with `MaterialTheme.typography.titleSmall` / `titleMedium` in primary color.
+  - Bullet items (`-`, `*`, `•`) $\rightarrow$ Styled `Row` with a distinct bullet indicator (`•`) and properly indented text.
+  - Numbered lists (`1.`, `2.`) $\rightarrow$ Styled `Row` with bold number badges.
+  - Markdown Tables $\rightarrow$ Automatically converted into responsive, stacked **Material 3 Cards** with bold title and key-value pairs, completely eliminating broken pipe formatting on mobile.
+- **Inline Markdown Parser (`parseInlineMarkdown`)**:
+  - Transforms `**bold**`, `*italic*`, and `` `code` `` into `AnnotatedString` with appropriate `SpanStyle` while stripping unparsed syntax artifacts.
+- **Horizontal Scroll for Search Chips**:
+  - Added `Modifier.horizontalScroll(rememberScrollState())` and `maxLines = 1` in `RagModeSelector` to ensure chip labels never wrap words across lines.
+- **Localization & Themes**:
+  - Colors and typography dynamically adapt to Material 3 Light Mode, Dark Mode, English, and Hindi.
+
+#### B. Strict Grounding & Factual Reliability in Groq Generation
+- Upgraded the system prompt in [`RAG/src/query_engine.py`](file:///c:/Users/sahil/OneDrive/Documents/JANSAARTHI/RAG/src/query_engine.py):
+  1. **Strict Grounding Rule**: Strictly prohibits stating or guessing unverified loan caps, subsidies, or interest rates not explicitly present in the retrieved `<context>`.
+  2. **Benefit Type Distinction**: Mandates clarifying whether a scheme provides **repayable loans/credit** or **non-repayable grants/subsidies**. If a citizen asks for grants but matching schemes offer loans, the assistant explicitly warns: *"Note: The matching schemes provide repayable loans or credit facilities, not non-repayable grants."*
+  3. **Launch Date vs. Active Status**: Forbids inferring that a scheme is currently open based solely on its launch date; requires disclaiming that live status and application cycles must be confirmed on official channels.
+  4. **Prohibition of Markdown Tables**: Strictly forbids pipe-delimited tables (`| ... |`), mandating clean paragraphs and bullet points for mobile readability.
+  5. **No False Promises**: Prohibits implying guaranteed government approval or sanction.
+- **Structured Factual Fallback**:
+  - When `GROQ_API_KEY` is absent, the backend now generates a structured, factual bullet summary of matching schemes directly from verified metadata, complete with status and portal verification disclaimers.
+- **Runtime Asset Synchronization**:
+  - Synchronized updated `query_engine.py` into `backend/RAG/src/query_engine.py` via `backend/scripts/sync-rag.js`.
+
+### 3. Test Verification Results
+
+| Test Category | Command / File | Total Tests | Result | Status |
+| :--- | :--- | :---: | :---: | :---: |
+| **Android Markdown Formatting Unit Tests** | `FormattedMessageTextTest.kt` | 6 tests | **6 / 6 PASSED** | Headings, bullets, tables-to-cards, inline styles |
+| **Android Integration Unit Tests** | `RagIntegrationTest.kt` | 10 tests | **10 / 10 PASSED** | Repositories, models, environment switching |
+| **Android Debug Compilation** | `./gradlew assembleDebug` | 1 task | **BUILD SUCCESSFUL** | Clean APK build without errors |
+| **Backend & RAG API Test Suite** | `npm --prefix backend test` | 13 tests | **13 / 13 PASSED** | Verified factual fallback & no raw markdown tables |
+| **Python Retrieval Modes Verification** | `verify_retrieval_suite.py` | 31 checks | **31 / 31 PASSED** | All 3 retrieval modes passing 100% |
+| **RAG 22-Query Benchmark Evaluation** | `benchmark_evaluation.py` | 66 runs | **100% PASSED** | High precision and 100% OOD accuracy |
+
+### 4. Remaining Limitations & Recommendations
+1. **Catalog Scheme Metadata Detail**:
+   The current catalog of 100 schemes in `scheme_metadata.json` stores basic fields (`scheme_id`, `scheme_name`, `category`, `ministry_or_department`, `target_group_or_purpose`, `scheme_launch_date`). Specific current monetary slabs (e.g. Mudra Shishu/Kishore/Tarun limits) are not yet populated in the structured JSON, so the model correctly disclaims them rather than hallucinating. Enriching `scheme_metadata.json` with detailed verified financial slabs in a future phase will enable exact figure reporting.
+2. **Live Application Cycle Tracking**:
+   Government application cycles change dynamically throughout the financial year. The assistant's official disclaimer advising citizens to verify open windows on `myScheme.gov.in` remains the safest, most reliable legal posture for citizen guidance.

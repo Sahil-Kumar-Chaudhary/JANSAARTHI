@@ -196,16 +196,37 @@ async function runTests() {
             assert.strictEqual(res.body.llm_status, 'no_context');
         });
 
-        // Test 8: Absence of GROQ_API_KEY does not break retrieval
-        await test('POST /api/rag/ask safely handles absence of GROQ_API_KEY', async () => {
+        // Test 8: Absence of GROQ_API_KEY does not break retrieval and yields structured factual guidance
+        await test('POST /api/rag/ask safely handles absence of GROQ_API_KEY with structured factual fallback', async () => {
             const res = await makeRequest('POST', '/api/rag/ask', {
                 query: 'PM-KISAN'
             });
             assert.strictEqual(res.statusCode, 200);
             assert.strictEqual(res.body.status, 'success');
             assert.strictEqual(res.body.sources.length > 0, true);
-            // Should contain clear unconfigured message or generated answer
             assert.strictEqual(['unconfigured_api_key', 'generated', 'service_error'].includes(res.body.llm_status), true);
+            assert.strictEqual(typeof res.body.answer, 'string');
+            assert.strictEqual(res.body.answer.length > 20, true);
+            // Must not contain raw Markdown table pipes
+            assert.strictEqual(res.body.answer.includes('|---|'), false);
+            // Must contain official portal reference
+            assert.strictEqual(res.body.answer.includes('myScheme.gov.in'), true);
+        });
+
+        // Test 8b: Phase 1.7 Factual Reliability & Benefit Type Distinction
+        await test('POST /api/rag/ask response contains grounded scheme references and official portal guidance', async () => {
+            const res = await makeRequest('POST', '/api/rag/ask', {
+                query: 'Financial grants for women entrepreneurs',
+                mode: 'hybrid'
+            });
+            assert.strictEqual(res.statusCode, 200);
+            assert.strictEqual(res.body.status, 'success');
+            assert.strictEqual(res.body.sources.length > 0, true);
+            // Verified that answer does not contain wide markdown tables
+            assert.strictEqual(res.body.answer.includes('|---|'), false);
+            // Sources should contain genuine scheme IDs
+            const ids = res.body.sources.map(s => s.schemeId);
+            assert.strictEqual(ids.includes('SCH003') || ids.includes('SCH085'), true);
         });
 
         // Test 9: RAG Endpoint works even when MongoDB is disconnected

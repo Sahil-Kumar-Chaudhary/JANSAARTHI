@@ -593,13 +593,34 @@ def retrieve_schemes_from_chroma(query: str, k: int = 5, db_path: Path = CHROMA_
     return retrieve_schemes(query, k=k, mode="hybrid")
 
 def generate_answer_with_groq(query: str, contexts: list[dict], api_key: str = None) -> tuple[str, str]:
-    """Generates grounded RAG response using Groq cloud inference (if configured)."""
+    """Generates grounded RAG response using Groq cloud inference (if configured), or structured factual fallback."""
     key = api_key or os.environ.get("GROQ_API_KEY")
     if not key:
-        return (
-            "No Groq API key configured. The retrieved scheme details are provided in the sources list.",
-            "unconfigured_api_key"
-        )
+        # Generate a structured, factual, grounded answer directly from verified context
+        lines = ["Verified government scheme records matching your inquiry:\n"]
+        for c in contexts[:3]:
+            name = c.get("schemeName", "")
+            sid = c.get("schemeId", "")
+            cat = c.get("category", "")
+            doc = c.get("content", "")
+
+            target = ""
+            ministry = ""
+            for l in doc.splitlines():
+                if l.lower().startswith("target_group_or_purpose:"):
+                    target = l.split(":", 1)[1].strip()
+                elif l.lower().startswith("ministry_or_department:"):
+                    ministry = l.split(":", 1)[1].strip()
+
+            desc = f"• {name} ({sid}): {cat}"
+            if ministry:
+                desc += f" (Administered by {ministry})"
+            if target:
+                desc += f"\n  - Target Focus: {target}"
+            lines.append(desc)
+
+        lines.append("\nNote: Specific monetary limits, eligibility criteria, and current application status must be verified on the official portal (myScheme.gov.in).")
+        return "\n".join(lines), "unconfigured_api_key"
 
     try:
         from groq import Groq
@@ -611,14 +632,27 @@ def generate_answer_with_groq(query: str, contexts: list[dict], api_key: str = N
         ])
 
         system_prompt = (
-            "You are JANSAARTHI AI, an official government scheme assistance specialist in India.\n"
-            "Rules:\n"
-            "1. Answer the question using ONLY the provided scheme context.\n"
-            "2. Do NOT hallucinate or assume unstated eligibility or loan criteria.\n"
-            "3. If the context does not contain enough information, state: "
-            "'I do not have enough verified scheme information in the database to answer that completely.'\n"
-            "4. Cite the scheme name and ID for each fact you state.\n"
-            "5. Keep the response factual, structured, and easy to read for citizens."
+            "You are JANSAARTHI AI, an official Indian Government Scheme Information Assistant.\n"
+            "Your objective is to provide concise, factual, mobile-friendly guidance to citizens based strictly on provided official scheme documents.\n\n"
+            "CRITICAL FACTUAL RELIABILITY RULES:\n"
+            "1. STRICT GROUNDING: State facts that appear in the provided <context>. NEVER invent, extrapolate, or guess loan amounts, grant values, subsidy percentages, interest rates, or quotas (e.g. do NOT say 'up to ₹10 lakhs' unless that number explicitly appears in <context>).\n"
+            "2. UNVERIFIED MONETARY CAPS: If specific financial limits, maximum loans/grants, interest rates, or eligibility criteria are NOT in the context, explicitly state: 'Specific monetary limits and detailed eligibility criteria are not specified in the current records; please verify on the official portal.'\n"
+            "3. DISTINGUISH LOANS VS GRANTS: Explicitly clarify whether each scheme offers repayable loans/credit or non-repayable grants/subsidies. If a citizen asks for 'grants' but the retrieved schemes provide loans, you MUST state: 'Note: The matching schemes provide repayable loans or credit facilities, not non-repayable grants.'\n"
+            "4. SCHEME STATUS & LAUNCH DATES: A launch date does NOT indicate that a scheme is currently active or accepting applications. Never infer current enrollment status from historical launch dates. Clearly advise citizens that current application windows and active status must be confirmed on official channels.\n"
+            "5. NO PROMISES OR GUARANTEES: Never claim government approval, guaranteed sanction, or guaranteed eligibility. Use cautious language such as 'Intended for...' or 'Citizens in this category may apply subject to ministry guidelines.'\n"
+            "6. SCHEME RELEVANCE: Focus on the schemes that most directly match the query. If a scheme is in a different domain or has a broader focus, clarify how it relates.\n"
+            "7. NO HALLUCINATED URLS: Never invent web links or application URLs. Direct citizens only to the official national portal: myScheme.gov.in.\n\n"
+            "MOBILE FORMATTING RULES (STRICT):\n"
+            "1. NEVER GENERATE MARKDOWN TABLES. Do not use pipe delimiters ('|'). Tables break on mobile screens.\n"
+            "2. Start with a short summary paragraph (2-3 sentences max) directly answering the citizen's question.\n"
+            "3. Present relevant schemes using clean bullet points:\n"
+            "   • Scheme Name (Scheme ID)\n"
+            "     - Category: [Category]\n"
+            "     - Ministry: [Ministry / Department]\n"
+            "     - Intended Beneficiaries: [Target group / Purpose]\n"
+            "     - Benefit Type: [Loan / Credit (repayable) OR Grant / Subsidy (non-repayable)]\n"
+            "4. Keep paragraphs short with comfortable spacing.\n"
+            "5. End with a short reminder to check current application cycles on myScheme.gov.in."
         )
 
         user_prompt = f"<context>\n{context_text}\n</context>\n\n<question>\n{query}\n</question>"
