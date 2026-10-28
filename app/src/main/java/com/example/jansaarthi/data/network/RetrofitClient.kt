@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     const val PROD_BASE_URL = "https://jansaarthi-backend.onrender.com/"
+    const val STAGING_BASE_URL = "https://jansaarthi-rag-staging.onrender.com/"
     const val EMULATOR_BASE_URL = "http://10.0.2.2:3000/"
 
     private fun isRunningOnEmulator(): Boolean {
@@ -71,6 +72,18 @@ object RetrofitClient {
     fun setCustomBaseUrl(url: String) {
         currentBaseUrl = url
         retrofit = buildRetrofit(url)
+    }
+
+    fun useStagingBaseUrl() {
+        setCustomBaseUrl(STAGING_BASE_URL)
+    }
+
+    fun useProdBaseUrl() {
+        setCustomBaseUrl(PROD_BASE_URL)
+    }
+
+    fun useEmulatorBaseUrl() {
+        setCustomBaseUrl(EMULATOR_BASE_URL)
     }
 
     fun getBaseUrl(): String = currentBaseUrl

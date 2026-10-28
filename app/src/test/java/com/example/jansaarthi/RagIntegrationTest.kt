@@ -4,6 +4,7 @@ import com.example.jansaarthi.data.model.RagAskRequest
 import com.example.jansaarthi.data.model.RagAskResponse
 import com.example.jansaarthi.data.model.RagSource
 import com.example.jansaarthi.data.network.RagApi
+import com.example.jansaarthi.data.network.RetrofitClient
 import com.example.jansaarthi.data.repository.RagRepository
 import com.example.jansaarthi.ui.screens.rag.RagViewModel
 import com.google.gson.Gson
@@ -295,5 +296,30 @@ class RagIntegrationTest {
         assertNull(state.errorMessage)
         assertNull(state.lastFailedQuery)
         assertTrue(state.messages.any { it.text == "Recovered successfully!" })
+    }
+
+    // 9. RetrofitClient staging and custom URL configuration
+    @Test
+    fun testRetrofitClientStagingAndUrlConfiguration() {
+        assertEquals("https://jansaarthi-rag-staging.onrender.com/", RetrofitClient.STAGING_BASE_URL)
+        assertEquals("https://jansaarthi-backend.onrender.com/", RetrofitClient.PROD_BASE_URL)
+        assertEquals("http://10.0.2.2:3000/", RetrofitClient.EMULATOR_BASE_URL)
+
+        val originalUrl = RetrofitClient.getBaseUrl()
+
+        RetrofitClient.useStagingBaseUrl()
+        assertEquals(RetrofitClient.STAGING_BASE_URL, RetrofitClient.getBaseUrl())
+        assertNotNull(RetrofitClient.ragApi)
+        assertNotNull(RetrofitClient.instance)
+
+        RetrofitClient.useProdBaseUrl()
+        assertEquals(RetrofitClient.PROD_BASE_URL, RetrofitClient.getBaseUrl())
+
+        RetrofitClient.useEmulatorBaseUrl()
+        assertEquals(RetrofitClient.EMULATOR_BASE_URL, RetrofitClient.getBaseUrl())
+
+        // Restore original URL
+        RetrofitClient.setCustomBaseUrl(originalUrl)
+        assertEquals(originalUrl, RetrofitClient.getBaseUrl())
     }
 }
