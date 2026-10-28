@@ -543,11 +543,25 @@ BUILD SUCCESSFUL in 2s
 Output: app/build/outputs/apk/debug/app-debug.apk (20.8 MB)
 ```
 
-#### C. Android Emulator Verification
+#### C. Live Android Emulator & End-to-End Query Verification
 
 - **Device**: Android Emulator `emulator-5554` (`Pixel_10_Pro_XL`, API 36 / Android 17 runtime).
-- **Installation**: `adb install -r app/build/outputs/apk/debug/app-debug.apk` $\rightarrow$ **Success**.
-- **Activity Launch**: `adb shell am start -n com.example.jansaarthi/.MainActivity` $\rightarrow$ Successfully launched without crashes.
+- **Backend Service**: Local Node.js Express server listening on `0.0.0.0:3000` with local MongoDB connected.
+- **Dynamic Networking**: `RetrofitClient` accurately detects `ranchu`/`sdk` hardware properties on debug builds, automatically selecting `http://10.0.2.2:3000/` for local emulator traffic while defaulting release builds to production HTTPS.
+- **End-to-End Execution Trace**:
+  1. **Authentication**: Logged into test citizen account on emulator (`9876543210`).
+  2. **HomeScreen Navigation**: Verified "Ask JANSAARTHI AI" card rendered with bilingual subtitles; tapped card to transition to `RagScreen` (`Routes.RAG_QUERY`).
+  3. **Interaction**: Selected suggestion chip *"Pradhan Mantri Mudra Yojana loan eligibility"* in `Hybrid` mode.
+  4. **Network & Backend Processing**:
+     - Android app dispatched `POST http://10.0.2.2:3000/api/rag/ask`.
+     - Express backend invoked Python `RAG/src/query_engine.py` with FastEmbed ONNX embeddings and BM25 lexical scorer.
+     - Returned status 200 with 5 verified scheme sources.
+  5. **UI Rendering**:
+     - User bubble displayed query.
+     - Assistant bubble displayed answer and `HYBRID` badge.
+     - Expandable source accordion rendered verified citations for `SCH002` (Pradhan Mantri Mudra Yojana, Ministry of Finance) and `SCH001` (Pradhan Mantri Jan Dhan Yojana).
+     - Verified official source links (`Source: myScheme.gov.in`) rendered with external link intent; zero fake URLs fabricated.
+  6. **Visual Proof**: Verified screenshot saved to brain artifacts (`rag_screen.png`).
 
 ---
 
