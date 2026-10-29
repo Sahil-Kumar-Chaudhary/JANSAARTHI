@@ -18,11 +18,11 @@ class App : Application() {
         instance = this
         settingsRepository = SettingsRepository(this)
         
-        // Switch debug app to production backend using existing RetrofitClient environment-switching method
-        com.example.jansaarthi.data.network.RetrofitClient.setEnvironment(
-            com.example.jansaarthi.data.network.RetrofitClient.EnvironmentTarget.PRODUCTION
-        )
-        android.util.Log.i("App", "RetrofitClient target switched to PRODUCTION: ${com.example.jansaarthi.data.network.RetrofitClient.getBaseUrl()}")
+        // Initialize backend environment safely:
+        // - Release builds ALWAYS route to Production HTTPS
+        // - Debug builds default safely to Staging on physical devices (and Emulator on emulators)
+        // - Controlled environment override is permitted only in debug builds via explicit selection
+        com.example.jansaarthi.data.network.RetrofitClient.initEnvironment(this)
 
         val tokenManager = com.example.jansaarthi.data.local.TokenManager(this)
         authRepository = com.example.jansaarthi.data.repository.AuthRepository(tokenManager)
