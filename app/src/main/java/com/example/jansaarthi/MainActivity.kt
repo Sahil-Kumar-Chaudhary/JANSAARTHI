@@ -13,7 +13,9 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.example.jansaarthi.data.repository.ThemeMode
 import com.example.jansaarthi.data.repository.AppLanguage
+import com.example.jansaarthi.data.network.RetrofitClient
 import com.example.jansaarthi.ui.navigation.AppNavGraph
+import com.example.jansaarthi.ui.navigation.Routes
 import com.example.jansaarthi.ui.theme.JANSAARTHITheme
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +25,22 @@ class MainActivity : AppCompatActivity() {
         androidx.core.view.WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         
+        // Controlled debug environment selection via Intent extra (e.g. adb am start --es environment production)
+        if (BuildConfig.DEBUG) {
+            val envExtra = intent?.getStringExtra("backend_environment") ?: intent?.getStringExtra("environment")
+            if (!envExtra.isNullOrBlank()) {
+                val target = when (envExtra.lowercase()) {
+                    "production", "prod" -> RetrofitClient.EnvironmentTarget.PRODUCTION
+                    "staging", "stage" -> RetrofitClient.EnvironmentTarget.STAGING
+                    "emulator", "local" -> RetrofitClient.EnvironmentTarget.EMULATOR
+                    else -> null
+                }
+                if (target != null) {
+                    RetrofitClient.setExplicitDebugEnvironment(this, target)
+                }
+            }
+        }
+
         val settingsRepo = App.instance.settingsRepository
         
         setContent {
@@ -43,7 +61,8 @@ class MainActivity : AppCompatActivity() {
             
             JANSAARTHITheme(darkTheme = darkTheme) {
                 val navController = rememberNavController()
-                AppNavGraph(navController = navController)
+                val startDest = intent?.getStringExtra("start_destination") ?: Routes.SPLASH
+                AppNavGraph(navController = navController, startDestination = startDest)
             }
         }
     }

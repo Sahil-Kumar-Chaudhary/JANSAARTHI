@@ -98,6 +98,73 @@ object RetrofitClient {
         setCustomBaseUrl(url)
     }
 
+    /**
+     * Initializes the network environment:
+     * - Release builds ALWAYS use PROD_BASE_URL (HTTPS).
+     * - Debug builds default safely to STAGING_BASE_URL on physical devices (and EMULATOR_BASE_URL on emulators).
+     * - In debug mode, an explicit environment override (e.g. set via Intent or explicit tester selection)
+     *   persisted in debug SharedPreferences can override the default.
+     */
+    fun initEnvironment(context: android.content.Context?) {
+        if (!com.example.jansaarthi.BuildConfig.DEBUG) {
+            // Release builds ALWAYS use production HTTPS
+            setEnvironment(EnvironmentTarget.PRODUCTION)
+            return
+        }
+
+        try {
+            if (context != null) {
+                val prefs = context.getSharedPreferences("debug_env_prefs", android.content.Context.MODE_PRIVATE)
+                val savedEnv = prefs.getString("debug_backend_environment", null)
+                if (savedEnv != null) {
+                    val target = EnvironmentTarget.valueOf(savedEnv)
+                    setEnvironment(target)
+                    try {
+                        android.util.Log.i("RetrofitClient", "Active debug environment (from explicit selection): $target ($currentBaseUrl)")
+                    } catch (_: Throwable) {}
+                    return
+                }
+            }
+        } catch (_: Throwable) {}
+
+        // Safe debug default: Staging on physical device, Emulator on emulator
+        resetToDefault()
+        try {
+            android.util.Log.i("RetrofitClient", "Active debug environment (default): ${getActiveEnvironment()} ($currentBaseUrl)")
+        } catch (_: Throwable) {}
+    }
+
+    /**
+     * Explicit, controlled environment selection for debug builds only.
+     * In release builds, this is a strict no-op.
+     */
+    fun setExplicitDebugEnvironment(context: android.content.Context?, target: EnvironmentTarget?) {
+        if (!com.example.jansaarthi.BuildConfig.DEBUG) return
+        try {
+            if (context != null) {
+                val prefs = context.getSharedPreferences("debug_env_prefs", android.content.Context.MODE_PRIVATE)
+                if (target != null) {
+                    prefs.edit().putString("debug_backend_environment", target.name).apply()
+                    setEnvironment(target)
+                } else {
+                    prefs.edit().remove("debug_backend_environment").apply()
+                    resetToDefault()
+                }
+            } else if (target != null) {
+                setEnvironment(target)
+            } else {
+                resetToDefault()
+            }
+        } catch (_: Throwable) {
+            if (target != null) setEnvironment(target) else resetToDefault()
+        }
+    }
+
+    fun resetToDefault() {
+        currentBaseUrl = determineDefaultBaseUrl()
+        retrofit = buildRetrofit(currentBaseUrl)
+    }
+
     fun getActiveEnvironment(): EnvironmentTarget {
         return when (currentBaseUrl) {
             PROD_BASE_URL -> EnvironmentTarget.PRODUCTION

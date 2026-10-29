@@ -60,7 +60,10 @@ object Routes {
 }
 
 @Composable
-fun AppNavGraph(navController: NavHostController) {
+fun AppNavGraph(
+    navController: NavHostController,
+    startDestination: String = Routes.SPLASH
+) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
@@ -78,7 +81,7 @@ fun AppNavGraph(navController: NavHostController) {
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = Routes.SPLASH,
+            startDestination = startDestination,
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(Routes.SPLASH) {

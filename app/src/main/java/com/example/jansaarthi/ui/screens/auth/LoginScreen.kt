@@ -274,15 +274,32 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             // Below: Forgot Password?
-            TextButton(
-                onClick = { showForgotDialog = true }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Forgot Password?",
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp
-                )
+                TextButton(
+                    onClick = { showForgotDialog = true }
+                ) {
+                    Text(
+                        text = "Forgot Password?",
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 14.sp
+                    )
+                }
+
+                TextButton(
+                    onClick = { onNavigateToHome() }
+                ) {
+                    Text(
+                        text = "Explore as Guest",
+                        color = MaterialTheme.colorScheme.secondary,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 14.sp
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.weight(1f))
