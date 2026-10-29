@@ -10,6 +10,9 @@ class App : Application() {
     lateinit var authRepository: com.example.jansaarthi.data.repository.AuthRepository
         private set
 
+    lateinit var ragRepository: com.example.jansaarthi.data.repository.RagRepository
+        private set
+
     override fun onCreate() {
         super.onCreate()
         instance = this
@@ -17,6 +20,7 @@ class App : Application() {
         
         val tokenManager = com.example.jansaarthi.data.local.TokenManager(this)
         authRepository = com.example.jansaarthi.data.repository.AuthRepository(tokenManager)
+        ragRepository = com.example.jansaarthi.data.repository.RagRepository()
     }
 
     companion object {

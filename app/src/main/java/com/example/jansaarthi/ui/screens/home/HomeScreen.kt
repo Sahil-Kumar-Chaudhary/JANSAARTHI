@@ -58,7 +58,8 @@ fun HomeScreen(navController: NavController) {
         )
         Spacer(modifier = Modifier.height(32.dp))
         VoiceAssistanceCard(
-            onSearchClick = { navController.navigate(Routes.REQUIREMENT) }
+            onAiChatClick = { navController.navigate(Routes.RAG_QUERY) },
+            onRequirementClick = { navController.navigate(Routes.REQUIREMENT) }
         )
         Spacer(modifier = Modifier.height(32.dp))
         ExploreServicesGrid(navController, strings)
@@ -112,39 +113,91 @@ fun HomeHeader(strings: AppStrings, userName: String?, onProfileClick: () -> Uni
 }
 
 @Composable
-fun VoiceAssistanceCard(onSearchClick: () -> Unit) {
+fun VoiceAssistanceCard(
+    onAiChatClick: () -> Unit,
+    onRequirementClick: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onSearchClick() },
+            .clip(RoundedCornerShape(16.dp))
+            .clickable { onAiChatClick() },
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Row(
-            modifier = Modifier.padding(24.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                Icons.Default.Mic,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                modifier = Modifier.size(32.dp)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
+        Column(modifier = Modifier.padding(20.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Surface(
+                    shape = CircleShape,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(44.dp)
+                ) {
+                    Icon(
+                        Icons.Default.AutoAwesome,
+                        contentDescription = "AI Assistant",
+                        tint = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier.padding(10.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.width(16.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            "Ask JANSAARTHI AI",
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Surface(
+                            shape = RoundedCornerShape(4.dp),
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                        ) {
+                            Text(
+                                "RAG",
+                                style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp, fontWeight = FontWeight.Bold),
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        "Tap to ask questions about government schemes",
+                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
+                        fontSize = 13.sp
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(14.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
-                    "Tell us your requirement",
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
+                    "Looking for personalized matches?",
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
+                    )
                 )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    "Tap to speak or type",
-                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
-                    fontSize = 14.sp
-                )
+                TextButton(
+                    onClick = onRequirementClick,
+                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp)
+                ) {
+                    Text(
+                        "Profile Form →",
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    )
+                }
             }
         }
     }

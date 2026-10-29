@@ -12,4 +12,10 @@ local.properties
 
 *.zip
 jdk17/
+.cache/
+*/.cache/
+__pycache__/
+*/__pycache__/
+venv/
+*/venv/
 

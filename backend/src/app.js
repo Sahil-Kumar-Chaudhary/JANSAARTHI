@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const recommendationRoutes = require('./routes/recommendationRoutes');
+const ragRoutes = require('./routes/ragRoutes');
 const dbCheck = require('./middleware/dbCheck');
 
 const app = express();
@@ -44,7 +45,7 @@ const healthCheckHandler = (req, res) => {
         server: 'healthy',
         database: {
             status: dbStatusText,
-            name: isDbConnected ? (mongoose.connection.name || 'jansaarthi') : undefined
+            name: isDbConnected ? (mongoose.connection.name || process.env.MONGODB_DB_NAME || 'jansaarthi') : undefined
         },
         timestamp: new Date().toISOString()
     };
@@ -56,6 +57,9 @@ const healthCheckHandler = (req, res) => {
 // Register health check endpoints
 app.get('/api/health', healthCheckHandler);
 app.get('/health', healthCheckHandler);
+
+// RAG Knowledge Base and Scheme Inquiry Endpoint
+app.use('/api/rag', ragRoutes);
 
 // Database-dependent routes guarded by dbCheck middleware
 // When MongoDB is disconnected, these return HTTP 503 with DATABASE_UNAVAILABLE

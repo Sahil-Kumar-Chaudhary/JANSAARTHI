@@ -18,6 +18,7 @@ import com.example.jansaarthi.ui.screens.schemes.SchemesScreen
 import com.example.jansaarthi.ui.screens.calculator.CalculatorScreen
 import com.example.jansaarthi.ui.screens.partners.PartnersScreen
 import com.example.jansaarthi.ui.screens.profile.*
+import com.example.jansaarthi.ui.screens.rag.RagScreen
 import com.example.jansaarthi.ui.screens.requirement.RequirementScreen
 
 object Routes {
@@ -49,6 +50,7 @@ object Routes {
     
     // Feature Routes
     const val REQUIREMENT = "requirement"
+    const val RAG_QUERY = "rag_query"
     const val SCHEME_DETAILS = "scheme_details"
     const val RECOMMENDATIONS = "recommendations"
     const val ELIGIBILITY = "eligibility"
@@ -150,7 +152,14 @@ fun AppNavGraph(navController: NavHostController) {
             composable(Routes.REQUIREMENT) {
                 RequirementScreen(
                     onBack = { navController.popBackStack() },
-                    onContinue = { navController.navigate(Routes.RECOMMENDATIONS) }
+                    onContinue = { navController.navigate(Routes.RECOMMENDATIONS) },
+                    onAskAiClick = { navController.navigate(Routes.RAG_QUERY) }
+                )
+            }
+
+            composable(Routes.RAG_QUERY) {
+                RagScreen(
+                    onBack = { navController.popBackStack() }
                 )
             }
 

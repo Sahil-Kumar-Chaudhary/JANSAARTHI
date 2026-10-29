@@ -1,0 +1,660 @@
+Git and GitHub Complete Knowledge Base
+Git Fundamentals
+
+Git is a distributed version control system used to track changes in files and coordinate development among multiple contributors. Unlike a simple file backup system, Git records a history of changes and allows developers to inspect, compare, restore, branch, merge, and share versions of a project. A Git repository contains the project's files along with Git's internal database that stores objects, references, and metadata. Git can be used locally without GitHub or any other hosting service. GitHub is a platform that hosts Git repositories and adds collaboration, pull requests, issues, discussions, Actions, security features, and other development capabilities.
+
+Git follows a distributed model. Each clone of a repository normally contains its own repository history, allowing many operations to be performed locally. A developer can create commits, inspect history, create branches, compare changes, and perform many other operations without network access. A remote repository can later be used to exchange changes with other repositories. A remote is simply another repository that the local repository knows about, often identified by a name such as origin.
+
+A Git repository has three important areas in the everyday workflow: the working tree, the staging area or index, and the repository database. The working tree contains the files currently being edited. The staging area contains changes selected for the next commit. The repository contains committed history. The common workflow is therefore to modify files, inspect the changes, stage selected changes with git add, and create a commit with git commit.
+
+A commit represents a recorded snapshot of project changes together with metadata such as the author, committer, message, parent commit information, and timestamp. Commits form a history that can be traversed using commands such as git log. A commit is identified by an object ID, historically represented using SHA-1 in standard Git object naming, although Git also supports SHA-256 repositories. Commits allow developers to move through the project's history and compare different states of the project.
+
+The git status command displays information about the current repository state. It can show the current branch, staged changes, unstaged modifications, untracked files, and relationships with an upstream branch. git diff is used to inspect differences between versions or between the working tree, staging area, and commits. These commands are among the most useful commands for understanding what is happening before creating a commit.
+
+Installing and Configuring Git
+
+Git configuration controls behavior at different levels. System configuration can apply to the entire machine, global configuration commonly applies to a user's account, and local repository configuration applies only to a particular repository. Common configuration includes the user's name and email address, default branch behavior, editor preferences, aliases, credential helpers, merge behavior, and rebase behavior.
+
+The git config command is used to read and modify configuration. A common setup is to configure user.name and user.email. These values are recorded in commits and therefore identify the author and committer metadata associated with Git history. Git configuration can also define aliases that shorten frequently used commands.
+
+The .gitconfig file is commonly used for user-level configuration. A repository also contains a .git/config file containing repository-specific configuration. Git's configuration system allows behavior to be customized without changing the Git executable itself.
+
+Creating a Repository
+
+The git init command creates a new Git repository in an existing directory. It creates a .git directory containing Git's internal repository data. After initialization, files can be staged and committed. git init does not automatically commit the existing files.
+
+The git clone command creates a new local copy of an existing repository. Cloning normally downloads repository history and checks out the default branch. It also configures a remote, commonly named origin, pointing to the repository from which the clone was created. After cloning, developers can create branches, make changes, commit locally, fetch updates, and push their work.
+
+The difference between git init and git clone is important. git init starts a new repository in an existing directory, while git clone creates a local repository from an existing repository. A repository created with git init may later have a remote added using git remote add.
+
+Git Add and Staging
+
+The staging area allows developers to select exactly which changes should become part of the next commit. git add file.txt stages a particular file. git add . stages changes under the current directory according to Git's path rules. The staging area is useful because a developer can modify multiple files but commit only a logically related subset of those changes.
+
+git add does not create a commit. It prepares changes for a future commit. git status can be used to see which changes are staged and which remain unstaged.
+
+If a staged change needs to be removed from the staging area without deleting the actual working-tree modification, commands such as git restore --staged can be used. This distinction is important because unstaging a file is different from discarding its modifications.
+
+Git Commit
+
+The git commit command records staged changes as a new commit. A commit should normally describe a coherent change. Commit messages should explain the purpose of the change rather than simply saying something vague such as "changes" or "update."
+
+A commit can contain changes to one file or many files. Git records the resulting project snapshot and connects the commit to its parent commit or parents. A normal commit has one parent. A merge commit can have multiple parents.
+
+The git commit --amend command modifies the most recent commit. It can be used to correct a commit message or add additional changes to the previous commit. Amending a commit changes its identity, so it should be used carefully when the original commit has already been shared with others.
+
+Git Log and History
+
+git log displays commit history. It can show commit IDs, authors, dates, commit messages, and other information. Options can format the output, limit the number of commits, filter by author, search commit messages, and display graph information.
+
+git show displays information about a particular Git object, commonly a commit. It can show the commit metadata and associated patch. git diff compares changes between commits, branches, the working tree, or the staging area.
+
+Git history can be navigated using references such as branch names, tags, HEAD, and commit IDs. HEAD generally represents the currently checked-out commit or branch. HEAD~1 refers to the first parent of the current commit, while HEAD~2 refers to an earlier ancestor.
+
+Git Branches
+
+A branch in Git is a movable reference to a commit. Branches allow different lines of development to progress independently. Creating a branch does not copy the entire repository. Instead, Git creates a new reference pointing to an existing commit.
+
+git branch lists branches and can create, delete, rename, and inspect them. git switch is the modern command for switching branches and creating new branches. git checkout is an older, multi-purpose command that can also switch branches, create branches, and restore files. For new workflows, git switch and git restore provide clearer separation of responsibilities.
+
+A typical feature workflow starts from a main development branch, creates a feature branch, makes commits on that branch, and eventually integrates those changes back into another branch. Branches are particularly useful because multiple developers can work on separate features without immediately modifying the same branch.
+
+Git branches can have upstream configuration. An upstream branch tells Git which remote branch a local branch is associated with for operations such as pull and push. Git stores this information in repository configuration.
+
+Main, Master, and Default Branches
+
+A repository can use any branch name as its primary development branch. main is common on modern repositories, while older repositories may use master. The name itself does not change Git's branching behavior. The default branch is configured by the hosting service or repository configuration.
+
+The default branch on GitHub is important because pull requests, repository browsing, and many automated workflows use it as the primary branch unless another branch is explicitly selected.
+
+Merge
+
+git merge integrates changes from one branch into another. If two branches have diverged, Git determines a common ancestor and combines the changes. When Git can automatically combine the changes, the merge completes without manual conflict resolution.
+
+A fast-forward merge occurs when the current branch has no unique commits after the point from which the other branch diverged. In that situation Git can simply move the branch reference forward rather than creating a new merge commit.
+
+A merge commit can be created when two branches have diverged and Git needs to record the combination of their histories. Merge commits have multiple parents.
+
+Git's official workflow documentation describes merge and cherry-pick as two different mechanisms for bringing changes between branches. A merge operates at the branch/history level, while cherry-pick applies selected commits.
+
+Merge Conflicts
+
+A merge conflict occurs when Git cannot automatically reconcile competing changes. This commonly happens when different branches modify overlapping portions of the same file.
+
+During a conflict, Git marks the conflicting regions in affected files. The developer must inspect the conflict, decide which content should remain, remove the conflict markers, stage the resolved files, and then complete the merge.
+
+Conflicts are not necessarily errors in Git. They indicate that Git needs human information about how two competing changes should be combined.
+
+Rebase
+
+git rebase moves or reapplies commits onto a different base commit. Instead of creating a merge commit for certain histories, rebase can create a more linear history by replaying commits on top of another branch. Git's documentation describes merge and rebase as two major ways to integrate changes between branches.
+
+Rebase rewrites commit history because the replayed commits receive new identities. This makes rebase powerful but potentially dangerous when rewriting commits that other people have already based work on. Rebase is commonly used on local or private branches before sharing them.
+
+Interactive rebase allows developers to reorder, edit, squash, reword, or remove commits. It is useful for cleaning up a series of local commits before publishing them.
+
+Merge Versus Rebase
+
+Merge preserves the existing branch histories and can introduce a merge commit. Rebase creates a new sequence of commits on a different base and can produce a more linear history. Neither operation should be treated as simply "better"; the appropriate choice depends on the project's workflow and whether the commits have already been shared.
+
+A common rule is to be cautious when rewriting shared history. Rebase can be appropriate for local work, while merging is often safer when preserving published history is important.
+
+Git Reset
+
+git reset moves references and can modify the staging area and working tree depending on the selected mode. git reset --soft moves the current branch reference while keeping changes staged. git reset --mixed changes the branch reference and resets the staging area while keeping working-tree changes. git reset --hard changes the branch reference and resets both the staging area and working tree, potentially discarding local changes.
+
+Because git reset --hard can remove uncommitted work, it should be used carefully. Reset can also be used to move a branch to an earlier commit, but its effect on shared history should be considered before using it.
+
+Git Revert
+
+git revert creates a new commit that reverses the effect of an earlier commit. Unlike reset, revert does not normally remove the existing commit from history. This makes revert useful for undoing changes that have already been shared.
+
+For example, if a problematic commit has been pushed to a shared branch, creating a revert commit can preserve the historical record while applying an inverse change.
+
+Git Restore
+
+git restore is used to restore files in the working tree or staging area. It provides a clearer command for file restoration compared with the older multi-purpose git checkout command.
+
+A developer can use git restore to discard working-tree modifications or use git restore --staged to remove a file from the staging area while keeping its working-tree changes.
+
+Git Stash
+
+git stash temporarily stores local modifications so that the working tree can be cleaned without creating a permanent commit. This is useful when a developer has unfinished work but needs to switch branches or handle another task.
+
+git stash push creates a stash from selected changes. git stash list displays saved stashes. git stash pop applies a stash and removes it from the stash list if the application succeeds. git stash apply applies a stash without automatically removing it.
+
+Stashes can also produce conflicts when their changes overlap with modifications in the current working tree.
+
+Git Cherry-Pick
+
+git cherry-pick applies the changes introduced by specific existing commits to the current branch. Unlike merge, which integrates branch histories, cherry-pick selects individual commits.
+
+Cherry-pick is useful when a specific fix needs to be applied to another branch without merging the entire source branch. Because cherry-pick creates a new commit representing the applied changes, the resulting commit has a different identity from the original.
+
+Git Tags
+
+A Git tag is a reference that identifies a particular point in repository history. Tags are commonly used for releases such as v1.0.0, v2.0.0, and similar version identifiers.
+
+Annotated tags contain additional metadata and are stored as Git objects. Lightweight tags are simpler references to commits. Tags can be pushed to and fetched from remote repositories.
+
+Tags are useful for identifying stable release versions because a tag provides a human-readable reference to a specific commit.
+
+Git Remote
+
+A remote represents another repository that a local repository communicates with. The most common remote name is origin. git remote -v displays configured remote URLs. git remote add adds a remote. git remote remove removes one. git remote rename changes its name.
+
+Remote configuration includes information such as the remote URL and fetch configuration. Git documentation describes remote.origin.url and remote.origin.fetch as important parts of remote configuration.
+
+Git Fetch
+
+git fetch downloads changes and references from a remote repository without integrating those changes into the current working branch. It updates remote-tracking references such as origin/main.
+
+Fetching is useful because it allows developers to inspect remote changes before deciding whether to merge, rebase, or otherwise integrate them.
+
+For example, after git fetch origin, a developer may inspect origin/main and compare it with the local branch.
+
+Git Pull
+
+git pull combines fetching remote changes with an integration step. According to the Git documentation, git pull first performs a fetch and then integrates the fetched branch into the current branch. Depending on configuration or options, the integration can use merge, rebase, fast-forward-only behavior, or other modes.
+
+A useful conceptual distinction is:
+
+git fetch means "download remote information."
+
+git pull means "download remote information and integrate it."
+
+Because pull performs an integration operation, conflicts can occur during a pull.
+
+Git Push
+
+git push transfers local commits and references to a remote repository. A push updates remote branches when the remote accepts the proposed changes.
+
+The first push of a new branch is commonly performed with git push -u origin branch-name. The -u option establishes an upstream relationship, allowing later commands such as git pull and git push to use the configured upstream.
+
+A push may be rejected if the remote branch contains changes that are not present locally, depending on the situation. The developer may need to fetch and integrate the remote changes before pushing again.
+
+Fast-Forward and Non-Fast-Forward
+
+A fast-forward update happens when the destination branch can simply move forward to a descendant commit without creating a merge commit. A non-fast-forward situation occurs when the histories have diverged or when a proposed update would move a remote branch backward.
+
+Git hosting platforms commonly reject non-fast-forward pushes to protected branches because blindly overwriting remote history could remove commits.
+
+GitHub
+
+GitHub is a web-based platform for hosting Git repositories and supporting software-development collaboration. It provides repository hosting along with pull requests, issues, discussions, Actions, security tooling, package management, Codespaces, and other features.
+
+Git and GitHub are not the same thing. Git is the version control system. GitHub is a service that can host Git repositories and provide collaboration and automation features around them.
+
+A developer can use Git without GitHub, and Git repositories can be hosted on other services or private infrastructure.
+
+GitHub Repository
+
+A GitHub repository contains source code, Git history, branches, tags, configuration, documentation, and collaboration features. Repositories can be public or private depending on the selected configuration and account or organization permissions.
+
+The repository page provides access to files, commits, branches, releases, issues, pull requests, Actions workflows, security information, and other repository features depending on permissions and configuration.
+
+A README file is commonly placed in a repository to explain the project, installation process, usage, architecture, configuration, and contribution instructions.
+
+Public and Private Repositories
+
+A public repository can be viewed according to GitHub's public-access rules, while a private repository restricts access to authorized users and teams. Repository visibility can affect who can view code, create issues, submit pull requests, and access other repository resources.
+
+Changing repository visibility can have significant consequences, so repository administrators should understand GitHub's rules before changing a project's visibility.
+
+Fork
+
+A fork is a separate copy of a repository under another account or organization. Forks are commonly used when a contributor does not have direct write access to the original repository.
+
+A developer can fork an open-source project, clone the fork, create a branch, make changes, push those changes to the fork, and then open a pull request against the upstream repository.
+
+Forks are different from branches. A branch is a reference within a repository, while a fork is a separate repository.
+
+Pull Request
+
+A pull request is a GitHub collaboration mechanism used to propose changes from one branch or repository into another. A pull request displays the proposed changes and provides a place for discussion, review, automated checks, and approval.
+
+A typical pull request workflow is to create a feature branch, push it to GitHub, open a pull request, wait for automated checks and human review, address requested changes, and eventually merge the pull request according to repository rules.
+
+Pull requests are not a Git command. They are a GitHub feature built around Git branches and commits.
+
+Pull Request Review
+
+Pull request reviews allow collaborators to inspect proposed code changes. Reviewers can leave comments, request changes, approve the pull request, or provide general feedback depending on repository permissions and settings.
+
+Review comments can be attached to specific lines of changed code, making it possible to discuss implementation details directly in the context of the change.
+
+Pull Request Merge Methods
+
+GitHub can provide different methods for integrating a pull request, depending on repository settings. A merge commit preserves the branch relationship and creates a merge commit. Squash merging combines the pull request's changes into a single commit on the target branch. Rebase merging reapplies the pull request's commits onto the target branch without creating a traditional merge commit.
+
+The exact merge options available can depend on repository settings and branch rules.
+
+Issues
+
+GitHub Issues provide a mechanism for tracking bugs, feature requests, tasks, questions, and other project work. Issues can contain titles, descriptions, comments, labels, milestones, assignees, and references to related pull requests.
+
+Issues are different from pull requests. An issue generally describes work or a problem, while a pull request proposes a concrete code change.
+
+Labels
+
+GitHub labels categorize issues and pull requests. A project may define labels such as bug, feature, documentation, help wanted, or custom labels. Labels make it easier to filter and organize work.
+
+Labels can be used together with milestones, assignees, projects, and issue filters.
+
+GitHub Discussions
+
+GitHub Discussions provides a space for community conversations that do not necessarily represent actionable issues. Discussions can be useful for questions, announcements, ideas, polls, and community conversations.
+
+Issues are generally better suited for concrete bugs and actionable work, while Discussions can support broader community interaction.
+
+GitHub Projects
+
+GitHub Projects provides project-management capabilities for organizing issues, pull requests, and other work items. Projects can use tables, boards, custom fields, filters, views, and automation to organize development work.
+
+A team can use a project board to represent workflow stages such as backlog, ready, in progress, review, and done.
+
+GitHub Authentication
+
+GitHub supports multiple authentication mechanisms depending on the access method. Developers can interact with GitHub through the browser, command line, APIs, GitHub Desktop, and applications. For Git operations from the command line, HTTPS and SSH are common connection methods.
+
+SSH authentication uses an SSH key pair. The public key is associated with GitHub while the private key remains on the developer's machine. HTTPS authentication can use supported credential mechanisms and tokens rather than relying on a normal account password for Git operations.
+
+Authentication and authorization are different concepts. Authentication establishes who the user or application is. Authorization determines what that identity is allowed to access or modify.
+
+SSH with GitHub
+
+SSH provides an encrypted connection for accessing GitHub repositories. A developer typically generates an SSH key pair, adds the public key to GitHub, and uses an SSH repository URL. The private key should remain protected on the local machine.
+
+SSH is useful because developers can authenticate Git operations without repeatedly entering credentials.
+
+Personal Access Tokens
+
+Personal access tokens can be used for authenticated operations where supported. Tokens should be treated like passwords or other sensitive credentials. They should never be committed into source code or pushed to public repositories.
+
+If a token is accidentally exposed, it should be revoked or rotated promptly according to the service's security procedures.
+
+GitHub Permissions
+
+GitHub permissions determine what users, teams, applications, and workflows can do with repositories and organizations. Permissions can control operations such as reading code, writing code, managing issues, changing repository settings, managing Actions, and administering security features.
+
+Repository permissions should follow the principle of least privilege: users and automation should receive only the access required for their responsibilities.
+
+GitHub Organizations
+
+An organization is a shared account structure for groups and teams. Organizations can contain repositories and manage members, teams, permissions, security policies, and other administrative settings.
+
+Teams can simplify permission management because repository access can be assigned to groups rather than configured individually for every member.
+
+GitHub Teams
+
+Teams group organization members for collaboration and permission management. A team can be granted access to repositories and can be mentioned in discussions or pull requests depending on settings.
+
+Teams are particularly useful in larger organizations because they reduce the need to manage repository access separately for every person.
+
+GitHub Actions
+
+GitHub Actions is GitHub's workflow automation and CI/CD platform. Workflows are defined using YAML files and can run in response to repository events such as pushes, pull requests, schedules, or manual triggers. GitHub Actions can build applications, run tests, perform security checks, publish artifacts, and deploy applications.
+
+A GitHub Actions workflow is commonly stored under .github/workflows/. A workflow contains one or more jobs. Jobs contain steps. Steps can execute shell commands or invoke reusable actions.
+
+A runner is the environment where a GitHub Actions job executes. GitHub provides hosted runners for supported environments, and organizations can also configure self-hosted runners.
+
+GitHub Actions Events
+
+Actions workflows can be triggered by events. Common events include push, pull_request, workflow_dispatch, schedule, and issue-related events. The event determines when the workflow starts and can provide context about the action that triggered it.
+
+A workflow can use conditions to execute certain jobs or steps only for particular branches, events, files, or other conditions.
+
+GitHub Actions Jobs and Steps
+
+A job is a collection of steps executed in a runner environment. Jobs can run independently or have dependencies on other jobs. Steps execute commands or actions.
+
+For example, a CI job may check out source code, install dependencies, run tests, perform static analysis, and build an application.
+
+Multiple jobs can be configured to execute in parallel when there are no dependency relationships between them.
+
+GITHUB_TOKEN
+
+GitHub Actions provides a GITHUB_TOKEN that workflows can use for authentication against GitHub APIs and repository resources. GitHub recommends using the built-in token when appropriate rather than unnecessarily creating another credential. Workflow permissions should be limited to the minimum required access.
+
+The permissions available to GITHUB_TOKEN should be explicitly considered when designing a workflow. A workflow that only reads repository contents should not receive unnecessary write permissions.
+
+GitHub Secrets
+
+Secrets provide a mechanism for storing sensitive values used by workflows. Examples include deployment credentials, API keys, cloud credentials, and tokens.
+
+Secrets should not be hard-coded into workflow files or source code. Workflows can reference configured secrets through the GitHub Actions secrets mechanism.
+
+Even when secrets are masked in workflow logs, developers should avoid deliberately printing sensitive values.
+
+GitHub Environments
+
+GitHub Actions environments represent deployment targets or protected execution contexts. Environments can have environment-specific secrets and protection rules.
+
+For example, a repository might define separate staging and production environments. Production could require approval before a deployment job proceeds.
+
+GitHub Packages
+
+GitHub Packages provides package hosting integrated with GitHub. It can store package types such as container images and language-specific packages depending on supported registries.
+
+Packages can be integrated into GitHub Actions workflows so that CI pipelines build and publish artifacts automatically.
+
+GitHub Container Registry
+
+GitHub Container Registry is used to store container images associated with GitHub. A GitHub Actions workflow can build a Docker image, authenticate to the registry, and push the image.
+
+Container image permissions should be configured so that only authorized users and workflows can publish or modify images.
+
+GitHub Releases
+
+GitHub Releases provide a way to package and communicate versions of a project. A release is commonly associated with a Git tag and can contain release notes and downloadable assets.
+
+Releases are useful for distributing stable versions of software and communicating changes between versions.
+
+Semantic Versioning
+
+Semantic Versioning commonly uses a three-part version such as MAJOR.MINOR.PATCH. A major version indicates incompatible API changes, a minor version indicates backward-compatible functionality, and a patch version indicates backward-compatible bug fixes.
+
+Git tags can be used to identify releases corresponding to semantic versions.
+
+Git Ignore
+
+The .gitignore file specifies files and directories that Git should normally ignore as untracked files. Typical entries include dependency directories, generated build output, environment files, logs, editor configuration, and temporary files.
+
+A .gitignore rule does not automatically remove a file that has already been committed. If a file is already tracked, it generally needs to be removed from tracking separately.
+
+Environment files containing credentials, such as .env, should generally not be committed when they contain secrets.
+
+Git Attributes
+
+.gitattributes controls attributes associated with paths in a repository. Attributes can influence line-ending handling, diff behavior, merge behavior, binary detection, and other Git operations.
+
+Git attributes are useful when a repository contains different types of files that require specialized handling.
+
+Git Hooks
+
+Git hooks are scripts executed at specific points in Git's lifecycle. Hooks can run before commits, after commits, before pushes, and at other stages.
+
+Hooks can be used to run formatting, tests, validation, security checks, or other automation locally. Hooks are repository-related automation, although their distribution and enforcement require additional tooling or CI when all contributors must run the same checks.
+
+Git Submodules
+
+A Git submodule allows one Git repository to include another Git repository at a particular commit. The parent repository stores information about the submodule repository and the commit that should be checked out.
+
+Submodules can be useful when a project depends on another repository but needs to maintain an explicit reference to a particular version. They also introduce additional workflow considerations because developers must initialize and update submodules separately.
+
+Git Worktree
+
+Git worktree allows multiple working directories to be associated with a single repository. This makes it possible to work on multiple branches simultaneously without repeatedly switching the same working directory.
+
+Worktrees can be useful when one branch contains unfinished work while another branch needs urgent changes.
+
+Git Bisect
+
+git bisect performs a binary search through repository history to identify the commit that introduced a bug. The developer identifies a known good commit and a known bad commit. Git then checks out intermediate commits, and the developer marks each tested version as good or bad.
+
+This process repeatedly reduces the search space until Git identifies a likely problematic commit.
+
+Git Reflog
+
+The reflog records updates to local references such as HEAD and branches. It can help recover commits after operations such as reset or rebase when the commit is no longer reachable through the normal branch history.
+
+The reflog is primarily local information and is not normally shared as part of a remote repository.
+
+Detached HEAD
+
+A detached HEAD occurs when HEAD points directly to a commit rather than to a local branch reference. This can happen when checking out a specific commit or certain tags.
+
+Changes made while detached can be preserved by creating a new branch before abandoning the detached state. Otherwise, commits may become difficult to find through normal branch references.
+
+Git Objects
+
+Git internally stores several major object types: blobs, trees, commits, and tags. A blob stores file content. A tree represents directory structure and references blobs or other trees. A commit records a project snapshot through a tree and references parent commits along with metadata. An annotated tag object can point to another object and contain tag metadata.
+
+Understanding Git objects helps explain why Git can efficiently represent history and why commits refer to snapshots rather than simply storing complete copies of every file.
+
+Git HEAD
+
+HEAD is a symbolic reference representing the current position in the repository. In normal branch-based work, HEAD points to the current branch, and that branch points to the latest commit.
+
+When a repository is in detached HEAD state, HEAD points directly to a commit rather than to a branch.
+
+Git References
+
+A Git reference is a human-readable name that points to an object. Branches and tags are examples of references. Remote-tracking branches are also references.
+
+Git's reference namespace includes forms such as refs/heads/main, refs/tags/v1.0.0, and refs/remotes/origin/main. The Git glossary describes references as names that point to objects or other references.
+
+Git Refspec
+
+A refspec describes how references are mapped during operations such as fetch and push. It specifies relationships between local and remote references.
+
+For example, remote-tracking branch updates are based on configured fetch refspecs. Understanding refspecs becomes useful when working with advanced Git workflows, multiple remotes, selective fetching, or unusual branch mappings.
+
+Git Aliases
+
+Git aliases provide custom shortcuts for Git commands. An alias can simplify frequently repeated commands or create convenient combinations of options.
+
+For example, developers commonly create a short alias for a graph-style git log. Aliases are personal configuration and do not change the underlying Git behavior.
+
+Git Clean
+
+git clean removes untracked files from the working tree. Because it can permanently delete untracked data, it should be used carefully. Running a preview before deleting files is safer when the contents are uncertain.
+
+Git clean does not normally remove tracked files; it is intended for cleaning untracked content.
+
+Git MV and Git RM
+
+git mv moves or renames tracked files while updating Git's index. git rm removes files from the working tree and staging area. Git can detect renames based on similarity when comparing history, even though Git's internal object model primarily stores file content and trees rather than a dedicated permanent "rename object."
+
+Git Diff
+
+git diff compares versions of content. Without additional options it commonly compares working-tree changes against the staging area. git diff --staged compares staged changes against the last commit.
+
+Git diff can compare two commits, branches, or other references. It is an essential tool for reviewing code before committing or merging.
+
+Git Log Graph
+
+git log --graph can display branch history in an ASCII graph. Combining graph output with options such as --oneline and --decorate makes it easier to understand branching and merge relationships.
+
+A graph helps visualize how feature branches diverged and where merges or rebases changed the history.
+
+Git Workflows
+
+A centralized-style workflow can use a main branch where developers integrate changes through short-lived branches. A feature-branch workflow gives each feature or bug fix its own branch and commonly integrates it through a pull request.
+
+Gitflow is a historical branching model that uses branches such as main, develop, feature branches, release branches, and hotfix branches. Modern teams may instead use simpler trunk-based or short-lived feature-branch workflows.
+
+There is no single Git workflow required by Git itself. Git provides primitives, while teams establish conventions around branches, reviews, releases, and deployment.
+
+Trunk-Based Development
+
+Trunk-based development emphasizes integrating small changes frequently into a shared main branch or a small number of short-lived branches. Automated testing and CI are particularly important because changes are integrated frequently.
+
+The goal is to reduce long-running branch divergence and integration complexity.
+
+Feature Branch Workflow
+
+In a feature branch workflow, a developer creates a branch for a particular feature or bug fix. Changes are committed to that branch and pushed to a remote. A pull request is then opened for review. After required checks and approvals, the branch is integrated into the target branch.
+
+This workflow provides a clear boundary around a change and works well with GitHub pull requests.
+
+GitHub Branch Protection
+
+Branch protection rules can require certain conditions before changes are integrated into important branches. Depending on configuration, requirements can include pull-request reviews, successful status checks, conversation resolution, signed commits, or restrictions on who can push.
+
+Protected branches are commonly used for important branches such as main.
+
+CODEOWNERS
+
+A CODEOWNERS file defines individuals or teams responsible for specific areas of a repository. GitHub can use CODEOWNERS information to request reviews from the appropriate owners when matching files are changed.
+
+CODEOWNERS is useful for large repositories where different teams own different components.
+
+GitHub Templates
+
+Repositories can use issue templates and pull request templates to standardize information submitted by contributors. Templates can ask users to provide reproduction steps, expected behavior, actual behavior, testing information, or other project-specific details.
+
+Templates improve consistency without changing Git's underlying functionality.
+
+GitHub Markdown
+
+GitHub supports GitHub Flavored Markdown for formatting documentation, issues, pull requests, discussions, and other content. Markdown can represent headings, lists, tables, links, code blocks, task lists, and other structures.
+
+README files commonly use Markdown to explain how to install and use a project.
+
+GitHub API
+
+GitHub provides APIs that allow applications and automation to interact with GitHub resources programmatically. API operations can work with repositories, issues, pull requests, workflows, users, organizations, and many other resources.
+
+API authentication and permissions determine what an application is allowed to access or modify.
+
+GitHub CLI
+
+GitHub CLI, commonly invoked as gh, provides command-line access to many GitHub operations. It can be used for repository management, pull requests, issues, Actions, releases, and authentication.
+
+Git CLI and GitHub CLI are different tools. git manages Git repositories and version-control operations, while gh interacts with GitHub's platform features.
+
+Git Credential Management
+
+Git can use credential helpers to securely store or retrieve authentication information. Credential handling should be configured according to the operating system and security requirements.
+
+Developers should avoid placing passwords, access tokens, private keys, or other secrets directly in shell history, source code, or repository files.
+
+Git Security
+
+Git repositories can accidentally contain secrets such as passwords, API keys, private certificates, cloud credentials, and tokens. Adding a secret to .gitignore after it has already been committed does not remove it from historical commits.
+
+Removing sensitive information from Git history may require history rewriting and credential rotation. If a credential has been exposed, simply deleting the latest copy is not sufficient; the credential itself should generally be revoked or rotated.
+
+Signed Commits
+
+Git supports commit signing using mechanisms such as GPG and SSH signatures. GitHub can display verification information for supported signed commits. Signing provides a way to establish that a commit was produced by a holder of a particular signing key.
+
+Signing does not prove that the code itself is safe or correct. It primarily provides an identity/authenticity signal for the commit.
+
+GitHub Dependabot
+
+Dependabot can help identify and update vulnerable or outdated dependencies. It can create pull requests that update dependency versions according to repository configuration.
+
+Dependency updates should still be tested because changing a dependency can affect application behavior.
+
+GitHub Code Scanning
+
+GitHub code scanning can identify potential security issues in source code. It can integrate with supported analysis tools and report findings within GitHub.
+
+Security scanning can be incorporated into pull-request workflows so that vulnerabilities are identified earlier in the development lifecycle.
+
+GitHub Secret Scanning
+
+Secret scanning detects supported credential patterns that may have been accidentally committed to repositories. GitHub can alert repository administrators or security teams when supported secrets are detected.
+
+Secret scanning is not a substitute for good credential management. Developers should still avoid committing secrets and should rotate credentials if exposure occurs.
+
+Git LFS
+
+Git Large File Storage, or Git LFS, is an extension designed for handling large files such as binaries, media assets, and other files that are inefficient to store directly in ordinary Git history.
+
+Git LFS replaces large files in Git history with pointers while storing the actual large content separately. This can reduce the size of the Git repository's ordinary object database.
+
+Git Subtree
+
+Git subtree provides another method for incorporating one repository's content into another repository. Unlike submodules, subtree content can become part of the main repository's working tree and history.
+
+Submodules and subtrees solve related but different dependency-management problems and have different workflows.
+
+Monorepo
+
+A monorepo stores multiple applications, libraries, or services in a single Git repository. A monorepo can simplify shared code management and atomic changes across projects, but large repositories can require specialized tooling for dependency management, builds, testing, and ownership.
+
+A polyrepo approach stores different applications or components in separate repositories.
+
+Git Performance
+
+Large repositories can require optimization because Git operations depend on repository size, history, number of objects, and working-tree characteristics. Git provides maintenance and garbage-collection mechanisms for repository optimization.
+
+Developers working with very large repositories may use shallow clones, sparse checkout, partial clone, or other advanced features to reduce local data requirements.
+
+Shallow Clone
+
+A shallow clone downloads only a limited portion of repository history. For example, a clone can be configured to retrieve only recent commits.
+
+Shallow clones can reduce download size and speed up CI operations, but they may not contain enough history for operations requiring older commits.
+
+Sparse Checkout
+
+Sparse checkout allows only selected portions of a repository's working tree to be populated. It can be useful in large monorepositories where a developer needs only a subset of files.
+
+Sparse checkout affects the working tree rather than changing the repository's complete history.
+
+Git Conflict Resolution Workflow
+
+A typical conflict-resolution process involves identifying conflicted files, opening each file, understanding the competing changes, deciding the desired final content, removing conflict markers, staging the resolved files, and continuing the merge or rebase.
+
+During a merge, git merge --abort can be used to abandon the merge in appropriate situations. During a rebase, git rebase --abort can stop the rebase and return the repository to its previous state. Git's pull documentation explicitly documents these abort operations for problematic integrations.
+
+Git Clone Versus Fork
+
+Clone and fork are often confused. A clone is a local copy of a repository. A fork is a separate repository hosted under another GitHub account or organization.
+
+A common open-source contribution workflow is: fork the project on GitHub, clone the fork locally, add the original project as an upstream remote, create a feature branch, make changes, push to the fork, and open a pull request to the original project.
+
+Origin and Upstream
+
+origin is conventionally the name Git assigns to the repository from which a clone was created. upstream is often used as a convention for the original project when a developer works from a fork.
+
+These names are conventions rather than special keywords. A remote can technically have any valid name.
+
+Origin Versus Upstream Workflow
+
+Suppose a developer forks a repository. Their fork may be configured as origin, while the original project is configured as upstream. The developer can fetch changes from upstream, update their local branches, and push their own work to origin.
+
+This distinction is especially useful in open-source development.
+
+Pull Request Lifecycle
+
+A pull request typically begins when a developer pushes a branch containing proposed changes. The pull request identifies a source branch and a target branch. GitHub calculates the proposed changes and provides review and automation features.
+
+Reviewers can comment on the code, request changes, or approve the pull request. Automated CI checks can run against the pull request. After required conditions are satisfied, the pull request can be merged using an available merge strategy.
+
+After merging, the feature branch may be deleted if it is no longer needed.
+
+Continuous Integration with GitHub
+
+GitHub Actions can automatically run tests whenever code is pushed or a pull request is opened. A basic CI pipeline can check out the repository, install dependencies, execute tests, and report success or failure.
+
+More advanced pipelines can perform linting, static analysis, vulnerability scanning, Docker image builds, artifact publication, and deployment.
+
+GitHub Actions workflows are YAML documents, and their configuration should be version-controlled alongside the application.
+
+GitHub Actions Matrix
+
+A matrix strategy allows a GitHub Actions job to run across combinations of variables. For example, a project can test against multiple operating systems, programming-language versions, or dependency versions.
+
+Matrix testing is useful when software supports several environments and the project wants to detect compatibility problems automatically.
+
+GitHub Actions Artifacts
+
+Actions artifacts allow workflows to upload files generated during a run. Examples include test reports, build outputs, compiled packages, coverage reports, or diagnostic logs.
+
+Artifacts are different from Git commits because they are generated outputs associated with workflow executions rather than source-control history.
+
+GitHub Actions Caching
+
+Actions workflows can cache dependencies and other reusable data to reduce execution time. A cache is intended for data that can be recreated rather than being treated as the authoritative source of important information.
+
+Caching strategies should use appropriate keys so that stale or incompatible data does not cause incorrect builds.
+
+GitHub Actions Deployment
+
+A GitHub Actions workflow can deploy applications to cloud platforms, Kubernetes clusters, virtual machines, package registries, or other environments.
+
+A production deployment workflow should carefully manage credentials, permissions, environment protection, approvals, rollback strategies, and observability.
+
+Git Best Practices
+
+A healthy Git workflow usually involves small, understandable commits, meaningful commit messages, frequent synchronization with shared branches, clear branch naming, review before merging important changes, and automated tests.
+
+Developers should inspect changes before committing, avoid committing secrets, avoid unnecessary generated files, and understand whether a history-rewriting operation affects other contributors.
+
+Git itself does not enforce a single development methodology. Teams should define conventions appropriate to their repository and release process.

@@ -1,0 +1,120 @@
+name: JANSAARTHI CI
+
+on:
+  push:
+    branches:
+      - integration/rag-validation
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend-and-rag-integration:
+    name: Backend & RAG Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: 'backend/package-lock.json'
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Python RAG Runtime Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r RAG/requirements_render.txt
+
+      - name: Install Node.js Backend Dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Sync RAG Runtime Assets into Backend
+        working-directory: backend
+        run: npm run build
+
+      - name: Run Backend & RAG Integration Tests
+        working-directory: backend
+        run: npm test
+
+  rag-retrieval-verification:
+    name: Python RAG Multi-Modal Retrieval Verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Python RAG Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r RAG/requirements_render.txt
+
+      - name: Cache FastEmbed Model
+        uses: actions/cache@v4
+        with:
+          path: RAG/.cache
+          key: fastembed-minilm-${{ runner.os }}-${{ hashFiles('RAG/requirements_render.txt') }}
+          restore-keys: |
+            fastembed-minilm-${{ runner.os }}-
+
+      - name: Pre-warm FastEmbed ONNX Model
+        run: |
+          python -c "import os; from fastembed import TextEmbedding; TextEmbedding(model_name='sentence-transformers/all-MiniLM-L6-v2', cache_dir='RAG/.cache')"
+
+      - name: Run Retrieval Multi-Modal Verification Suite
+        run: python RAG/src/verify_retrieval_suite.py
+
+      - name: Run 22-Query Benchmark Regression Suite
+        run: python RAG/src/benchmark_evaluation.py
+
+  android-test-and-build:
+    name: Android Unit Tests & Debug Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant Execute Permission to gradlew
+        run: chmod +x gradlew
+
+      - name: Run Android Unit Tests
+        run: ./gradlew testDebugUnitTest --no-daemon --stacktrace
+
+      - name: Assemble Debug APK
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Upload Test Reports on Failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-test-reports
+          path: app/build/reports/tests/testDebugUnitTest/

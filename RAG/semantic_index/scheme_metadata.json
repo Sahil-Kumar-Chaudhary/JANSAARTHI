@@ -1,0 +1,802 @@
+[
+  {
+    "embedding_id": "scheme-SCH001",
+    "scheme_id": "SCH001",
+    "scheme_name": "Pradhan Mantri Jan Dhan Yojana",
+    "category": "Banking, Financial Services and Insurance",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH001\nscheme_name: Pradhan Mantri Jan Dhan Yojana\ncategory: Banking, Financial Services and Insurance\nministry_or_department: Ministry of Finance\ntarget_group_or_purpose: Financial inclusion\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2014-08-28"
+  },
+  {
+    "embedding_id": "scheme-SCH002",
+    "scheme_id": "SCH002",
+    "scheme_name": "Pradhan Mantri Mudra Yojana",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH002\nscheme_name: Pradhan Mantri Mudra Yojana\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Finance\ntarget_group_or_purpose: Micro-enterprise credit\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015-04-08"
+  },
+  {
+    "embedding_id": "scheme-SCH003",
+    "scheme_id": "SCH003",
+    "scheme_name": "Stand Up India Scheme",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH003\nscheme_name: Stand Up India Scheme\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Finance\ntarget_group_or_purpose: SC/ST and women entrepreneurs\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2016-04-05"
+  },
+  {
+    "embedding_id": "scheme-SCH004",
+    "scheme_id": "SCH004",
+    "scheme_name": "Prime Minister Employment Generation Programme (PMEGP)",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH004\nscheme_name: Prime Minister Employment Generation Programme (PMEGP)\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: Employment generation/self-employment\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2008-08-15"
+  },
+  {
+    "embedding_id": "scheme-SCH005",
+    "scheme_id": "SCH005",
+    "scheme_name": "PM SVANidhi",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH005\nscheme_name: PM SVANidhi\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Housing & Urban Affairs\ntarget_group_or_purpose: Street vendor working capital\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2020-06-01"
+  },
+  {
+    "embedding_id": "scheme-SCH006",
+    "scheme_id": "SCH006",
+    "scheme_name": "Pradhan Mantri Formalisation of Micro Food Processing Enterprises (PMFME)",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH006\nscheme_name: Pradhan Mantri Formalisation of Micro Food Processing Enterprises (PMFME)\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Food Processing Industries\ntarget_group_or_purpose: Micro food processing\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2020-06-29"
+  },
+  {
+    "embedding_id": "scheme-SCH007",
+    "scheme_id": "SCH007",
+    "scheme_name": "Credit Guarantee Scheme for Micro and Small Enterprises",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH007\nscheme_name: Credit Guarantee Scheme for Micro and Small Enterprises\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: Credit guarantee\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2000"
+  },
+  {
+    "embedding_id": "scheme-SCH008",
+    "scheme_id": "SCH008",
+    "scheme_name": "MSME Sustainable (ZED) Certification Scheme",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH008\nscheme_name: MSME Sustainable (ZED) Certification Scheme\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: Quality and sustainability\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2016"
+  },
+  {
+    "embedding_id": "scheme-SCH009",
+    "scheme_id": "SCH009",
+    "scheme_name": "MSME Competitive (LEAN) Scheme",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH009\nscheme_name: MSME Competitive (LEAN) Scheme\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: Productivity and competitiveness\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2022"
+  },
+  {
+    "embedding_id": "scheme-SCH010",
+    "scheme_id": "SCH010",
+    "scheme_name": "SFURTI",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH010\nscheme_name: SFURTI\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: Traditional industries and clusters\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2005"
+  },
+  {
+    "embedding_id": "scheme-SCH011",
+    "scheme_id": "SCH011",
+    "scheme_name": "ASPIRE",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH011\nscheme_name: ASPIRE\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: Innovation and rural entrepreneurship\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015"
+  },
+  {
+    "embedding_id": "scheme-SCH012",
+    "scheme_id": "SCH012",
+    "scheme_name": "National SC-ST Hub",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH012\nscheme_name: National SC-ST Hub\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: SC/ST enterprise support\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2016"
+  },
+  {
+    "embedding_id": "scheme-SCH013",
+    "scheme_id": "SCH013",
+    "scheme_name": "Procurement and Marketing Support Scheme",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH013\nscheme_name: Procurement and Marketing Support Scheme\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: Marketing support\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2018"
+  },
+  {
+    "embedding_id": "scheme-SCH014",
+    "scheme_id": "SCH014",
+    "scheme_name": "International Cooperation Scheme",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH014\nscheme_name: International Cooperation Scheme\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: International market access\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 1991"
+  },
+  {
+    "embedding_id": "scheme-SCH015",
+    "scheme_id": "SCH015",
+    "scheme_name": "MSME Innovative Scheme",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH015\nscheme_name: MSME Innovative Scheme\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: Innovation and incubation\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2021"
+  },
+  {
+    "embedding_id": "scheme-SCH016",
+    "scheme_id": "SCH016",
+    "scheme_name": "Coir Udyami Yojana",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH016\nscheme_name: Coir Udyami Yojana\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: Coir enterprise finance\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2014"
+  },
+  {
+    "embedding_id": "scheme-SCH017",
+    "scheme_id": "SCH017",
+    "scheme_name": "Coir Vikas Yojana",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH017\nscheme_name: Coir Vikas Yojana\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: Coir sector development\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2018"
+  },
+  {
+    "embedding_id": "scheme-SCH018",
+    "scheme_id": "SCH018",
+    "scheme_name": "PM Vishwakarma",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH018\nscheme_name: PM Vishwakarma\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: Artisans and craftspeople\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2023-09-17"
+  },
+  {
+    "embedding_id": "scheme-SCH019",
+    "scheme_id": "SCH019",
+    "scheme_name": "Special Credit Linked Capital Subsidy Scheme (SCLCSS)",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH019\nscheme_name: Special Credit Linked Capital Subsidy Scheme (SCLCSS)\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: SC/ST MSE capital subsidy\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2018"
+  },
+  {
+    "embedding_id": "scheme-SCH020",
+    "scheme_id": "SCH020",
+    "scheme_name": "Testing Fee Reimbursement Scheme",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH020\nscheme_name: Testing Fee Reimbursement Scheme\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Micro, Small and Medium Enterprises\ntarget_group_or_purpose: SC/ST MSE testing support\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2012"
+  },
+  {
+    "embedding_id": "scheme-SCH021",
+    "scheme_id": "SCH021",
+    "scheme_name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH021\nscheme_name: Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Income support for farmers\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2019-02-24"
+  },
+  {
+    "embedding_id": "scheme-SCH022",
+    "scheme_id": "SCH022",
+    "scheme_name": "Pradhan Mantri Kisan Maandhan Yojana",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH022\nscheme_name: Pradhan Mantri Kisan Maandhan Yojana\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Pension for small and marginal farmers\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2019-09-12"
+  },
+  {
+    "embedding_id": "scheme-SCH023",
+    "scheme_id": "SCH023",
+    "scheme_name": "Pradhan Mantri Fasal Bima Yojana",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH023\nscheme_name: Pradhan Mantri Fasal Bima Yojana\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Crop insurance\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2016-02-18"
+  },
+  {
+    "embedding_id": "scheme-SCH024",
+    "scheme_id": "SCH024",
+    "scheme_name": "Pradhan Mantri Krishi Sinchayee Yojana",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH024\nscheme_name: Pradhan Mantri Krishi Sinchayee Yojana\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Irrigation and water efficiency\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015-07-01"
+  },
+  {
+    "embedding_id": "scheme-SCH025",
+    "scheme_id": "SCH025",
+    "scheme_name": "Kisan Credit Card",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH025\nscheme_name: Kisan Credit Card\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Agricultural credit\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 1998"
+  },
+  {
+    "embedding_id": "scheme-SCH026",
+    "scheme_id": "SCH026",
+    "scheme_name": "National Livestock Mission",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH026\nscheme_name: National Livestock Mission\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Fisheries, Animal Husbandry & Dairying\ntarget_group_or_purpose: Livestock entrepreneurship\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2014-15"
+  },
+  {
+    "embedding_id": "scheme-SCH027",
+    "scheme_id": "SCH027",
+    "scheme_name": "Pradhan Mantri Matsya Sampada Yojana",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH027\nscheme_name: Pradhan Mantri Matsya Sampada Yojana\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Fisheries, Animal Husbandry & Dairying\ntarget_group_or_purpose: Fisheries development\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2020-09-10"
+  },
+  {
+    "embedding_id": "scheme-SCH028",
+    "scheme_id": "SCH028",
+    "scheme_name": "PM-KUSUM",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH028\nscheme_name: PM-KUSUM\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of New and Renewable Energy\ntarget_group_or_purpose: Solar energy for agriculture\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2019"
+  },
+  {
+    "embedding_id": "scheme-SCH029",
+    "scheme_id": "SCH029",
+    "scheme_name": "Soil Health Card Scheme",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH029\nscheme_name: Soil Health Card Scheme\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Soil testing and nutrients\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015-02-19"
+  },
+  {
+    "embedding_id": "scheme-SCH030",
+    "scheme_id": "SCH030",
+    "scheme_name": "Paramparagat Krishi Vikas Yojana",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH030\nscheme_name: Paramparagat Krishi Vikas Yojana\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Organic farming\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015"
+  },
+  {
+    "embedding_id": "scheme-SCH031",
+    "scheme_id": "SCH031",
+    "scheme_name": "Rashtriya Krishi Vikas Yojana",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH031\nscheme_name: Rashtriya Krishi Vikas Yojana\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Agricultural development\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2007-05-29"
+  },
+  {
+    "embedding_id": "scheme-SCH032",
+    "scheme_id": "SCH032",
+    "scheme_name": "Agriculture Infrastructure Fund",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH032\nscheme_name: Agriculture Infrastructure Fund\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Agriculture infrastructure finance\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2020"
+  },
+  {
+    "embedding_id": "scheme-SCH033",
+    "scheme_id": "SCH033",
+    "scheme_name": "Agricultural Marketing Infrastructure",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH033\nscheme_name: Agricultural Marketing Infrastructure\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Storage and marketing infrastructure\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2001"
+  },
+  {
+    "embedding_id": "scheme-SCH034",
+    "scheme_id": "SCH034",
+    "scheme_name": "National Food Security Mission",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH034\nscheme_name: National Food Security Mission\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Crop productivity\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2007-08"
+  },
+  {
+    "embedding_id": "scheme-SCH035",
+    "scheme_id": "SCH035",
+    "scheme_name": "National Mission on Edible Oils – Oil Palm",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH035\nscheme_name: National Mission on Edible Oils – Oil Palm\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Oil palm development\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2021"
+  },
+  {
+    "embedding_id": "scheme-SCH036",
+    "scheme_id": "SCH036",
+    "scheme_name": "Mission for Integrated Development of Horticulture",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH036\nscheme_name: Mission for Integrated Development of Horticulture\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Horticulture\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2014"
+  },
+  {
+    "embedding_id": "scheme-SCH037",
+    "scheme_id": "SCH037",
+    "scheme_name": "Sub-Mission on Agricultural Mechanization",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH037\nscheme_name: Sub-Mission on Agricultural Mechanization\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Farm mechanization\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2014"
+  },
+  {
+    "embedding_id": "scheme-SCH038",
+    "scheme_id": "SCH038",
+    "scheme_name": "National Mission for Sustainable Agriculture",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH038\nscheme_name: National Mission for Sustainable Agriculture\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Sustainable agriculture\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2014"
+  },
+  {
+    "embedding_id": "scheme-SCH039",
+    "scheme_id": "SCH039",
+    "scheme_name": "National Bamboo Mission",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH039\nscheme_name: National Bamboo Mission\ncategory: Agriculture, Rural & Environment\nministry_or_department: Ministry of Agriculture and Farmers Welfare\ntarget_group_or_purpose: Bamboo development\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2006-07"
+  },
+  {
+    "embedding_id": "scheme-SCH040",
+    "scheme_id": "SCH040",
+    "scheme_name": "Pradhan Mantri Awas Yojana – Urban",
+    "category": "Housing & Shelter",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH040\nscheme_name: Pradhan Mantri Awas Yojana – Urban\ncategory: Housing & Shelter\nministry_or_department: Ministry of Housing & Urban Affairs\ntarget_group_or_purpose: Urban housing\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015-06-25"
+  },
+  {
+    "embedding_id": "scheme-SCH041",
+    "scheme_id": "SCH041",
+    "scheme_name": "Pradhan Mantri Awas Yojana – Gramin",
+    "category": "Housing & Shelter",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH041\nscheme_name: Pradhan Mantri Awas Yojana – Gramin\ncategory: Housing & Shelter\nministry_or_department: Ministry of Rural Development\ntarget_group_or_purpose: Rural housing\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2016-04-01"
+  },
+  {
+    "embedding_id": "scheme-SCH042",
+    "scheme_id": "SCH042",
+    "scheme_name": "Pradhan Mantri Ujjwala Yojana",
+    "category": "Utility & Sanitation",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH042\nscheme_name: Pradhan Mantri Ujjwala Yojana\ncategory: Utility & Sanitation\nministry_or_department: Ministry of Petroleum and Natural Gas\ntarget_group_or_purpose: Clean cooking fuel\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2016-05-01"
+  },
+  {
+    "embedding_id": "scheme-SCH043",
+    "scheme_id": "SCH043",
+    "scheme_name": "Jal Jeevan Mission",
+    "category": "Utility & Sanitation",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH043\nscheme_name: Jal Jeevan Mission\ncategory: Utility & Sanitation\nministry_or_department: Ministry of Jal Shakti\ntarget_group_or_purpose: Rural household tap water\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2019-08-15"
+  },
+  {
+    "embedding_id": "scheme-SCH044",
+    "scheme_id": "SCH044",
+    "scheme_name": "Swachh Bharat Mission – Gramin",
+    "category": "Utility & Sanitation",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH044\nscheme_name: Swachh Bharat Mission – Gramin\ncategory: Utility & Sanitation\nministry_or_department: Ministry of Jal Shakti\ntarget_group_or_purpose: Rural sanitation\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2014-10-02"
+  },
+  {
+    "embedding_id": "scheme-SCH045",
+    "scheme_id": "SCH045",
+    "scheme_name": "Swachh Bharat Mission – Urban",
+    "category": "Utility & Sanitation",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH045\nscheme_name: Swachh Bharat Mission – Urban\ncategory: Utility & Sanitation\nministry_or_department: Ministry of Housing & Urban Affairs\ntarget_group_or_purpose: Urban sanitation\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2014-10-02"
+  },
+  {
+    "embedding_id": "scheme-SCH046",
+    "scheme_id": "SCH046",
+    "scheme_name": "Ayushman Bharat – Pradhan Mantri Jan Arogya Yojana",
+    "category": "Health & Wellness",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH046\nscheme_name: Ayushman Bharat – Pradhan Mantri Jan Arogya Yojana\ncategory: Health & Wellness\nministry_or_department: Ministry of Health and Family Welfare\ntarget_group_or_purpose: Health insurance/assurance\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2018-09-23"
+  },
+  {
+    "embedding_id": "scheme-SCH047",
+    "scheme_id": "SCH047",
+    "scheme_name": "Pradhan Mantri Bhartiya Janaushadhi Pariyojana",
+    "category": "Health & Wellness",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH047\nscheme_name: Pradhan Mantri Bhartiya Janaushadhi Pariyojana\ncategory: Health & Wellness\nministry_or_department: Ministry of Chemicals and Fertilizers\ntarget_group_or_purpose: Affordable medicines\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2008"
+  },
+  {
+    "embedding_id": "scheme-SCH048",
+    "scheme_id": "SCH048",
+    "scheme_name": "Pradhan Mantri Matru Vandana Yojana",
+    "category": "Women and Child",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH048\nscheme_name: Pradhan Mantri Matru Vandana Yojana\ncategory: Women and Child\nministry_or_department: Ministry of Women and Child Development\ntarget_group_or_purpose: Maternity benefit\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2017-09-01"
+  },
+  {
+    "embedding_id": "scheme-SCH049",
+    "scheme_id": "SCH049",
+    "scheme_name": "Beti Bachao Beti Padhao",
+    "category": "Women and Child",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH049\nscheme_name: Beti Bachao Beti Padhao\ncategory: Women and Child\nministry_or_department: Ministry of Women and Child Development\ntarget_group_or_purpose: Girl child welfare\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015-01-22"
+  },
+  {
+    "embedding_id": "scheme-SCH050",
+    "scheme_id": "SCH050",
+    "scheme_name": "One Stop Centre Scheme",
+    "category": "Women and Child",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH050\nscheme_name: One Stop Centre Scheme\ncategory: Women and Child\nministry_or_department: Ministry of Women and Child Development\ntarget_group_or_purpose: Support for women affected by violence\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015"
+  },
+  {
+    "embedding_id": "scheme-SCH051",
+    "scheme_id": "SCH051",
+    "scheme_name": "Women Helpline",
+    "category": "Women and Child",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH051\nscheme_name: Women Helpline\ncategory: Women and Child\nministry_or_department: Ministry of Women and Child Development\ntarget_group_or_purpose: Women safety and support\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015"
+  },
+  {
+    "embedding_id": "scheme-SCH052",
+    "scheme_id": "SCH052",
+    "scheme_name": "PM POSHAN",
+    "category": "Education & Learning",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH052\nscheme_name: PM POSHAN\ncategory: Education & Learning\nministry_or_department: Ministry of Education\ntarget_group_or_purpose: School nutrition\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 1995-08-15"
+  },
+  {
+    "embedding_id": "scheme-SCH053",
+    "scheme_id": "SCH053",
+    "scheme_name": "Samagra Shiksha",
+    "category": "Education & Learning",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH053\nscheme_name: Samagra Shiksha\ncategory: Education & Learning\nministry_or_department: Ministry of Education\ntarget_group_or_purpose: School education\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2018"
+  },
+  {
+    "embedding_id": "scheme-SCH054",
+    "scheme_id": "SCH054",
+    "scheme_name": "National Means-cum-Merit Scholarship Scheme",
+    "category": "Education & Learning",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH054\nscheme_name: National Means-cum-Merit Scholarship Scheme\ncategory: Education & Learning\nministry_or_department: Ministry of Education\ntarget_group_or_purpose: Scholarship\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2008"
+  },
+  {
+    "embedding_id": "scheme-SCH055",
+    "scheme_id": "SCH055",
+    "scheme_name": "PM-USP Central Sector Scheme of Scholarship for College and University Students",
+    "category": "Education & Learning",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH055\nscheme_name: PM-USP Central Sector Scheme of Scholarship for College and University Students\ncategory: Education & Learning\nministry_or_department: Ministry of Education\ntarget_group_or_purpose: Higher education scholarship\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2008"
+  },
+  {
+    "embedding_id": "scheme-SCH056",
+    "scheme_id": "SCH056",
+    "scheme_name": "National Scholarship for Post Graduate Studies",
+    "category": "Education & Learning",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH056\nscheme_name: National Scholarship for Post Graduate Studies\ncategory: Education & Learning\nministry_or_department: Ministry of Education\ntarget_group_or_purpose: Postgraduate scholarship\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2022"
+  },
+  {
+    "embedding_id": "scheme-SCH057",
+    "scheme_id": "SCH057",
+    "scheme_name": "AICTE-Swanath Scholarship Scheme",
+    "category": "Education & Learning",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH057\nscheme_name: AICTE-Swanath Scholarship Scheme\ncategory: Education & Learning\nministry_or_department: Ministry of Education\ntarget_group_or_purpose: Scholarship for specified vulnerable students\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2021"
+  },
+  {
+    "embedding_id": "scheme-SCH058",
+    "scheme_id": "SCH058",
+    "scheme_name": "AICTE Pragati Scholarship Scheme",
+    "category": "Education & Learning",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH058\nscheme_name: AICTE Pragati Scholarship Scheme\ncategory: Education & Learning\nministry_or_department: Ministry of Education\ntarget_group_or_purpose: Scholarship for girls in technical education\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2014"
+  },
+  {
+    "embedding_id": "scheme-SCH059",
+    "scheme_id": "SCH059",
+    "scheme_name": "AICTE Saksham Scholarship Scheme",
+    "category": "Education & Learning",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH059\nscheme_name: AICTE Saksham Scholarship Scheme\ncategory: Education & Learning\nministry_or_department: Ministry of Education\ntarget_group_or_purpose: Scholarship for students with disabilities\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2014"
+  },
+  {
+    "embedding_id": "scheme-SCH060",
+    "scheme_id": "SCH060",
+    "scheme_name": "PM-YASASVI Top Class College Education for OBC, EBC and DNT Students",
+    "category": "Education & Learning",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH060\nscheme_name: PM-YASASVI Top Class College Education for OBC, EBC and DNT Students\ncategory: Education & Learning\nministry_or_department: Ministry of Social Justice and Empowerment\ntarget_group_or_purpose: Higher education scholarship\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2023"
+  },
+  {
+    "embedding_id": "scheme-SCH061",
+    "scheme_id": "SCH061",
+    "scheme_name": "Post-Matric Scholarship for OBC Students",
+    "category": "Education & Learning",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH061\nscheme_name: Post-Matric Scholarship for OBC Students\ncategory: Education & Learning\nministry_or_department: Ministry of Social Justice and Empowerment\ntarget_group_or_purpose: Post-matric scholarship\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 1954"
+  },
+  {
+    "embedding_id": "scheme-SCH062",
+    "scheme_id": "SCH062",
+    "scheme_name": "Pre-Matric Scholarship for Students with Disabilities",
+    "category": "Education & Learning",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH062\nscheme_name: Pre-Matric Scholarship for Students with Disabilities\ncategory: Education & Learning\nministry_or_department: Ministry of Social Justice and Empowerment\ntarget_group_or_purpose: Disability scholarship\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2009"
+  },
+  {
+    "embedding_id": "scheme-SCH063",
+    "scheme_id": "SCH063",
+    "scheme_name": "National Overseas Scholarship for Students with Disabilities",
+    "category": "Education & Learning",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH063\nscheme_name: National Overseas Scholarship for Students with Disabilities\ncategory: Education & Learning\nministry_or_department: Ministry of Social Justice and Empowerment\ntarget_group_or_purpose: Overseas higher education\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 1954"
+  },
+  {
+    "embedding_id": "scheme-SCH064",
+    "scheme_id": "SCH064",
+    "scheme_name": "FutureSkills Prime Incentive Program",
+    "category": "Skills & Employment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH064\nscheme_name: FutureSkills Prime Incentive Program\ncategory: Skills & Employment\nministry_or_department: Ministry of Electronics and Information Technology\ntarget_group_or_purpose: Digital skilling\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2020"
+  },
+  {
+    "embedding_id": "scheme-SCH065",
+    "scheme_id": "SCH065",
+    "scheme_name": "Pradhan Mantri Kaushal Vikas Yojana – Recognition of Prior Learning",
+    "category": "Skills & Employment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH065\nscheme_name: Pradhan Mantri Kaushal Vikas Yojana – Recognition of Prior Learning\ncategory: Skills & Employment\nministry_or_department: Ministry of Skill Development and Entrepreneurship\ntarget_group_or_purpose: Skill certification\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015"
+  },
+  {
+    "embedding_id": "scheme-SCH066",
+    "scheme_id": "SCH066",
+    "scheme_name": "PM-DAKSH",
+    "category": "Skills & Employment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH066\nscheme_name: PM-DAKSH\ncategory: Skills & Employment\nministry_or_department: Ministry of Social Justice and Empowerment\ntarget_group_or_purpose: Skill development for marginalized groups\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2020"
+  },
+  {
+    "embedding_id": "scheme-SCH067",
+    "scheme_id": "SCH067",
+    "scheme_name": "Prime Minister’s Internship Scheme",
+    "category": "Skills & Employment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH067\nscheme_name: Prime Minister’s Internship Scheme\ncategory: Skills & Employment\nministry_or_department: Ministry of Corporate Affairs\ntarget_group_or_purpose: Internship and employability\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2024"
+  },
+  {
+    "embedding_id": "scheme-SCH068",
+    "scheme_id": "SCH068",
+    "scheme_name": "Pradhan Mantri Virasat Ka Samvardhan (PM VIKAS)",
+    "category": "Skills & Employment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH068\nscheme_name: Pradhan Mantri Virasat Ka Samvardhan (PM VIKAS)\ncategory: Skills & Employment\nministry_or_department: Ministry of Minority Affairs\ntarget_group_or_purpose: Skill and socioeconomic empowerment\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2022"
+  },
+  {
+    "embedding_id": "scheme-SCH069",
+    "scheme_id": "SCH069",
+    "scheme_name": "SMILE – Skill Development and Training for Transgender Persons",
+    "category": "Skills & Employment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH069\nscheme_name: SMILE – Skill Development and Training for Transgender Persons\ncategory: Skills & Employment\nministry_or_department: Ministry of Social Justice and Empowerment\ntarget_group_or_purpose: Skill training\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2022"
+  },
+  {
+    "embedding_id": "scheme-SCH070",
+    "scheme_id": "SCH070",
+    "scheme_name": "Atal Pension Yojana",
+    "category": "Banking, Financial Services and Insurance",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH070\nscheme_name: Atal Pension Yojana\ncategory: Banking, Financial Services and Insurance\nministry_or_department: Ministry of Finance\ntarget_group_or_purpose: Pension\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015-05-09"
+  },
+  {
+    "embedding_id": "scheme-SCH071",
+    "scheme_id": "SCH071",
+    "scheme_name": "Pradhan Mantri Jeevan Jyoti Bima Yojana",
+    "category": "Banking, Financial Services and Insurance",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH071\nscheme_name: Pradhan Mantri Jeevan Jyoti Bima Yojana\ncategory: Banking, Financial Services and Insurance\nministry_or_department: Ministry of Finance\ntarget_group_or_purpose: Life insurance\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015-05-09"
+  },
+  {
+    "embedding_id": "scheme-SCH072",
+    "scheme_id": "SCH072",
+    "scheme_name": "Pradhan Mantri Suraksha Bima Yojana",
+    "category": "Banking, Financial Services and Insurance",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH072\nscheme_name: Pradhan Mantri Suraksha Bima Yojana\ncategory: Banking, Financial Services and Insurance\nministry_or_department: Ministry of Finance\ntarget_group_or_purpose: Accident insurance\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015-05-09"
+  },
+  {
+    "embedding_id": "scheme-SCH073",
+    "scheme_id": "SCH073",
+    "scheme_name": "Sukanya Samriddhi Account",
+    "category": "Banking, Financial Services and Insurance",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH073\nscheme_name: Sukanya Samriddhi Account\ncategory: Banking, Financial Services and Insurance\nministry_or_department: Ministry of Finance\ntarget_group_or_purpose: Savings for girl child\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015-01-22"
+  },
+  {
+    "embedding_id": "scheme-SCH074",
+    "scheme_id": "SCH074",
+    "scheme_name": "National Social Assistance Programme",
+    "category": "Social Welfare & Empowerment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH074\nscheme_name: National Social Assistance Programme\ncategory: Social Welfare & Empowerment\nministry_or_department: Ministry of Rural Development\ntarget_group_or_purpose: Social assistance\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 1995-08-15"
+  },
+  {
+    "embedding_id": "scheme-SCH075",
+    "scheme_id": "SCH075",
+    "scheme_name": "Indira Gandhi National Old Age Pension Scheme",
+    "category": "Social Welfare & Empowerment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH075\nscheme_name: Indira Gandhi National Old Age Pension Scheme\ncategory: Social Welfare & Empowerment\nministry_or_department: Ministry of Rural Development\ntarget_group_or_purpose: Old-age pension\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2007-11-19"
+  },
+  {
+    "embedding_id": "scheme-SCH076",
+    "scheme_id": "SCH076",
+    "scheme_name": "Indira Gandhi National Widow Pension Scheme",
+    "category": "Social Welfare & Empowerment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH076\nscheme_name: Indira Gandhi National Widow Pension Scheme\ncategory: Social Welfare & Empowerment\nministry_or_department: Ministry of Rural Development\ntarget_group_or_purpose: Widow pension\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2009"
+  },
+  {
+    "embedding_id": "scheme-SCH077",
+    "scheme_id": "SCH077",
+    "scheme_name": "Indira Gandhi National Disability Pension Scheme",
+    "category": "Social Welfare & Empowerment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH077\nscheme_name: Indira Gandhi National Disability Pension Scheme\ncategory: Social Welfare & Empowerment\nministry_or_department: Ministry of Rural Development\ntarget_group_or_purpose: Disability pension\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2009"
+  },
+  {
+    "embedding_id": "scheme-SCH078",
+    "scheme_id": "SCH078",
+    "scheme_name": "Self Employment Scheme for Rehabilitation of Manual Scavengers",
+    "category": "Social Welfare & Empowerment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH078\nscheme_name: Self Employment Scheme for Rehabilitation of Manual Scavengers\ncategory: Social Welfare & Empowerment\nministry_or_department: Ministry of Social Justice and Empowerment\ntarget_group_or_purpose: Self-employment rehabilitation\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2013"
+  },
+  {
+    "embedding_id": "scheme-SCH079",
+    "scheme_id": "SCH079",
+    "scheme_name": "ADIP Scheme – Assistance to Persons with Disabilities for Aids/Appliances",
+    "category": "Social Welfare & Empowerment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH079\nscheme_name: ADIP Scheme – Assistance to Persons with Disabilities for Aids/Appliances\ncategory: Social Welfare & Empowerment\nministry_or_department: Ministry of Social Justice and Empowerment\ntarget_group_or_purpose: Assistive devices\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 1981"
+  },
+  {
+    "embedding_id": "scheme-SCH080",
+    "scheme_id": "SCH080",
+    "scheme_name": "National Action Plan for Drug Demand Reduction",
+    "category": "Social Welfare & Empowerment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH080\nscheme_name: National Action Plan for Drug Demand Reduction\ncategory: Social Welfare & Empowerment\nministry_or_department: Ministry of Social Justice and Empowerment\ntarget_group_or_purpose: Drug demand reduction\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 1985"
+  },
+  {
+    "embedding_id": "scheme-SCH081",
+    "scheme_id": "SCH081",
+    "scheme_name": "PMAY-U Interest Subsidy Scheme",
+    "category": "Housing & Shelter",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH081\nscheme_name: PMAY-U Interest Subsidy Scheme\ncategory: Housing & Shelter\nministry_or_department: Ministry of Housing & Urban Affairs\ntarget_group_or_purpose: Housing finance support\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015"
+  },
+  {
+    "embedding_id": "scheme-SCH082",
+    "scheme_id": "SCH082",
+    "scheme_name": "National Handloom Development Programme – Weaver MUDRA",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH082\nscheme_name: National Handloom Development Programme – Weaver MUDRA\ncategory: Business & Entrepreneurship\nministry_or_department: Ministry of Textiles\ntarget_group_or_purpose: Handloom credit\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2016"
+  },
+  {
+    "embedding_id": "scheme-SCH083",
+    "scheme_id": "SCH083",
+    "scheme_name": "Capacity Building for Service Providers – Entrepreneurship Programme",
+    "category": "Travel & Tourism",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH083\nscheme_name: Capacity Building for Service Providers – Entrepreneurship Programme\ncategory: Travel & Tourism\nministry_or_department: Ministry of Tourism\ntarget_group_or_purpose: Tourism entrepreneurship training\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2004"
+  },
+  {
+    "embedding_id": "scheme-SCH084",
+    "scheme_id": "SCH084",
+    "scheme_name": "Technology Transfer & Commercialization Support Scheme",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH084\nscheme_name: Technology Transfer & Commercialization Support Scheme\ncategory: Business & Entrepreneurship\nministry_or_department: Government of Kerala\ntarget_group_or_purpose: Startup technology commercialization\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2012"
+  },
+  {
+    "embedding_id": "scheme-SCH085",
+    "scheme_id": "SCH085",
+    "scheme_name": "Mahila Samiriddhi Yojana for Backward Classes – Haryana",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH085\nscheme_name: Mahila Samiriddhi Yojana for Backward Classes – Haryana\ncategory: Business & Entrepreneurship\nministry_or_department: Government of Haryana\ntarget_group_or_purpose: Women entrepreneurship loan\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015"
+  },
+  {
+    "embedding_id": "scheme-SCH086",
+    "scheme_id": "SCH086",
+    "scheme_name": "New Entrepreneur-cum-Enterprise Development Scheme (NEEDS)",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH086\nscheme_name: New Entrepreneur-cum-Enterprise Development Scheme (NEEDS)\ncategory: Business & Entrepreneurship\nministry_or_department: Government of Tamil Nadu\ntarget_group_or_purpose: First-generation entrepreneurs\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2012"
+  },
+  {
+    "embedding_id": "scheme-SCH087",
+    "scheme_id": "SCH087",
+    "scheme_name": "Skilled Youth Startup Scheme",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH087\nscheme_name: Skilled Youth Startup Scheme\ncategory: Business & Entrepreneurship\nministry_or_department: Government of Sikkim\ntarget_group_or_purpose: Youth entrepreneurship\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2016"
+  },
+  {
+    "embedding_id": "scheme-SCH088",
+    "scheme_id": "SCH088",
+    "scheme_name": "Back Ended Interest Subsidy (BEIS)",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH088\nscheme_name: Back Ended Interest Subsidy (BEIS)\ncategory: Business & Entrepreneurship\nministry_or_department: Government of Tamil Nadu\ntarget_group_or_purpose: MSME interest subsidy\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2016"
+  },
+  {
+    "embedding_id": "scheme-SCH089",
+    "scheme_id": "SCH089",
+    "scheme_name": "PMMSY Establishment of New Freshwater Fin Fish Hatcheries – Haryana",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH089\nscheme_name: PMMSY Establishment of New Freshwater Fin Fish Hatcheries – Haryana\ncategory: Agriculture, Rural & Environment\nministry_or_department: Government of Haryana\ntarget_group_or_purpose: Fisheries entrepreneurship\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2020"
+  },
+  {
+    "embedding_id": "scheme-SCH090",
+    "scheme_id": "SCH090",
+    "scheme_name": "PMMSY Establishment of Backyard Mini RAS Units – Haryana",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH090\nscheme_name: PMMSY Establishment of Backyard Mini RAS Units – Haryana\ncategory: Agriculture, Rural & Environment\nministry_or_department: Government of Haryana\ntarget_group_or_purpose: Aquaculture subsidy\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2020"
+  },
+  {
+    "embedding_id": "scheme-SCH091",
+    "scheme_id": "SCH091",
+    "scheme_name": "PMMSY Refrigerated Vehicles – Haryana",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH091\nscheme_name: PMMSY Refrigerated Vehicles – Haryana\ncategory: Agriculture, Rural & Environment\nministry_or_department: Government of Haryana\ntarget_group_or_purpose: Fish transport infrastructure\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2020"
+  },
+  {
+    "embedding_id": "scheme-SCH092",
+    "scheme_id": "SCH092",
+    "scheme_name": "PMMSY Small Biofloc Establishment – Gujarat",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH092\nscheme_name: PMMSY Small Biofloc Establishment – Gujarat\ncategory: Agriculture, Rural & Environment\nministry_or_department: Government of Gujarat\ntarget_group_or_purpose: Aquaculture subsidy\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2020"
+  },
+  {
+    "embedding_id": "scheme-SCH093",
+    "scheme_id": "SCH093",
+    "scheme_name": "PMMSY Medium RAS Culture System – Gujarat",
+    "category": "Agriculture, Rural & Environment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH093\nscheme_name: PMMSY Medium RAS Culture System – Gujarat\ncategory: Agriculture, Rural & Environment\nministry_or_department: Government of Gujarat\ntarget_group_or_purpose: Aquaculture subsidy\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2020"
+  },
+  {
+    "embedding_id": "scheme-SCH094",
+    "scheme_id": "SCH094",
+    "scheme_name": "Swami Vivekananda Nishakta Swavlamban Protsahan Yojana",
+    "category": "Social Welfare & Empowerment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH094\nscheme_name: Swami Vivekananda Nishakta Swavlamban Protsahan Yojana\ncategory: Social Welfare & Empowerment\nministry_or_department: Government of Jharkhand\ntarget_group_or_purpose: Disability pension\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2016"
+  },
+  {
+    "embedding_id": "scheme-SCH095",
+    "scheme_id": "SCH095",
+    "scheme_name": "Project Sankalp",
+    "category": "Skills & Employment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH095\nscheme_name: Project Sankalp\ncategory: Skills & Employment\nministry_or_department: Government of Gujarat\ntarget_group_or_purpose: Vocational skilling\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2018"
+  },
+  {
+    "embedding_id": "scheme-SCH096",
+    "scheme_id": "SCH096",
+    "scheme_name": "Financial Loan for Training of Commercial Pilot – Gujarat",
+    "category": "Skills & Employment",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH096\nscheme_name: Financial Loan for Training of Commercial Pilot – Gujarat\ncategory: Skills & Employment\nministry_or_department: Government of Gujarat\ntarget_group_or_purpose: Skill/education loan\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2020"
+  },
+  {
+    "embedding_id": "scheme-SCH097",
+    "scheme_id": "SCH097",
+    "scheme_name": "Term Loan Scheme (GSKVN)",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH097\nscheme_name: Term Loan Scheme (GSKVN)\ncategory: Business & Entrepreneurship\nministry_or_department: Government of Gujarat\ntarget_group_or_purpose: Self-employment loan\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2015"
+  },
+  {
+    "embedding_id": "scheme-SCH098",
+    "scheme_id": "SCH098",
+    "scheme_name": "Aatmanirbhar Gujarat Scheme – EPF Reimbursement",
+    "category": "Business & Entrepreneurship",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH098\nscheme_name: Aatmanirbhar Gujarat Scheme – EPF Reimbursement\ncategory: Business & Entrepreneurship\nministry_or_department: Government of Gujarat\ntarget_group_or_purpose: Industrial investment support\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2022"
+  },
+  {
+    "embedding_id": "scheme-SCH099",
+    "scheme_id": "SCH099",
+    "scheme_name": "Investment Promotion Assistance for Large/Mega/Ultra-Mega Tourism Projects",
+    "category": "Travel & Tourism",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH099\nscheme_name: Investment Promotion Assistance for Large/Mega/Ultra-Mega Tourism Projects\ncategory: Travel & Tourism\nministry_or_department: Government of Madhya Pradesh\ntarget_group_or_purpose: Tourism investment support\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2022"
+  },
+  {
+    "embedding_id": "scheme-SCH100",
+    "scheme_id": "SCH100",
+    "scheme_name": "Financial Assistance to SC Students Appearing in UPSC Mains – Assam",
+    "category": "Education & Learning",
+    "source_platform": "myScheme.gov.in",
+    "document": "scheme_id: SCH100\nscheme_name: Financial Assistance to SC Students Appearing in UPSC Mains – Assam\ncategory: Education & Learning\nministry_or_department: Government of Assam\ntarget_group_or_purpose: Competitive exam assistance\nsource_platform: myScheme.gov.in\ndata_status: Launch date/year populated; exact date used where established, otherwise launch year/period.\nscheme_launch_date: 2025"
+  }
+]

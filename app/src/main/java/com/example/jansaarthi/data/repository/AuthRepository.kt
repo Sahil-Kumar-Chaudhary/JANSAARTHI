@@ -12,7 +12,8 @@ import org.json.JSONObject
 import okhttp3.MultipartBody
 
 class AuthRepository(private val tokenManager: TokenManager) {
-    private val api = RetrofitClient.instance
+    private val api: com.example.jansaarthi.data.network.AuthApi
+        get() = RetrofitClient.instance
 
     private val _currentUser = MutableStateFlow<User?>(null)
     val currentUser: StateFlow<User?> = _currentUser.asStateFlow()

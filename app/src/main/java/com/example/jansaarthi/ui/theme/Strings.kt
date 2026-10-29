@@ -1,4 +1,4 @@
-﻿package com.example.jansaarthi.ui.theme
+package com.example.jansaarthi.ui.theme
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.example.jansaarthi.data.repository.AppLanguage
@@ -22,7 +22,23 @@ data class AppStrings(
     val languageSetting: String,
     val themeSetting: String,
     val notifications: String,
-    val helpSupport: String
+    val helpSupport: String,
+    
+    // RAG Assistant Strings
+    val ragTitle: String,
+    val ragSubtitle: String,
+    val ragInputPlaceholder: String,
+    val ragSend: String,
+    val ragSourcesTitle: String,
+    val ragEmptyHeading: String,
+    val ragEmptyPrompt: String,
+    val ragSuggestion1: String,
+    val ragSuggestion2: String,
+    val ragSuggestion3: String,
+    val ragRetry: String,
+    val ragModeLabel: String,
+    val ragClearChat: String,
+    val ragNoSources: String
 )
 
 val EnglishStrings = AppStrings(
@@ -44,7 +60,22 @@ val EnglishStrings = AppStrings(
     languageSetting = "Language",
     themeSetting = "Theme",
     notifications = "Notifications",
-    helpSupport = "Help & Support"
+    helpSupport = "Help & Support",
+    
+    ragTitle = "JANSAARTHI AI Assistant",
+    ragSubtitle = "Ask questions about Indian government schemes",
+    ragInputPlaceholder = "Ask about eligibility, benefits, loans, or subsidies...",
+    ragSend = "Send",
+    ragSourcesTitle = "Verified Scheme Sources",
+    ragEmptyHeading = "How can JANSAARTHI AI help you today?",
+    ragEmptyPrompt = "Ask any question in plain English or Hinglish about verified government schemes across India.",
+    ragSuggestion1 = "Pradhan Mantri Mudra Yojana loan eligibility",
+    ragSuggestion2 = "Financial grants for women entrepreneurs",
+    ragSuggestion3 = "Crop insurance and drought aid for farmers",
+    ragRetry = "Retry",
+    ragModeLabel = "Search Mode",
+    ragClearChat = "Clear Chat",
+    ragNoSources = "No sources cited for this response"
 )
 
 val HindiStrings = AppStrings(
@@ -66,7 +97,22 @@ val HindiStrings = AppStrings(
     languageSetting = "भाषा (Language)",
     themeSetting = "थीम (Theme)",
     notifications = "सूचनाएं",
-    helpSupport = "सहायता और समर्थन"
+    helpSupport = "सहायता और समर्थन",
+    
+    ragTitle = "जनसारथी AI सहायक",
+    ragSubtitle = "भारतीय सरकारी योजनाओं के बारे में प्रश्न पूछें",
+    ragInputPlaceholder = "पात्रता, लाभ, ऋण या सब्सिडी के बारे में पूछें...",
+    ragSend = "भेजें",
+    ragSourcesTitle = "सत्यापित योजना स्रोत",
+    ragEmptyHeading = "जनसारथी AI आपकी क्या सहायता कर सकता है?",
+    ragEmptyPrompt = "भारत भर की सत्यापित सरकारी योजनाओं के बारे में अपनी भाषा में कोई भी प्रश्न पूछें।",
+    ragSuggestion1 = "प्रधानमंत्री मुद्रा योजना ऋण पात्रता",
+    ragSuggestion2 = "महिला उद्यमियों के लिए वित्तीय सहायता",
+    ragSuggestion3 = "किसानों के लिए फसल बीमा और सूखा सहायता",
+    ragRetry = "पुनः प्रयास करें",
+    ragModeLabel = "खोज मोड",
+    ragClearChat = "बातचीत साफ़ करें",
+    ragNoSources = "इस उत्तर के लिए कोई स्रोत उपलब्ध नहीं है"
 )
 
 val LocalAppStrings = staticCompositionLocalOf { EnglishStrings }
