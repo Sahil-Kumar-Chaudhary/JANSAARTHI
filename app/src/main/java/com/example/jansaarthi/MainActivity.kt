@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.jansaarthi.data.repository.ThemeMode
 import com.example.jansaarthi.data.repository.AppLanguage
 import com.example.jansaarthi.ui.navigation.AppNavGraph
+import com.example.jansaarthi.ui.navigation.Routes
 import com.example.jansaarthi.ui.theme.JANSAARTHITheme
 
 class MainActivity : AppCompatActivity() {
@@ -43,7 +44,8 @@ class MainActivity : AppCompatActivity() {
             
             JANSAARTHITheme(darkTheme = darkTheme) {
                 val navController = rememberNavController()
-                AppNavGraph(navController = navController)
+                val startDest = intent?.getStringExtra("start_destination") ?: Routes.SPLASH
+                AppNavGraph(navController = navController, startDestination = startDest)
             }
         }
     }

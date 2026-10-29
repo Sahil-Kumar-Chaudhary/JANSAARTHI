@@ -18,6 +18,12 @@ class App : Application() {
         instance = this
         settingsRepository = SettingsRepository(this)
         
+        // Switch debug app to production backend using existing RetrofitClient environment-switching method
+        com.example.jansaarthi.data.network.RetrofitClient.setEnvironment(
+            com.example.jansaarthi.data.network.RetrofitClient.EnvironmentTarget.PRODUCTION
+        )
+        android.util.Log.i("App", "RetrofitClient target switched to PRODUCTION: ${com.example.jansaarthi.data.network.RetrofitClient.getBaseUrl()}")
+
         val tokenManager = com.example.jansaarthi.data.local.TokenManager(this)
         authRepository = com.example.jansaarthi.data.repository.AuthRepository(tokenManager)
         ragRepository = com.example.jansaarthi.data.repository.RagRepository()
