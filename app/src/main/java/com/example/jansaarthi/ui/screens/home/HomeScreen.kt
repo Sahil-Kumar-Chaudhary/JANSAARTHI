@@ -32,7 +32,13 @@ fun HomeScreen(navController: NavController) {
     
     // Fetch profile on mount if null
     LaunchedEffect(Unit) {
-        if (currentUser == null && com.example.jansaarthi.App.instance.authRepository.isLoggedIn()) {
+        if (!com.example.jansaarthi.App.instance.authRepository.isLoggedIn()) {
+            navController.navigate(Routes.LOGIN) {
+                popUpTo(0) { inclusive = true }
+            }
+            return@LaunchedEffect
+        }
+        if (currentUser == null) {
             val result = com.example.jansaarthi.App.instance.authRepository.fetchMe()
             if (result.isFailure) {
                 com.example.jansaarthi.App.instance.authRepository.logout()

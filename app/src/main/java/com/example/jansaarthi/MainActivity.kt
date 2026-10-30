@@ -61,7 +61,14 @@ class MainActivity : AppCompatActivity() {
             
             JANSAARTHITheme(darkTheme = darkTheme) {
                 val navController = rememberNavController()
-                val startDest = intent?.getStringExtra("start_destination") ?: Routes.SPLASH
+                val rawStartDest = intent?.getStringExtra("start_destination") ?: Routes.SPLASH
+                val isLoggedIn = App.instance.authRepository.isLoggedIn()
+                val unauthenticatedRoutes = setOf(Routes.SPLASH, Routes.LOGIN, Routes.REGISTER, Routes.ONBOARDING)
+                val startDest = if (rawStartDest in unauthenticatedRoutes || isLoggedIn) {
+                    rawStartDest
+                } else {
+                    Routes.LOGIN
+                }
                 AppNavGraph(navController = navController, startDestination = startDest)
             }
         }

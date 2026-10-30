@@ -473,11 +473,10 @@ fun LoginScreen(
 
                     Spacer(modifier = Modifier.height(14.dp))
 
-                    // Forgot Password | Explore as Guest Row
-                    Row(
+                    // Forgot Password Action (Centered)
+                    Box(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
+                        contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = "Forgot Password?",
@@ -486,29 +485,7 @@ fun LoginScreen(
                             fontSize = 13.5.sp,
                             modifier = Modifier
                                 .clickable { showForgotDialog = true }
-                                .padding(vertical = 4.dp, horizontal = 6.dp)
-                        )
-
-                        Spacer(modifier = Modifier.width(8.dp))
-
-                        // Vertical Separator
-                        Box(
-                            modifier = Modifier
-                                .width(1.dp)
-                                .height(14.dp)
-                                .background(dividerColor)
-                        )
-
-                        Spacer(modifier = Modifier.width(8.dp))
-
-                        Text(
-                            text = "Explore as Guest",
-                            color = goldPrimary,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 13.5.sp,
-                            modifier = Modifier
-                                .clickable { onNavigateToHome() }
-                                .padding(vertical = 4.dp, horizontal = 6.dp)
+                                .padding(vertical = 4.dp, horizontal = 8.dp)
                         )
                     }
                 }
