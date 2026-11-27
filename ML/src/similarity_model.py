@@ -41,8 +41,32 @@ class SchemeRecommendationModel:
             user_vector,
             self.scheme_vectors
         ).flatten()
+        print("\nDEBUG - Top 10 raw similarity scores:")
+
+        for index in scores.argsort()[::-1][:10]:
+            print(
+                self.schemes.iloc[index]["scheme_name"],
+                round(float(scores[index]) * 100, 2),
+                self.schemes.iloc[index]["category"]
+            )
+        
+        # DEBUG: Inspect every housing scheme
+        print("\nDEBUG - All Housing Schemes:")
+
+        housing_indices = self.schemes[
+            self.schemes["category"] == "Housing & Shelter"
+        ].index
+
+        for index in housing_indices:
+            print(
+                self.schemes.iloc[index]["scheme_name"],
+                round(float(scores[index]) * 100, 2),
+                self.schemes.iloc[index]["combined_features"]
+            )
+
 
         ranked_indices = scores.argsort()[::-1]
+        
 
         results = []
 

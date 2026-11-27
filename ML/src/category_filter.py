@@ -31,6 +31,18 @@ CATEGORY_KEYWORDS = {
         "training",
         "career",
         "livelihood"
+    ],
+    "Education & Learning": [
+        "student",
+        "students",
+        "scholarship",
+        "scholarships",
+        "education",
+        "school",
+        "college",
+        "university",
+        "tuition",
+        "academic"
     ]
 }
 

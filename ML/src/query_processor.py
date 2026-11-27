@@ -14,7 +14,17 @@ SYNONYMS = {
     "sc": "scheduled caste",
     "st": "scheduled tribe",
     "entrepreneur": "business entrepreneur",
-    "entrepreneurs": "business entrepreneur"
+    "entrepreneurs": "business entrepreneur",
+    "house": "housing home",
+    "houses": "housing homes",
+    "build": "construction",
+    "building": "construction",
+    "construct": "construction",
+    "constructing": "construction",
+    "home": "housing house",
+"homes": "housing houses",
+"buy": "purchase",
+"buying": "purchase"
 }
 
 
