@@ -5,7 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 
 const app = express();
-
+const chatRoutes = require('./routes/chatRoutes');
 app.use(cors());
 app.use(express.json());
 
@@ -22,6 +22,7 @@ const recommendationRoutes = require('./routes/recommendationRoutes');
 app.use('/api/schemes', (req, res) => res.json([]));
 app.use('/api/requirements', (req, res) => res.json([]));
 app.use('/api/recommendations', recommendationRoutes);
+app.use('/api/chat', chatRoutes);
 app.use('/api/eligibility', (req, res) => res.json({}));
 app.use('/api/calculator', (req, res) => res.json({}));
 app.use('/api/partners', (req, res) => res.json([]));
